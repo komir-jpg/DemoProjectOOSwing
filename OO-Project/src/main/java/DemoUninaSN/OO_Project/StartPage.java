@@ -1,6 +1,7 @@
 package DemoUninaSN.OO_Project;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -32,7 +33,11 @@ public class StartPage extends JFrame {
 		JButton LoginBtn = new JButton("Login");
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.loginScreen();
+				try {
+					controller.loginScreen();
+				}catch(Exception exc) {
+					ConnectionErrorMessage("Connessione al DB","connessione non riuscita");
+				}
 			}
 		});
 		LoginBtn.setBounds(143, 81, 138, 30);
@@ -41,5 +46,8 @@ public class StartPage extends JFrame {
 		JButton SignInBtn = new JButton("Registrati");
 		SignInBtn.setBounds(143, 166, 138, 30);
 		contentPane.add(SignInBtn);
+	}
+	private void ConnectionErrorMessage(String titolo,String testo) {
+		JOptionPane.showMessageDialog(this,testo,titolo,JOptionPane.ERROR_MESSAGE);
 	}
 }
