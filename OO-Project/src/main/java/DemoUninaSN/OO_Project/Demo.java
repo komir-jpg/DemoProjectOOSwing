@@ -100,7 +100,7 @@ public class Demo extends JFrame {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				
+				System.out.println("Hover");
 			}
 		});
 		lblNewLabel.setForeground(SystemColor.textHighlight);
