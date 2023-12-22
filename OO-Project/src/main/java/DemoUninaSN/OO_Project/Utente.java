@@ -8,6 +8,7 @@ public class Utente {
 	public Utente() {
 		this.cognome = "Rossi";
 		this.nome = "Mario";
+		int numero;
 	}
 
 }
