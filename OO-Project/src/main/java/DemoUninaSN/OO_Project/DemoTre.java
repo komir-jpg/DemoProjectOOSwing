@@ -25,8 +25,10 @@ public class DemoTre extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private int MinimumWidth = 250;
-	private int MinimumHeight = 250;
+	private int MinimumWidth = 500;
+	private int MinimumHeight = 400;
+	private JTextField textField;
+	private JPasswordField passwordField;
 	/**
 	 * Launch the application.
 	 */
@@ -51,7 +53,7 @@ public class DemoTre extends JFrame {
 		setMinimumSize(new Dimension(MinimumWidth,MinimumHeight));
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 600);
+		setBounds(100, 100, 592, 398);
 		contentPane = new JPanel();
 		contentPane.setPreferredSize(new Dimension(250, 250));
 		contentPane.setBorder(null);
@@ -63,25 +65,54 @@ public class DemoTre extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\_465693e9-ae7f-46bb-8727-6f515978c48f.jpg"));
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Login");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		
+		JLabel lblNewLabel_1 = new JLabel("Email");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblNewLabel_2 = new JLabel("Password");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
-					.addGap(212))
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+					.addGap(36)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_2))
+					.addGap(148))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(162)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnNewButton))
-					.addGap(162))
+					.addGap(38)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(0)
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addGap(14)
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnNewButton)
+							.addContainerGap(172, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+							.addGap(38))))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
