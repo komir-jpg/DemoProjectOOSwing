@@ -17,6 +17,7 @@ import java.awt.Component;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.BorderLayout;
 
 public class DemoDue extends JFrame {
 
@@ -45,5 +46,8 @@ public class DemoDue extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setMinimumSize(new Dimension(200,200));
+		
+		JButton btnNewButton = new JButton("New button");
+		getContentPane().add(btnNewButton, BorderLayout.CENTER);
 	}
 }
