@@ -61,6 +61,7 @@ public class Login extends JFrame {
 		usernameField.setColumns(10);
 		
 		passwordField = new JPasswordField();
+		
 		passwordField.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		passwordField.setBounds(169, 97, 168, 22);
 		contentPane.add(passwordField);
