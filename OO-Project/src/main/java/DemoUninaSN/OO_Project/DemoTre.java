@@ -20,6 +20,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 
 public class DemoTre extends JFrame {
 
@@ -29,6 +30,9 @@ public class DemoTre extends JFrame {
 	private int MinimumHeight = 400;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	JLabel lblNewLabel_1;
+	JLabel lblNewLabel_2;
+	GroupLayout gl_contentPane;
 	/**
 	 * Launch the application.
 	 */
@@ -73,12 +77,13 @@ public class DemoTre extends JFrame {
 		
 		passwordField = new JPasswordField();
 		
-		JLabel lblNewLabel_1 = new JLabel("Email");
+		lblNewLabel_1 = new JLabel("Email");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		//lblNewLabel_1.setLocation();
 		
-		JLabel lblNewLabel_2 = new JLabel("Password");
+		lblNewLabel_2 = new JLabel("Password");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -99,7 +104,7 @@ public class DemoTre extends JFrame {
 					.addGap(38)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(0)
+							.addPreferredGap(ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
 							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
@@ -109,13 +114,15 @@ public class DemoTre extends JFrame {
 							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(btnNewButton)
-							.addContainerGap(172, Short.MAX_VALUE))
+							.addGap(172))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
 							.addGap(38))))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+	
+	
 	private void setMaxSize() {
 		addComponentListener(new ComponentAdapter() {
 			@Override
