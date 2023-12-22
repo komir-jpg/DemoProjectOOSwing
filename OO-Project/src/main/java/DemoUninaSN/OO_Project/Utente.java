@@ -9,6 +9,8 @@ public class Utente {
 		this.cognome = "Rossi";
 		this.nome = "Mario";
 		int numero;
+		System.out.println("creata classe");
 	}
+	
 
 }
