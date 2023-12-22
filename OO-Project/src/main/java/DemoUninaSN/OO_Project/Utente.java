@@ -7,6 +7,8 @@ public class Utente {
 	public Utente() {
 		this.cognome = "Rossi";
 		this.nome = "Mario";
+		System.out.println("creata classe");
 	}
+	
 
 }
