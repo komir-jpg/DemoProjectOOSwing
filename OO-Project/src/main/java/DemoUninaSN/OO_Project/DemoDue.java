@@ -18,6 +18,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 public class DemoDue extends JFrame {
 
@@ -48,6 +49,7 @@ public class DemoDue extends JFrame {
 		setMinimumSize(new Dimension(200,200));
 		
 		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		getContentPane().add(btnNewButton, BorderLayout.CENTER);
 	}
 }
