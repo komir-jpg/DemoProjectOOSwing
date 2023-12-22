@@ -7,6 +7,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.ComponentOrientation;
 
 public class StartPage extends JFrame {
 
@@ -21,10 +24,12 @@ public class StartPage extends JFrame {
 	 * Create the frame.
 	 */
 	public StartPage(Controller myController) {
+		setBounds(new Rectangle(200, 200, 150, 150));
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 440, 770);
 		contentPane = new JPanel();
+		contentPane.setMinimumSize(new Dimension(30, 30));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
