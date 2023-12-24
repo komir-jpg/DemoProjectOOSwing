@@ -15,34 +15,45 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Demo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField UsernameField;
+	private JPasswordField passwordField;
+	Controller controller;
+	private JLabel UsernameLabel;
+	private JLabel passwordLabel;
+	private JButton LoginBtn;
+	private JLabel CreateAccount;
+	private JLabel InsertUsernameLabel;
+	private JLabel insertPasswordLabel;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Demo frame = new Demo();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Demo frame = new Demo();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public Demo() {
+	public Demo(Controller myController) {
+		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 730, 494);
 		contentPane = new JPanel();
@@ -57,60 +68,102 @@ public class Demo extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(28, 128, 276, 198);
-		panel.add(lblNewLabel_1);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg"));
+		JLabel pictureLabel = new JLabel("");
+		pictureLabel.setBounds(28, 128, 276, 198);
+		panel.add(pictureLabel);
+		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pictureLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg"));
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(329, 0, 385, 455);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("username");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(131, 74, 105, 26);
-		panel_2.add(lblNewLabel_2);
+		UsernameLabel = new JLabel("username");
+		UsernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		UsernameLabel.setBounds(131, 74, 105, 26);
+		panel_2.add(UsernameLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(131, 111, 163, 20);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		UsernameField = new JTextField();
+		UsernameField.setBounds(131, 111, 163, 20);
+		panel_2.add(UsernameField);
+		UsernameField.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("password");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_3.setBounds(131, 142, 105, 26);
-		panel_2.add(lblNewLabel_3);
+		passwordLabel = new JLabel("password");
+		passwordLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		passwordLabel.setBounds(131, 142, 105, 26);
+		panel_2.add(passwordLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(131, 179, 163, 20);
-		panel_2.add(textField_1);
-		textField_1.setColumns(10);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(131, 179, 163, 20);
+		panel_2.add(passwordField);
+		passwordField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBounds(131, 210, 89, 23);
-		panel_2.add(btnNewButton);
+		LoginBtn = new JButton("Login");
+		LoginBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkUsername();
+				checkPassword();
+			}
+		});
+		LoginBtn.setBounds(131, 210, 89, 23);
+		panel_2.add(LoginBtn);
 		
-		JLabel lblNewLabel = new JLabel("create an account");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
+		CreateAccount = new JLabel("create an account");
+		CreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Cliccato");
+				
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				System.out.println("Hover");
 			}
 		});
-		lblNewLabel.setForeground(SystemColor.textHighlight);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(151, 244, 103, 26);
-		panel_2.add(lblNewLabel);
+		CreateAccount.setForeground(SystemColor.textHighlight);
+		CreateAccount.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		CreateAccount.setBounds(151, 244, 103, 26);
+		panel_2.add(CreateAccount);
 		
-		JLabel lblNewLabel_4 = new JLabel("or");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_4.setBounds(131, 244, 23, 26);
-		panel_2.add(lblNewLabel_4);
+		JLabel textLabel = new JLabel("or");
+		textLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textLabel.setBounds(131, 244, 23, 26);
+		panel_2.add(textLabel);
+		
+		InsertUsernameLabel = new JLabel("insert username");
+		InsertUsernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		InsertUsernameLabel.setVisible(false);
+		InsertUsernameLabel.setForeground(Color.RED);
+		InsertUsernameLabel.setBounds(248, 82, 90, 14);
+		panel_2.add(InsertUsernameLabel);
+		
+		insertPasswordLabel = new JLabel("insert password\r\n");
+		insertPasswordLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		insertPasswordLabel.setVisible(false);
+		insertPasswordLabel.setForeground(Color.RED);
+		insertPasswordLabel.setBounds(246, 150, 90, 14);
+		panel_2.add(insertPasswordLabel);
 	}
+	private void checkUsername() {
+		
+			String Username = UsernameField.getText();
+			System.out.println(Username);
+			if(Username.isBlank()) {
+				System.out.println("Inserisci username");
+				InsertUsernameLabel.setVisible(true);
+			}
+			else
+				controller.setFrame2();
+	}
+	
+	private void checkPassword() {
+			String password = new String(passwordField.getPassword());
+			if(password.isBlank()) {
+				System.out.println("inserisci password");
+			insertPasswordLabel.setVisible(true);
+			}
+			else
+				controller.setFrame2();
+		}	
 }
