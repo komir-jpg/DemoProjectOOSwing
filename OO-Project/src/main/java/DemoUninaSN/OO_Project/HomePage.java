@@ -6,8 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import java.awt.Font;
 
-public class Frame2 extends JFrame {
+public class HomePage extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,7 +32,7 @@ public class Frame2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Frame2(Controller myController) {
+	public HomePage(Controller myController) {
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -41,6 +42,7 @@ public class Frame2 extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Frame 2");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		contentPane.add(lblNewLabel);
 	}
 
