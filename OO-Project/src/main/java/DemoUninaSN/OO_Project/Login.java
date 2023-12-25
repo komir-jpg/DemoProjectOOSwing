@@ -34,8 +34,6 @@ public class Login extends JFrame {
 	private JLabel passwordLabel;
 	private JButton LoginBtn;
 	private JLabel CreateAccount;
-	private JLabel InsertUsernameLabel;
-	private JLabel insertPasswordLabel;
 	private final int minHeight = 490;
 	private final int minWidth = 810;
 	Controller controller;
@@ -106,16 +104,6 @@ public class Login extends JFrame {
 		
 		JLabel textLabel = new JLabel("or");
 		textLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
-		InsertUsernameLabel = new JLabel("insert username");
-		InsertUsernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		InsertUsernameLabel.setVisible(false);
-		InsertUsernameLabel.setForeground(Color.RED);
-		
-		insertPasswordLabel = new JLabel("insert password\r\n");
-		insertPasswordLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		insertPasswordLabel.setVisible(false);
-		insertPasswordLabel.setForeground(Color.RED);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -151,20 +139,13 @@ public class Login extends JFrame {
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(131)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(InsertUsernameLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+							.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
 							.addGap(44))
+						.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(insertPasswordLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addGap(2))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+							.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
 							.addGap(44))
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
@@ -180,19 +161,11 @@ public class Login extends JFrame {
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(74)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(8)
-							.addComponent(InsertUsernameLabel)))
+					.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
 					.addComponent(UsernameField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(8)
-							.addComponent(insertPasswordLabel)))
+					.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
 					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
