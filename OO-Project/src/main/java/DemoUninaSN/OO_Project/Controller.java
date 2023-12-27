@@ -1,5 +1,6 @@
 package DemoUninaSN.OO_Project;
 
+import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JFrame;
@@ -12,25 +13,31 @@ public class Controller {
 	public static void main(String[] args) {
 		new Controller();
 	}
+	
+	
 	public Controller() {
 		LoginFrame = new Login(this);
 		LoginFrame.setVisible(true);
 	}
 	
 	public void setHomePageFrame() {
-		Point point;
 		LoginSuccessoframe = new HomePage(this);
-		point = GetFramePosition(LoginFrame);
+		SetFramePosition(LoginSuccessoframe, GetFramePosition(LoginFrame));
+		SetFrameSize(LoginSuccessoframe,GetFrameSize(LoginFrame));
 		LoginFrame.setVisible(false);
 		LoginSuccessoframe.setVisible(true);
-		SetFramePosition(LoginSuccessoframe, point);
+		
 		
 	}
 	public void setRegisterFrame() {
 		RegisterFrame = new RegisterUserFrame();
+		SetFramePosition(RegisterFrame,GetFramePosition(LoginFrame));
+		SetFrameSize(RegisterFrame, GetFrameSize(LoginFrame));
 		RegisterFrame.setVisible(true);
 		LoginFrame.setVisible(false);
 	}
+	
+	
 	private Point GetFramePosition(JFrame frame) {
 		Point point;
 		point = frame.getLocationOnScreen();
@@ -38,6 +45,14 @@ public class Controller {
 	}
 	private void SetFramePosition(JFrame frame,Point point) {
 		frame.setLocation(point);
+	}
+	private Dimension GetFrameSize(JFrame frame) {
+		Dimension dimension;
+		dimension = frame.getSize();
+		return dimension;
+	}
+	private void SetFrameSize(JFrame frame,Dimension dimension) {
+		frame.setSize(dimension);
 	}
 	
 
