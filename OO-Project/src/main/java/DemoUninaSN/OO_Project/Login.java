@@ -1,5 +1,7 @@
 package DemoUninaSN.OO_Project;
 
+import ExceptionPackage.*;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -89,12 +91,10 @@ public class Login extends JFrame {
 		CreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Cliccato");
 				controller.setRegisterFrame();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				System.out.println("Hover");
 				CreateAccount.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				
 			}
@@ -178,6 +178,7 @@ public class Login extends JFrame {
 		panel_2.setLayout(gl_panel_2);
 		contentPane.setLayout(gl_contentPane);
 	}
+	//redere generica passando il componente per parametro 
 	private void checkUsername() throws InvalidUsername{
 		
 			String Username = UsernameField.getText();
@@ -196,7 +197,7 @@ public class Login extends JFrame {
 			else
 				controller.setHomePageFrame();
 		}
-	//usa popup
+	
 	private void checkInsertion() {
 		try {
 			checkUsername();
@@ -204,10 +205,11 @@ public class Login extends JFrame {
 			ShowMessage();
 		}
 	}
+	
 	private Dimension setMinDimension() {
-		Dimension tempDimension = new Dimension();
-		tempDimension.setSize(minWidth,minHeight);
-		return tempDimension;
+		Dimension Dimension = new Dimension();
+		Dimension.setSize(minWidth,minHeight);
+		return Dimension;
 	}
 	private void ShowMessage() {
 		JOptionPane.showMessageDialog(this, "Errore: inserire un valore nei campi", "Errore", JOptionPane.WARNING_MESSAGE);

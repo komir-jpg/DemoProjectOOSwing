@@ -25,16 +25,27 @@ public class Controller {
 		SetFramePosition(LoginSuccessoframe, GetFramePosition(LoginFrame));
 		SetFrameSize(LoginSuccessoframe,GetFrameSize(LoginFrame));
 		LoginFrame.setVisible(false);
+		LoginFrame.dispose();
 		LoginSuccessoframe.setVisible(true);
 		
 		
 	}
 	public void setRegisterFrame() {
-		RegisterFrame = new RegisterUserFrame();
+		RegisterFrame = new RegisterUserFrame(this);
 		SetFramePosition(RegisterFrame,GetFramePosition(LoginFrame));
 		SetFrameSize(RegisterFrame, GetFrameSize(LoginFrame));
 		RegisterFrame.setVisible(true);
 		LoginFrame.setVisible(false);
+		LoginFrame.dispose();
+	}
+	
+	public void setLoginPage() {
+		LoginFrame = new Login(this);
+		SetFramePosition(LoginFrame, GetFramePosition(RegisterFrame));
+		SetFrameSize(LoginFrame,GetFrameSize(RegisterFrame));
+		RegisterFrame.setVisible(false);
+		LoginFrame.setVisible(true);
+		RegisterFrame.dispose();
 	}
 	
 	
