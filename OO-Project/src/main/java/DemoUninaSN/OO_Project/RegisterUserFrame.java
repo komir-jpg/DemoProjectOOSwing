@@ -24,6 +24,9 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -33,6 +36,7 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 public class RegisterUserFrame extends JFrame {
 
@@ -43,19 +47,23 @@ public class RegisterUserFrame extends JFrame {
 	private JTextField emailField;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JTextField nuberField;
+	private JTextField numberField;
 	private JComboBox <String>numberComboBox;
 	private JComboBox<String> comboBox;
 	private JLabel lbMatricule;
-	private final int minHeigth = 330;
+	//private String phoneNumber;
+	private final int minHeigth = 350;
 	private final int minWidth = 640;
 	Controller controller;
 	private JTextField matriculeField;
 
-	/**
-	 * Launch the application.
-	 */
-
+	/*TODO 
+	 * controllare numero di telefono se inserito 
+	 * matricola se ci sono errori lanciare un eccezione
+	 * creare un package con le classi di tutte le eccezioni userdefined
+	 * al text field posso castare ad intero e se lancia un'eccezione la posso gestire
+	 * lo si può fare per tutti i text field
+	*/
 	/**
 	 * Create the frame.
 	 */
@@ -119,9 +127,10 @@ public class RegisterUserFrame extends JFrame {
 		numberComboBox = new JComboBox<String>();
 		numberComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"+00", "+39", "+20"}));
 		
-		nuberField = new JTextField();
-		nuberField.setBorder(new LineBorder(new Color(0, 0, 0)));
-		nuberField.setColumns(10);
+		numberField = new JTextField();
+		numberField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		numberField.setColumns(10);
+		
 		
 		JLabel lbSex = new JLabel("sesso");
 		lbSex.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -143,8 +152,11 @@ public class RegisterUserFrame extends JFrame {
 					checkTextField(usernameField);
 					checkTextField(passwordField);
 					checkTextField(matriculeField);
-				}catch(InvalidUsername exc) {
-					ShowMessage();
+					checkTelefono(numberField);
+				}catch(InvalidInsertion InvalidInsertionExc) {
+					ShowMessage("Errore: inserire un valore nei campi","Errore");
+				}catch(InvalidNumber InvalidNumberExc) {
+					ShowMessage("Errore: numero di telefono non valido","Errore");
 				}
 				
 			}
@@ -178,7 +190,7 @@ public class RegisterUserFrame extends JFrame {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(numberComboBox, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 							.addGap(4)
-							.addComponent(nuberField, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
+							.addComponent(numberField, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lbName, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -249,7 +261,7 @@ public class RegisterUserFrame extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lbPhoneNum, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 						.addComponent(numberComboBox, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nuberField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(numberField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -272,13 +284,32 @@ public class RegisterUserFrame extends JFrame {
 		return dimension;
 	}
 
-	private void checkTextField(JTextField field) throws InvalidUsername{
+	private void checkTextField(JTextField field) throws InvalidInsertion{
 		String text = field.getText();
 		if(text.isBlank())
-			throw new InvalidUsername();
+			throw new InvalidInsertion();
 	}
-	private void ShowMessage() {
-		JOptionPane.showMessageDialog(this, "Errore: inserire un valore nei campi", "Errore", JOptionPane.WARNING_MESSAGE);
+	private void ShowMessage(String testo,String titolo) {
+		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	//TODO controllare numero di telefono se inserito e matricola se ci sono errori lanciare un eccezione(creare un package con le classi di tutte le eccezioni userdefined)
+	
+	private void checkTelefono(JTextField telephoneField) throws InvalidNumber{
+		String telephone = telephoneField.getText();
+		final int LENGTH_PHONE_NUMBER = 9;
+		
+		if(!telephone.isBlank() && telephone.length() != LENGTH_PHONE_NUMBER) {
+			telephoneField.setText(null);
+			throw new InvalidNumber();
+		}
+		checkInt(telephone);
+	}
+	private void checkInt(String telephone)throws InvalidNumber {
+		//takes the telephone and puts into a char array then checks the array for illegal values
+		try{
+			int phoneNumber = new Integer(telephone);
+		}catch(NumberFormatException e) {
+			throw new InvalidNumber();
+		}
+		
+	}
 }
