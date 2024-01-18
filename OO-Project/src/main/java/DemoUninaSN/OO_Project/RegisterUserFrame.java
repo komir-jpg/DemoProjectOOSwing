@@ -24,6 +24,8 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -49,13 +51,14 @@ public class RegisterUserFrame extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField numberField;
 	private JComboBox <String>numberComboBox;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> SexComboBox;
 	private JLabel lbMatricule;
 	//private String phoneNumber;
 	private final int minHeigth = 350;
 	private final int minWidth = 640;
 	Controller controller;
 	private JTextField matriculeField;
+	private int idIncrement = 0; //sol temporanea creare un trigger di autoincremento per tutte le pk
 
 	/*TODO 
 	 * controllare numero di telefono se inserito 
@@ -63,6 +66,7 @@ public class RegisterUserFrame extends JFrame {
 	 * creare un package con le classi di tutte le eccezioni userdefined
 	 * al text field posso castare ad intero e se lancia un'eccezione la posso gestire
 	 * lo si può fare per tutti i text field
+	 * inserire campo data di nascita e rimuovere il campo matricola
 	*/
 	/**
 	 * Create the frame.
@@ -136,8 +140,8 @@ public class RegisterUserFrame extends JFrame {
 		lbSex.setHorizontalAlignment(SwingConstants.TRAILING);
 		lbSex.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"M", "F", "Altro"}));
+		SexComboBox = new JComboBox<String>();
+		SexComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"M", "F", "Altro"}));
 		
 		JLabel ImageLabel = new JLabel("");
 		ImageLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\MSN_Messenger_23101.png"));
@@ -153,10 +157,15 @@ public class RegisterUserFrame extends JFrame {
 					checkTextField(passwordField);
 					checkTextField(matriculeField);
 					checkTelefono(numberField);
+					controller.getDBConnection();
+					getFields();
+					setNewUser();
 				}catch(InvalidInsertion InvalidInsertionExc) {
 					ShowMessage("Errore: inserire un valore nei campi","Errore");
 				}catch(InvalidNumber InvalidNumberExc) {
 					ShowMessage("Errore: numero di telefono non valido","Errore");
+				} catch (DBconnectionError DBconnectionError) {
+					ShowMessage("Errore: connessione al db non riuscita","Errore");
 				}
 				
 			}
@@ -178,6 +187,23 @@ public class RegisterUserFrame extends JFrame {
 		matriculeField = new JTextField();
 		matriculeField.setColumns(10);
 		matriculeField.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		JButton tempBTN = new JButton("temp");
+		tempBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.getDBConnection();
+					controller.getUserByName();
+				} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DBconnectionError e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -218,12 +244,12 @@ public class RegisterUserFrame extends JFrame {
 								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(createAccoutnBtn)
 										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addGap(88))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(createAccoutnBtn)
-											.addPreferredGap(ComponentPlacement.UNRELATED)))
+											.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addComponent(tempBTN)
+												.addComponent(SexComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(46)))
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(backBtn)))))
 					.addGap(22)
@@ -235,45 +261,47 @@ public class RegisterUserFrame extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lbName, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSurname, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lbMatricule, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(matriculeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lbPhoneNum, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(numberComboBox, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(numberField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbSex, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addGap(22)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(createAccoutnBtn)
-						.addComponent(backBtn))
-					.addContainerGap(101, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(185, Short.MAX_VALUE)
-					.addComponent(ImageLabel, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lbName, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblSurname, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lbMatricule, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(matriculeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lbPhoneNum, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+								.addComponent(numberComboBox, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+								.addComponent(numberField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(SexComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lbSex, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+							.addGap(22)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(createAccoutnBtn)
+								.addComponent(backBtn))
+							.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+							.addComponent(tempBTN)
+							.addGap(35))
+						.addComponent(ImageLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -300,16 +328,36 @@ public class RegisterUserFrame extends JFrame {
 		if(!telephone.isBlank() && telephone.length() != LENGTH_PHONE_NUMBER) {
 			telephoneField.setText(null);
 			throw new InvalidNumber();
+		}else {
+			checkInt(telephone);
 		}
-		checkInt(telephone);
+		
 	}
 	private void checkInt(String telephone)throws InvalidNumber {
-		//takes the telephone and puts into a char array then checks the array for illegal values
+		
 		try{
 			int phoneNumber = new Integer(telephone);
 		}catch(NumberFormatException e) {
 			throw new InvalidNumber();
 		}
 		
+	}
+	private void getFields() {
+		controller.newUser();
+		controller.getNameField(nameField.getText());
+		controller.getSurnameField(surnameField.getText());
+		controller.getSexField(SexComboBox.getItemAt(SexComboBox.getSelectedIndex()));
+		controller.getUsername(usernameField.getText());
+		controller.getEmailField(emailField.getText());
+		controller.getPasswordField(new String(passwordField.getPassword()));
+		
+	}
+	private void setNewUser() throws DBconnectionError{
+		try {
+			controller.InsertNewUser(idIncrement++);
+		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+			e.printStackTrace();
+			throw new DBconnectionError();
+		}
 	}
 }

@@ -82,7 +82,17 @@ public class Login extends JFrame {
 		LoginBtn = new JButton("Login");
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				checkInsertion();
+				try {
+					checkUsername();
+					controller.getDBConnection();
+					controller.setHomePageFrame();
+				}catch(DBconnectionError ecx) {
+					passwordField.setText(null);
+					UsernameField.setText(null);
+					ShowMessage("ERRORE", "connessione al DB non riuscita");
+				}catch(InvalidUsername UserInsertEx) {
+					ShowMessage("Errore","inserisci un valore valido nei campi");
+					}
 			}
 		});
 		
@@ -191,27 +201,19 @@ public class Login extends JFrame {
 	
 	private void checkPassword() throws InvalidPassword{
 			String password = new String(passwordField.getPassword());
-			if(password.isBlank()) {
+			if(password.isBlank()) { 
 				throw new InvalidPassword();
 			}
-			else
-				controller.setHomePageFrame();
-		}
-	
-	private void checkInsertion() {
-		try {
-			checkUsername();
-		}catch(InvalidUsername UserInsertEx) {
-			ShowMessage();
-		}
 	}
+	
+	
 	
 	private Dimension setMinDimension() {
 		Dimension Dimension = new Dimension();
 		Dimension.setSize(minWidth,minHeight);
 		return Dimension;
 	}
-	private void ShowMessage() {
-		JOptionPane.showMessageDialog(this, "Errore: inserire un valore nei campi", "Errore", JOptionPane.WARNING_MESSAGE);
+	private void ShowMessage(String titolo,String testo) {
+		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
 }
