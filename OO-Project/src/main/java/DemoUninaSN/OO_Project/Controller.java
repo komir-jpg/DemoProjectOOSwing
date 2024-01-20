@@ -112,8 +112,6 @@ public class Controller {
 		
 	};
 	
-	
-	
 	private Point GetFramePosition(JFrame frame) {
 		Point point;
 		point = frame.getLocationOnScreen();
@@ -131,5 +129,5 @@ public class Controller {
 		frame.setSize(dimension);
 	}
 	
-
+	
 }

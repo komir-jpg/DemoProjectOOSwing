@@ -191,16 +191,16 @@ public class RegisterUserFrame extends JFrame {
 		JButton tempBTN = new JButton("temp");
 		tempBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					controller.getDBConnection();
-					controller.getUserByName();
-				} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DBconnectionError e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					controller.getDBConnection();
+//					
+//				} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (DBconnectionError e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				
 			}
 		});

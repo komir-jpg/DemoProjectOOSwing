@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class HomePage extends JFrame {
 
@@ -28,6 +29,9 @@ public class HomePage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		
+		JButton btnNewButton = new JButton("New button");
+		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("Frame 2");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));

@@ -19,7 +19,7 @@ public class GroupDAO {
 		try {
 			statement = connection.createStatement();
 			String insertNewGroup = "INSERT INTO progettobd_unina_social_network.GRUPPO VALUES"+"("+
-									"\'"+"1234"+"\'"+","
+									"\'DEFAULT\'"+","
 									 +"\'"+newGroup.getGroupName()+"\'"+","
 									 +"\'"+newGroup.getCreationDate()+"\'"+","
 									 +"\'"+newGroup.getDescription()+"\'"+","
