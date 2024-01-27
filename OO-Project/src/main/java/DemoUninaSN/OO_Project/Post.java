@@ -3,18 +3,25 @@ package DemoUninaSN.OO_Project;
 import java.sql.Date;
 
 public class Post {
-	int PostNumber;
-	Date dataPost;
-	int numberOfLikes;
-	int numberOfComments;
-	int numberOfShare;
-	String content;
-	String fotoFormat;
-	String typeOfPost;
-	boolean preferredPost;
-	boolean eliminatedPost;
+	private int PostNumber;
+	private Date dataPost;
+	private int numberOfLikes;
+	private int numberOfComments;
+	private int numberOfShare;
+	private String content;
+	private String fotoFormat;
+	private String typeOfPost;
+	private boolean preferredPost;
+	private boolean eliminatedPost;
+	private boolean Shared;
 	
 	
+	public int getPostNumber() {
+		return PostNumber;
+	}
+	public void setPostNumber(int postNumber) {
+		PostNumber = postNumber;
+	}
 	public Date getDataPost() {
 		return dataPost;
 	}
@@ -69,6 +76,13 @@ public class Post {
 	public void setEliminatedPost(boolean eliminatedPost) {
 		this.eliminatedPost = eliminatedPost;
 	}
+	public boolean isShared() {
+		return Shared;
+	}
+	public void setShared(boolean shared) {
+		Shared = shared;
+	}
+	
 	
 	
 
