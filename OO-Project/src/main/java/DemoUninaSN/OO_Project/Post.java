@@ -11,9 +11,7 @@ public class Post {
 	private String content;
 	private String fotoFormat;
 	private String typeOfPost;
-	private boolean preferredPost;
 	private boolean eliminatedPost;
-	private boolean Shared;
 	
 	
 	public int getPostNumber() {
@@ -64,24 +62,14 @@ public class Post {
 	public void setTypeOfPost(String typeOfPost) {
 		this.typeOfPost = typeOfPost;
 	}
-	public boolean isPreferredPost() {
-		return preferredPost;
-	}
-	public void setPreferredPost(boolean preferredPost) {
-		this.preferredPost = preferredPost;
-	}
+	
 	public boolean isEliminatedPost() {
 		return eliminatedPost;
 	}
 	public void setEliminatedPost(boolean eliminatedPost) {
 		this.eliminatedPost = eliminatedPost;
 	}
-	public boolean isShared() {
-		return Shared;
-	}
-	public void setShared(boolean shared) {
-		Shared = shared;
-	}
+	
 	
 	
 	

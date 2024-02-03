@@ -74,8 +74,6 @@ public class CommentClassDAO extends getIdDAO{
 				user.setSex(queryRS.getString("sesso"));
 				user.setUserName(queryRS.getString("nomeutente"));
 				user.setUserType(queryRS.getString("tipoutente"));
-				user.setInviteState(queryRS.getString("statoinvito"));
-				user.setRequestState(queryRS.getString("statorichiesta"));
 				queryResultUser.add(user);
 				queryRS.close();
 				preparedStatement.close();

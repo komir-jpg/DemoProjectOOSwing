@@ -70,8 +70,6 @@ public class UserDAO {
 				userResultQuery.setSex(queryRS.getString("sesso"));
 				userResultQuery.setUserName(queryRS.getString("nomeutente"));
 				userResultQuery.setUserType(queryRS.getString("tipoutente"));
-				userResultQuery.setInviteState(queryRS.getString("statoinvito"));
-				userResultQuery.setRequestState(queryRS.getString("statorichiesta"));
 				userData.add(userResultQuery);				
 			}
 			preparedStatement.clearBatch();

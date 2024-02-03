@@ -37,6 +37,27 @@ public class ShareDAO extends getIdDAO {
 		}
 		
 	}
+	public void deleteSharedPost(Share sharedPost) {
+		int postID = getPostID(sharedPost.getPostShared());
+		int groupID = getGroupID(sharedPost.getGroupSharedPost());
+		int userID = getUserID(sharedPost.getUserSharing());
+		
+		String deleteSharedPost = "DELETE FROM progettobd_unina_social_network.CONDIVISIONE_POST WHERE postcondiviso = ? "
+				+ "and gruppocondivisione = ? and idUtenteCondivide = ?;";
+		
+		try {
+			preparedStatement = connection.prepareStatement(deleteSharedPost);
+			preparedStatement.setInt(1, postID);
+			preparedStatement.setInt(2, groupID);
+			preparedStatement.setInt(3, userID);
+			preparedStatement.executeUpdate(deleteSharedPost);
+			preparedStatement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 }

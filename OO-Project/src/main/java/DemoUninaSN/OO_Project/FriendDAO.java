@@ -72,8 +72,6 @@ public class FriendDAO extends getIdDAO{
 				userResult.setSex(queryRS.getString("sesso"));
 				userResult.setUserName(queryRS.getString("nomeutente"));
 				userResult.setUserType(queryRS.getString("tipoutente"));
-				userResult.setInviteState(queryRS.getString("statoinvito"));
-				userResult.setRequestState(queryRS.getString("statorichiesta"));
 				queryResultUser.add(userResult);
 				queryRS.close();
 				preparedStatement.close();

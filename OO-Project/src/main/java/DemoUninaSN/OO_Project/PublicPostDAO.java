@@ -41,9 +41,7 @@ public class PublicPostDAO extends getIdDAO{
 									 +"\'"+newPost.getContent()+"\'"+","
 									 +newPost.getFotoFormat()+"," //valore null
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isPreferredPost()+"\'"+","
 									 +"\'"+newPost.isEliminatedPost()+"\'"+
-									 "\""+newPost.isShared()+"\""+
 									 "\""+idGroup+"\""+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
@@ -71,9 +69,7 @@ public class PublicPostDAO extends getIdDAO{
 									 +newPost.getContent()+"," //valore null
 									 +"\'"+newPost.getFotoFormat()+"\'"+","
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isPreferredPost()+"\'"+","
 									 +"\'"+newPost.isEliminatedPost()+"\'"+
-									 "\""+newPost.isShared()+"\""+
 									 "\""+idGroup+"\""+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
@@ -117,9 +113,7 @@ public class PublicPostDAO extends getIdDAO{
 				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
 				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
 				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
-				postQueryResult.setPreferredPost(queryRS.getBoolean("postpreferito"));
 				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
-				postQueryResult.setShared(queryRS.getBoolean("postcondiviso"));
 				postData.add(postQueryResult);
 			}
 			queryRS.close();
@@ -151,9 +145,7 @@ public class PublicPostDAO extends getIdDAO{
 				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
 				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
 				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
-				postQueryResult.setPreferredPost(queryRS.getBoolean("postpreferito"));
 				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
-				postQueryResult.setShared(queryRS.getBoolean("postcondiviso"));
 				postData.add(postQueryResult);
 			}
 			queryRS.close();

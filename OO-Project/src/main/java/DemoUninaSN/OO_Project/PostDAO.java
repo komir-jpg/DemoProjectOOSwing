@@ -26,7 +26,6 @@ public class PostDAO {
 									 +"\'"+newPost.getContent()+"\'"+","
 									 +newPost.getFotoFormat()+"," //valore null
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isPreferredPost()+"\'"+","
 									 +"\'"+newPost.isEliminatedPost()+"\'"+")";
 		statement.executeUpdate(insertNewPost);
 					
@@ -47,7 +46,6 @@ public class PostDAO {
 									 +newPost.getContent()+"," //valore null
 									 +"\'"+newPost.getFotoFormat()+"\'"+","
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isPreferredPost()+"\'"+","
 									 +"\'"+newPost.isEliminatedPost()+"\'"+")";
 		statement.executeUpdate(insertNewPost);
 					

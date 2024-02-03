@@ -13,8 +13,7 @@ public class User {
 	private String email;
 	private String password;
 	private String userType;
-	private String requestState;
-	private String inviteState;
+	
 	
 	
 	public User() {
@@ -35,8 +34,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
-		this.requestState = requestState;
-		this.inviteState = inviteState;
 	}
 
 
@@ -86,15 +83,6 @@ public class User {
 	}
 
 
-	public void setRequestState(String requestState) {
-		this.requestState = requestState;
-	}
-
-
-	public void setInviteState(String inviteState) {
-		this.inviteState = inviteState;
-	}
-	
 	
 	public String getName() {
 		return name;
@@ -141,14 +129,6 @@ public class User {
 	}
 
 
-	public String getRequestState() {
-		return requestState;
-	}
-
-
-	public String getInviteState() {
-		return inviteState;
-	}
 
 
 	@Override
