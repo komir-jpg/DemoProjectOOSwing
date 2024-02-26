@@ -36,7 +36,7 @@ public class GroupDAO {
 	}
 	public Group GetGroupByName(String groupName){
 		try {
-			preparedStatement = connection.prepareStatement("SELECT * FROM GRUPPO WHERE nomegruppo LIKE ?");
+			preparedStatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.GRUPPO WHERE nomegruppo LIKE ?");
 			preparedStatement.setString(1,groupName);
 			ResultSet queryRS = preparedStatement.executeQuery();
 			Group groupResult = new Group();
@@ -46,7 +46,10 @@ public class GroupDAO {
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setNumberOfPatecipants(queryRS.getInt("numeropartecipanti"));
 			}
+			queryRS.close();
+			preparedStatement.close();
 			return groupResult;
+			
 			
 		} catch (SQLException e) {
 			
@@ -54,5 +57,5 @@ public class GroupDAO {
 		}
 		return null;
 	}
-
+	//controller get group by name inserisco il nome chiamo una delete group
 }

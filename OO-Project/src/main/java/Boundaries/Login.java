@@ -1,5 +1,5 @@
-package DemoUninaSN.OO_Project;
-
+package Boundaries;
+import DemoUninaSN.OO_Project.*;
 import ExceptionPackage.*;
 
 import java.awt.EventQueue;
@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,12 +20,20 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.ActionMap;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Cursor;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -37,8 +46,8 @@ public class Login extends JFrame {
 	private JButton LoginBtn;
 	private JLabel CreateAccount;
 	private final int minHeight = 490;
-	private final int minWidth = 810;
-	Controller controller;
+	private final int minWidth = 700;
+	private Controller controller;
 
 	/**
 	 * Launch the application.
@@ -55,6 +64,7 @@ public class Login extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setMinimumSize(setMinDimension());
+		
 
 		setContentPane(contentPane);
 		
@@ -85,18 +95,22 @@ public class Login extends JFrame {
 				try {
 					checkUsername();
 					controller.getDBConnection();
-					controller.setHomePageFrame();
+					checkLogIn();
 				}catch(DBconnectionError ecx) {
 					passwordField.setText(null);
 					UsernameField.setText(null);
 					ShowMessage("ERRORE", "connessione al DB non riuscita");
 				}catch(InvalidUsername UserInsertEx) {
 					ShowMessage("Errore","inserisci un valore valido nei campi");
-					}
+				}catch(LogInErrorExc LogInExc) {
+					passwordField.setText(null);
+					UsernameField.setText(null);
+					ShowMessage("Errore", "username o password non corretti");
+				}
 			}
 		});
 		
-		CreateAccount = new JLabel("create an account");
+		CreateAccount = new JLabel("crea un account");
 		CreateAccount.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		CreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
@@ -112,7 +126,7 @@ public class Login extends JFrame {
 		CreateAccount.setForeground(SystemColor.textHighlight);
 		CreateAccount.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		JLabel textLabel = new JLabel("or");
+		JLabel textLabel = new JLabel("o");
 		textLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -151,20 +165,19 @@ public class Login extends JFrame {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
 						.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+							.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
 							.addGap(44))
 						.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+							.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
 							.addGap(44))
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 							.addGap(118))
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(20)
-							.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-							.addGap(84))
-						.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
 					.addGap(39))
 		);
 		gl_panel_2.setVerticalGroup(
@@ -181,9 +194,9 @@ public class Login extends JFrame {
 					.addGap(11)
 					.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
 		);
 		panel_2.setLayout(gl_panel_2);
 		contentPane.setLayout(gl_contentPane);
@@ -206,6 +219,25 @@ public class Login extends JFrame {
 			}
 	}
 	
+	private void checkLogIn() throws LogInErrorExc, DBconnectionError {
+		boolean LogInResult;
+		String username = UsernameField.getText();
+		String password = new String(passwordField.getPassword());
+		try {
+			LogInResult = controller.CheckUserLogIn(username,password);
+			if(LogInResult) {
+				controller.userLogIn(username);
+				controller.setHomePageFrame();
+			}
+			else {
+				throw new LogInErrorExc();
+			}
+		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+			e.printStackTrace();
+			throw new DBconnectionError();
+		}
+		
+	}
 	
 	
 	private Dimension setMinDimension() {
@@ -216,4 +248,5 @@ public class Login extends JFrame {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
+	
 }

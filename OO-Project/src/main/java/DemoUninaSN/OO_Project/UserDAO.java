@@ -2,26 +2,33 @@ package DemoUninaSN.OO_Project;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ExceptionPackage.DBconnectionError;
 
-public class UserDAO {
+public class UserDAO extends CurrentDate{
 	
 	private Connection connection;
 	private Statement statement;
 	private PreparedStatement preparedStatement;
+	private String CurrentDate;
+
 	
 	
 	
 	public UserDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		connection = myConnection;
+		CurrentDate = date();
 	}
-	public void SaveNewUser(User newUser,int idIncrement) {
+	public void SaveNewUser(User newUser) {
 		try {
 			//INSERT INTO UTENTE values ('1234','nome','cognome'...)
 			statement = connection.createStatement();
@@ -33,9 +40,7 @@ public class UserDAO {
 								    +"\'"+newUser.getEmail()+"\'"+","
 								    +"\'"+newUser.getUserName()+"\'"+","
 								    +"\'"+newUser.getPassword()+"\'"+","
-								    +"\'12/12/12\'"+","
-								    +"\'null\'"+","
-								    +"null"+","
+								    +"\'"+CurrentDate+"\'"+","
 								    +"\'null\'"
 								    +")";
 			statement.executeUpdate(InsertNewUser);
@@ -64,7 +69,6 @@ public class UserDAO {
 				userResultQuery.setName(queryRS.getString("nome"));
 				userResultQuery.setSurname(queryRS.getString("cognome"));
 				userResultQuery.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
-				userResultQuery.setDateofBirth(queryRS.getDate("dataiscrizione"));
 				userResultQuery.setEmail(queryRS.getString("email"));
 				userResultQuery.setPassword(queryRS.getString("password"));
 				userResultQuery.setSex(queryRS.getString("sesso"));
@@ -81,5 +85,72 @@ public class UserDAO {
         }
 		return null;
 	}
+	
+	public ArrayList<User> getUserList() {
+		try {
+			
+			preparedStatement = connection.prepareStatement("SELECT *"
+															+ "	FROM progettobd_unina_social_network.utente");
+			ResultSet queryRS = preparedStatement.executeQuery();
+			
+			//Retrieve the data
+			ArrayList<User> userData = new ArrayList<User>();
+			
+			while(queryRS.next()) {
+				User userResultQuery = new User();
+				userResultQuery.setName(queryRS.getString("nome"));
+				userResultQuery.setSurname(queryRS.getString("cognome"));
+				userResultQuery.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
+				userResultQuery.setEmail(queryRS.getString("email"));
+				userResultQuery.setPassword(queryRS.getString("password"));
+				userResultQuery.setSex(queryRS.getString("sesso"));
+				userResultQuery.setUserName(queryRS.getString("nomeutente"));
+				userResultQuery.setUserType(queryRS.getString("tipoutente"));
+				userData.add(userResultQuery);				
+			}
+			preparedStatement.clearBatch();
+			queryRS.close();
+			return userData;
+		}catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
+        }
+		return null;
+	}
+	public ArrayList<User> getUserbyUsername(String username) {
+		try {
+			
+			preparedStatement = connection.prepareStatement("SELECT *"
+															+ "	FROM progettobd_unina_social_network.utente "
+															+ "WHERE nomeutente LIKE ?");
+			preparedStatement.setString(1, username);
+			ResultSet queryRS = preparedStatement.executeQuery();
+			
+			//Retrieve the data
+			ArrayList<User> userData = new ArrayList<User>();
+			
+			while(queryRS.next()) {
+				User userResultQuery = new User();
+				userResultQuery.setName(queryRS.getString("nome"));
+				userResultQuery.setSurname(queryRS.getString("cognome"));
+				userResultQuery.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
+				userResultQuery.setEmail(queryRS.getString("email"));
+				userResultQuery.setPassword(queryRS.getString("password"));
+				userResultQuery.setSex(queryRS.getString("sesso"));
+				userResultQuery.setUserName(queryRS.getString("nomeutente"));
+				userResultQuery.setUserType(queryRS.getString("tipoutente"));
+				userData.add(userResultQuery);				
+			}
+			preparedStatement.clearBatch();
+			queryRS.close();
+			return userData;
+		}catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
+        }
+		return null;
+	}
+	
+	
 	
 }

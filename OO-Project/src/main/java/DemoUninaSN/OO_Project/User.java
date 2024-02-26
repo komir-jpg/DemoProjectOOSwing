@@ -6,9 +6,8 @@ public class User {
 	
 	private String name;
 	private String surname;
-	private Date dateofBirth;
 	private String sex;
-	private Date subsriptionDate;
+	private Date subscriptionDate;
 	private String userName;
 	private String email;
 	private String password;
@@ -22,18 +21,15 @@ public class User {
 	
 
 
-	public User(String name, String surname, Date dateofBirth, String sex, Date subsriptionDate, String userName,
-			String email, String password, String userType, String requestState, String inviteState) {
+	public User(String name, String surname, String sex, String userName,
+			String email, String password) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.dateofBirth = dateofBirth;
 		this.sex = sex;
-		this.subsriptionDate = subsriptionDate;
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
-		this.userType = userType;
 	}
 
 
@@ -48,18 +44,14 @@ public class User {
 	}
 
 
-	public void setDateofBirth(Date dateofBirth) {
-		this.dateofBirth = dateofBirth;
-	}
-
 
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
 
-	public void setSubsriptionDate(Date subsriptionDate) {
-		this.subsriptionDate = subsriptionDate;
+	public void setSubsriptionDate(Date subscriptionDate) {
+		this.subscriptionDate = subscriptionDate;
 	}
 
 
@@ -94,18 +86,13 @@ public class User {
 	}
 
 
-	public Date getDateofBirth() {
-		return dateofBirth;
-	}
-
-
 	public String getSex() {
 		return sex;
 	}
 
 
-	public Date getSubsriptionDate() {
-		return subsriptionDate;
+	public Date getSubcsriptionDate() {
+		return subscriptionDate;
 	}
 
 
@@ -139,6 +126,19 @@ public class User {
 			   "username->"+this.userName+"\r\n"+
 			   "email->"+this.email;
 	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		String ComparedUser;
+		User user = (User)obj;
+		
+		ComparedUser = user.getUserName();
+		
+		return ComparedUser.compareTo(this.userName) == 0;
+	}
+	
 	
 
 }

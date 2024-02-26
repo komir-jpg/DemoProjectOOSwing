@@ -66,7 +66,6 @@ public class GroupPartecipantsDAO extends getIdDAO{
 				user.setName(queryRS.getString("nome"));
 				user.setSurname(queryRS.getString("cognome"));
 				user.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
-				user.setDateofBirth(queryRS.getDate("dataiscrizione"));
 				user.setEmail(queryRS.getString("email"));
 				user.setPassword(queryRS.getString("password"));
 				user.setSex(queryRS.getString("sesso"));

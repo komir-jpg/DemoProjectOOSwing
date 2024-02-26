@@ -5,6 +5,9 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class getIdDAO {
 
@@ -12,12 +15,12 @@ public class getIdDAO {
 	private Connection connection;
 
 	public getIdDAO(Connection myConnection)throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		connection =myConnection; 
+		connection = myConnection; 
 	}
 	public int getUserID(User user) {
 		try {
 			int userID;
-			callablestatement = connection.prepareCall("{? = call getuserid(?)}");
+			callablestatement = connection.prepareCall("{? = call progettobd_unina_social_network.getuserid(?)}");
 			callablestatement.registerOutParameter(1,Types.INTEGER);
 			callablestatement.setString(2, user.getUserName());
 			callablestatement.execute();
@@ -70,7 +73,7 @@ public class getIdDAO {
 	public int getGroupID(Group group) {
 	try {
 		int groupID;
-		callablestatement = connection.prepareCall("{? = call getgroupid(?)}");
+		callablestatement = connection.prepareCall("{? = call progettobd_unina_social_network.getgroupid(?)}");
 		callablestatement.registerOutParameter(1,Types.INTEGER);
 		callablestatement.setString(2, group.getGroupName());
 		callablestatement.execute();
@@ -86,7 +89,7 @@ public class getIdDAO {
 	public int getGroupID(String groupName) {
 		try {
 			int groupID;
-			callablestatement = connection.prepareCall("{? = call getgroupid(?)}");
+			callablestatement = connection.prepareCall("{? = call progettobd_unina_social_network.getgroupid(?)}");
 			callablestatement.registerOutParameter(1,Types.INTEGER);
 			callablestatement.setString(2, groupName);
 			callablestatement.execute();
@@ -114,8 +117,9 @@ public class getIdDAO {
 			e.printStackTrace();
 		}
 		return -1;
-		
-		
+			
 	}
+
+	
 
 }

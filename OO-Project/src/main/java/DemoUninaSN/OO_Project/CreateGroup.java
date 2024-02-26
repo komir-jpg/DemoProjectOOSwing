@@ -7,9 +7,17 @@ public class CreateGroup {
 	private String usernameAdmin;
 	private String description;
 	private int numberOfPartecipants;
-	private Date dateOfCreation;
+	private String dateOfCreation;
+	private String category;
 	public CreateGroup() {
 		
+	}
+	public CreateGroup(String groupName, String description,String dateOfCreation,String category) {
+		super();
+		GroupName = groupName;
+		this.description = description;
+		this.dateOfCreation = dateOfCreation;
+		this.category = category;
 	}
 	public String getGroupName() {
 		return GroupName;
@@ -23,6 +31,12 @@ public class CreateGroup {
 	public void setUsernameAdmin(String userName) {
 		this.usernameAdmin = userName;
 	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getCategory() {
+		return category;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -35,10 +49,10 @@ public class CreateGroup {
 	public void setNumberOfPartecipants(int numberOfPartecipants) {
 		this.numberOfPartecipants = numberOfPartecipants;
 	}
-	public Date getDateOfCreation() {
+	public String getDateOfCreation() {
 		return dateOfCreation;
 	}
-	public void setDateOfCreation(Date dateOfCreation) {
+	public void setDateOfCreation(String dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
 	

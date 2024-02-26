@@ -17,6 +17,7 @@ public class FriendDAO extends getIdDAO{
 	
 	public FriendDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		super(myConnection);
+		connection = myConnection;
 	}
 	
 	public void addFriend(Friend friend) {
@@ -66,18 +67,19 @@ public class FriendDAO extends getIdDAO{
 				userResult.setName(queryRS.getString("nome"));
 				userResult.setSurname(queryRS.getString("cognome"));
 				userResult.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
-				userResult.setDateofBirth(queryRS.getDate("dataiscrizione"));
 				userResult.setEmail(queryRS.getString("email"));
 				userResult.setPassword(queryRS.getString("password"));
 				userResult.setSex(queryRS.getString("sesso"));
 				userResult.setUserName(queryRS.getString("nomeutente"));
 				userResult.setUserType(queryRS.getString("tipoutente"));
 				queryResultUser.add(userResult);
-				queryRS.close();
-				preparedStatement.close();
-				return queryResultUser;
+				
+				
 				
 			}
+			queryRS.close();
+			preparedStatement.close();
+			return queryResultUser;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

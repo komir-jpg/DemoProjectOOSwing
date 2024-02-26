@@ -16,6 +16,7 @@ public class TagDAO extends getIdDAO{
 	
 	public TagDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		super(myConnection);
+		connection = myConnection;
 	}
 	
 	public void insertNewTag(Tag tag) {
@@ -39,10 +40,11 @@ public class TagDAO extends getIdDAO{
 				Tag tag = new Tag();
 				tag.setCategory(queryRS.getString("categoria"));
 				queryResultTag.add(tag);
-				queryRS.close();
-				preparedStatement.close();
-				return queryResultTag;
+				
 			}
+			queryRS.close();
+			preparedStatement.close();
+			return queryResultTag;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
