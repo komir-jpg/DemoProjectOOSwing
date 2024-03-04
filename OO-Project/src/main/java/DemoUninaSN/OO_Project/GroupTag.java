@@ -1,27 +1,30 @@
 package DemoUninaSN.OO_Project;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class GroupTag {
-	private String groupName;
-	private String category;
+	private Group groupName;
+	private ArrayList<Tag> groupTag;
 	
 	public GroupTag() {
 		
 	}
 
-	public String getGroupName() {
+	public Group getGroupName() {
 		return groupName;
 	}
 
-	public void setGroupName(String groupName) {
+	public void setGroupName(Group groupName) {
 		this.groupName = groupName;
 	}
 
-	public String getCategory() {
-		return category;
+	public ArrayList<Tag> getCategory() {
+		return groupTag;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategory(ArrayList<Tag> tag) {
+		this.groupTag = tag;
 	}
 	
 }

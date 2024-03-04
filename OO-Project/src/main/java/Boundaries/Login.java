@@ -34,6 +34,13 @@ import java.awt.Cursor;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.border.LineBorder;
+
+import Controllers.LoginController;
+
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.UIManager;
 
 public class Login extends JFrame {
 
@@ -47,7 +54,7 @@ public class Login extends JFrame {
 	private JLabel CreateAccount;
 	private final int minHeight = 490;
 	private final int minWidth = 700;
-	private Controller controller;
+	private LoginController controller;
 
 	/**
 	 * Launch the application.
@@ -56,7 +63,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login(Controller myController) {
+	public Login(LoginController myController) {
 		controller = myController;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +83,7 @@ public class Login extends JFrame {
 		pictureLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg"));
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(null);
 		
 		UsernameLabel = new JLabel("username");
 		UsernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -90,11 +98,11 @@ public class Login extends JFrame {
 		passwordField.setColumns(10);
 		
 		LoginBtn = new JButton("Login");
+		LoginBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					checkUsername();
-					controller.getDBConnection();
 					checkLogIn();
 				}catch(DBconnectionError ecx) {
 					passwordField.setText(null);
@@ -115,7 +123,7 @@ public class Login extends JFrame {
 		CreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.setRegisterFrame();
+				controller.setRegisterFrame(Login.this);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -219,7 +227,7 @@ public class Login extends JFrame {
 			}
 	}
 	
-	private void checkLogIn() throws LogInErrorExc, DBconnectionError {
+	private void checkLogIn() throws LogInErrorExc, DBconnectionError{
 		boolean LogInResult;
 		String username = UsernameField.getText();
 		String password = new String(passwordField.getPassword());
@@ -227,12 +235,12 @@ public class Login extends JFrame {
 			LogInResult = controller.CheckUserLogIn(username,password);
 			if(LogInResult) {
 				controller.userLogIn(username);
-				controller.setHomePageFrame();
+				controller.setHomePageFrame(this);
 			}
 			else {
 				throw new LogInErrorExc();
 			}
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBconnectionError();
 		}

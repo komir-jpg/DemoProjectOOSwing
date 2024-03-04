@@ -94,9 +94,9 @@ public class GroupPartecipantsDAO extends getIdDAO{
 			while(queryRS.next()) {
 				Group group = new Group();
 				group.setGroupName(queryRS.getString("nomegruppo"));
-				group.setCreationDate(queryRS.getDate("datacreazione"));
+				group.setDateOfCreation(queryRS.getString("datacreazione"));
 				group.setDescription(queryRS.getString("descrizione"));
-				group.setNumberOfPatecipants(queryRS.getInt("numeropartecipanti"));
+				group.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
 				queryResultGroup.add(group);
 			}
 			queryRS.close();

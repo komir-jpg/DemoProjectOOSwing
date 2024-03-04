@@ -1,27 +1,29 @@
 package DemoUninaSN.OO_Project;
 
+import java.util.ArrayList;
+
 public class Friend {
-	private User friend1;
-	private User friend2;
+	private User user;
+	private ArrayList<User> friends;
 	
-	public Friend() {
-		// TODO Auto-generated constructor stub
+	public Friend(User user) {
+		this.user = user;
 	}
 
-	public User getFriend1() {
-		return friend1;
+	public User getUser() {
+		return user;
 	}
 
-	public void setFriend1(User friend1) {
-		this.friend1 = friend1;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public User getFriend2() {
-		return friend2;
+	public ArrayList<User> getFriends() {
+		return friends;
 	}
 
-	public void setFriend2(User friend2) {
-		this.friend2 = friend2;
+	public void setFriends(ArrayList<User> friends) {
+		this.friends = friends;
 	}
 	
 

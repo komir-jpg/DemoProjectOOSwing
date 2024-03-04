@@ -1,20 +1,22 @@
 package DemoUninaSN.OO_Project;
 
+import java.util.ArrayList;
+
 public class GroupPartecipants {
 
-	private User user;
+	private ArrayList<User> partecipants;
 	private Group group;
 	
-	public GroupPartecipants() {
-		
+	public GroupPartecipants(Group group) {
+		this.group = group;
 	}
 
-	public User getUser() {
-		return user;
+	public ArrayList<User> getPartecipants() {
+		return partecipants;
 	}
 
 	public void setUser(User user) {
-		this.user = user;
+		this.partecipants.add(user);
 	}
 
 	public Group getGroup() {

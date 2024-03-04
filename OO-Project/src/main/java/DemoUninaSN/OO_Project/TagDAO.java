@@ -50,6 +50,25 @@ public class TagDAO extends getIdDAO{
 		}
 		return null;
 	}
+	public Tag getSingleTag(String tag) {
+		String getTag = ("SELECT * from progettobd_unina_social_network.TAG where categoria = ?");
+		try {
+			preparedStatement = connection.prepareStatement(getTag);
+			preparedStatement.setString(1, tag);
+			ResultSet queryRS = preparedStatement.executeQuery();
+			Tag queryResultTag = new Tag();
+			while(queryRS.next()) {
+				queryResultTag.setCategory(queryRS.getString("categoria"));
+			}
+			queryRS.close();
+			preparedStatement.close();
+			return queryResultTag;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	

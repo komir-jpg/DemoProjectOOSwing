@@ -6,7 +6,7 @@ public class LikeClass {
 	private User user;
 	private Post post;
 	private Date likeDate;
-	private String LikeAuthor;
+	private int likeID;
 	
 	public LikeClass() {
 		// TODO Auto-generated constructor stub
@@ -36,12 +36,12 @@ public class LikeClass {
 		this.likeDate = likeDate;
 	}
 
-	public String getLikeAuthor() {
-		return LikeAuthor;
+	public int getLikeAuthor() {
+		return likeID;
 	}
 
-	public void setLikeAuthor(String likeAuthor) {
-		LikeAuthor = likeAuthor;
+	public void setLikeAuthor(int likeID) {
+		this.likeID = likeID;
 	}
 	
 

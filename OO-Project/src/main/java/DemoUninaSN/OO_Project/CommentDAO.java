@@ -1,49 +1,53 @@
 package DemoUninaSN.OO_Project;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
-public class CommentClassDAO extends getIdDAO{
+public class CommentDAO {
 	
 	
 
 	Connection connection;
 	Statement statement;
 	PreparedStatement preparedStatement;
-	public CommentClassDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		super(myConnection);
+	private CallableStatement callablestatement;
+	public CommentDAO() {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connection = connectionToDB.getConnection();
 	}
 
-	public void addComment(CommentClass comment) {
-		int UserID = getUserID(comment.getUser());
-		int PostID = getPostID(comment.getPost());
-		String insertNewComment = "INSERT INTO progettobd_unina_social_network.RICEVE_COMMENTO VALUES ("
+	public void addComment(Comment comment) {
+		String UserID = (comment.getUser().getUserName());
+		int PostID = (comment.getPost().getIdPost());
+		String insertNewComment = "INSERT INTO progettobd_unina_social_network.COMMENTO VALUES ("
 				 + "\'DEFAULT\'"
 				 +"\""+PostID+"\""+","
 				 +"\""+UserID+"\""+","
 				 +"\'"+comment.getText()+"\'"+","
-				 +"\'"+comment.getCommentDate()+"\'"+","
-				 +"\'"+comment.getCommentAuthor()+"\'"+")";
+				 +"\'"+comment.getCommentDate()+"\'"+","+")";
+				 
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(insertNewComment);
 			statement.close();
-			comment.setCommentNumber(getCommentID(comment));
+			comment.setCommentID(getCommentID(comment));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	
 	}
-	public void deleteComment(CommentClass comment) {
+	public void deleteComment(Comment comment) {
 		int commentID = getCommentID(comment);
-		String deleteComment = "DELETE  FROM progettobd_unina_social_network.RICEVE_COMMENTO where idcommento = ?";
+		String deleteComment = "DELETE  FROM progettobd_unina_social_network.COMMENTO where idcommento = ?";
 		try {
 			preparedStatement = connection.prepareStatement(deleteComment);
 			preparedStatement.setInt(1,commentID);
@@ -53,10 +57,10 @@ public class CommentClassDAO extends getIdDAO{
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<User> CommentedPostUsers(CommentClass comment){
-		int PostID = getPostID(comment.getPost());
+	public ArrayList<User> CommentedPostUsers(Comment comment){
+		int PostID = (comment.getPost().getIdPost());
 		String getUserQuery = "SELECT DISTINCT from progettobd_unina_social_network.UTENTE where idUtente in (SELECT idUtente from "
-				+ "progettobd_unina_social_network.RICEVE_COMMENTO where idPost = ?)";
+				+ "progettobd_unina_social_network.COMMENTO where idPost = ?)";
 		
 		try {
 			preparedStatement = connection.prepareStatement(getUserQuery);
@@ -86,6 +90,24 @@ public class CommentClassDAO extends getIdDAO{
 		return null;
 		
 	}
+	private int getCommentID(Comment comment) {
+		int commentID;
+		try {
+			callablestatement = connection.prepareCall("{? = call getcommentid(?,?)}");
+			callablestatement.registerOutParameter(1, Types.INTEGER);
+			callablestatement.setInt(2, comment.getPost().getIdPost());
+			callablestatement.setString(3, comment.getUser().getUserName());
+			callablestatement.execute();
+			commentID = callablestatement.getInt(1);
+			callablestatement.close();
+			return commentID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+			
+	}
+
 	
 	
 

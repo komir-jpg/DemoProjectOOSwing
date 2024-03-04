@@ -20,9 +20,9 @@ public class FriendDAO extends getIdDAO{
 		connection = myConnection;
 	}
 	
-	public void addFriend(Friend friend) {
-		int userIDFriend1 = getUserID(friend.getFriend1());
-		int userIDFriend2 = getUserID(friend.getFriend2());
+	public void addFriend(Friend user,User friend) {
+		int userIDFriend1 = getUserID(user.getUser());
+		String userIDFriend2 = (friend.getUserName());
 		
 		String insertNewFriends = "INSERT INTO progettobd_unina_social_network.AMICIZIA values ("
 								  +"\""+userIDFriend1+"\""+","
@@ -36,6 +36,7 @@ public class FriendDAO extends getIdDAO{
 		}
 		
 	}
+	/*
 	public void deleteFriend(Friend friend) {
 		int userIDFriend1 = getUserID(friend.getFriend1());
 		int userIDFriend2 = getUserID(friend.getFriend2());
@@ -52,6 +53,7 @@ public class FriendDAO extends getIdDAO{
 		}
 		
 	}
+	*/
 	public ArrayList<User> getUserFriends(User user) {
 		int userID = getUserID(user);
 		String getUserFriends = "SELECT * FROM progettobd_unina_social_network.UTENTE "

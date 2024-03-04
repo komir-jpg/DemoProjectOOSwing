@@ -1,50 +1,79 @@
 package DemoUninaSN.OO_Project;
 
 import java.sql.Date;
-
-import javax.xml.crypto.Data;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Group {
-
 	private String groupName;
-	private Date creationDate;
+	private User admin;
 	private String description;
-	private int numberOfPatecipants;
-	
+	private int numberOfPartecipants;
+	private String dateOfCreation;
+	private String category;
+	private ArrayList<Post>groupPosts;
+	private ArrayList<User>groupUsers;
 	public Group() {
 		
 	}
-
+	public Group(String groupName, String description,String dateOfCreation,String category) {
+		super();
+		this.groupName = groupName;
+		this.description = description;
+		this.dateOfCreation = dateOfCreation;
+		this.category = category;
+	}
 	public String getGroupName() {
 		return groupName;
 	}
-
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-
-	public Date getCreationDate() {
-		return creationDate;
+	public User getUsernameAdmin() {
+		return admin;
 	}
-
-	public void setCreationDate(Date date) {
-		this.creationDate = date;
+	public void setUsernameAdmin(User admin) {
+		this.admin = admin;
 	}
-
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getCategory() {
+		return category;
+	}
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public int getNumberOfPatecipants() {
-		return numberOfPatecipants;
+	public int getNumberOfPartecipants() {
+		return numberOfPartecipants;
 	}
-
-	public void setNumberOfPatecipants(int numberOfPatecipants) {
-		this.numberOfPatecipants = numberOfPatecipants;
+	public void setNumberOfPartecipants(int numberOfPartecipants) {
+		this.numberOfPartecipants = numberOfPartecipants;
+	}
+	public String getDateOfCreation() {
+		return dateOfCreation;
+	}
+	public void setDateOfCreation(String dateOfCreation) {
+		this.dateOfCreation = dateOfCreation;
+	}
+	public ArrayList<Post> getGroupPosts() {
+		return groupPosts;
+	}
+	public void setGroupPosts(ArrayList<Post> groupPosts) {
+		this.groupPosts = groupPosts;
+	}
+	public ArrayList<User> getGroupUsers() {
+		return groupUsers;
+	}
+	public void setGroupUsers(ArrayList<User> groupUsers) {
+		this.groupUsers = groupUsers;
+	}
+	public void addNewPost() throws SQLException {
+		PostDAO postDAO = new PostDAO();
+		groupPosts.addAll(postDAO.getPostbyGroup(this));
 	}
 
 }

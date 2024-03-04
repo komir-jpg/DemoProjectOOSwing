@@ -2,16 +2,15 @@ package DemoUninaSN.OO_Project;
 
 import java.sql.Date;
 
-public class CommentClass {
+public class Comment {
 	private User user;
 	private Post post;
-	private int commentNumber;
+	private int commentID;
 	private Date commentDate;
-	private String commentAuthor;
 	private String text;
 	
 	
-	public CommentClass() {
+	public Comment() {
 		
 	}
 	
@@ -31,12 +30,12 @@ public class CommentClass {
 		this.post = post;
 	}
 
-	public int getCommentNumber() {
-		return commentNumber;
+	public int getCommentID() {
+		return commentID;
 	}
 
-	public void setCommentNumber(int commentNumber) {
-		this.commentNumber = commentNumber;
+	public void setCommentID(int commentID) {
+		this.commentID = commentID;
 	}
 
 	public Date getCommentDate() {
@@ -45,14 +44,6 @@ public class CommentClass {
 
 	public void setCommentDate(Date commentDate) {
 		this.commentDate = commentDate;
-	}
-
-	public String getCommentAuthor() {
-		return commentAuthor;
-	}
-
-	public void setCommentAuthor(String commentAuthor) {
-		this.commentAuthor = commentAuthor;
 	}
 
 	public String getText() {

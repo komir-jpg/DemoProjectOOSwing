@@ -39,7 +39,7 @@ public class getIdDAO {
 			int postID;
 			callablestatement = connection.prepareCall("{? = call getidpost(?)}");
 			callablestatement.registerOutParameter(1,Types.INTEGER);
-			callablestatement.setInt(2, post.getPostNumber());
+			callablestatement.setInt(2, post.getIdPost());
 			callablestatement.execute();
 			postID = callablestatement.getInt(1);
 			callablestatement.close();
@@ -102,7 +102,7 @@ public class getIdDAO {
 		return -1;
 			
 		}
-	public int getCommentID(CommentClass comment) {
+	public int getCommentID(Comment comment) {
 		int commentID;
 		try {
 			callablestatement = connection.prepareCall("{? = call getcommentid(?,?)}");

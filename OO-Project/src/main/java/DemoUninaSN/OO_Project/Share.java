@@ -1,11 +1,12 @@
 package DemoUninaSN.OO_Project;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Share {
 	
 	private Post postShared;
-	private Group groupSharedPost;
+	private ArrayList<Group> groupSharedPost;
 	private User userSharing;
 	private Date shareDate;
 	
@@ -20,11 +21,11 @@ public class Share {
 		this.postShared = postShared;
 	}
 
-	public Group getGroupSharedPost() {
+	public ArrayList<Group> getGroupSharedPost() {
 		return groupSharedPost;
 	}
 
-	public void setGroupSharedPost(Group groupSharedPost) {
+	public void setGroupSharedPost(ArrayList<Group> groupSharedPost) {
 		this.groupSharedPost = groupSharedPost;
 	}
 	

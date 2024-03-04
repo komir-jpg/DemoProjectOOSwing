@@ -1,19 +1,23 @@
 package DemoUninaSN.OO_Project;
 
 public class Request {
-	private String RequestState;
+	private int idRequest;
+	private String requestState;
 	private User user;
 	private Group group;
 
-	public Request() {
+	public Request(User user,Group group) {
+		this.user = user;
+		this.group = group;
+		requestState = "attesa";
 	}
 
 	public String getRequestState() {
-		return RequestState;
+		return requestState;
 	}
 
 	public void setRequestState(String requestState) {
-		RequestState = requestState;
+		this.requestState = requestState;
 	}
 
 	public User getUser() {
@@ -30,6 +34,14 @@ public class Request {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public int getIdRequest() {
+		return idRequest;
+	}
+
+	public void setIdRequest(int idRequest) {
+		this.idRequest = idRequest;
 	}
 	
 	

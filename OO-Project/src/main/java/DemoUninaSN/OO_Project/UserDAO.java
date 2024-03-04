@@ -24,32 +24,25 @@ public class UserDAO extends CurrentDate{
 	
 	
 	
-	public UserDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		connection = myConnection;
+	public UserDAO(){
+		ConnectionToDB connectionDB = new ConnectionToDB();
+		connection = connectionDB.getConnection();
 		CurrentDate = date();
 	}
-	public void SaveNewUser(User newUser) {
-		try {
-			//INSERT INTO UTENTE values ('1234','nome','cognome'...)
+	public void SaveNewUser(User newUser) throws SQLException {
 			statement = connection.createStatement();
-			String InsertNewUser = "INSERT INTO progettobd_unina_social_network.utente VALUES"+"("+
-									"DEFAULT"+","
-								    +"\'"+newUser.getName()+"\'"+","
+			String InsertNewUser = "INSERT INTO progettobd_unina_social_network.utente VALUES"+"("
+					 				+"\'"+newUser.getUserName()+"\'"+","
+					 				+"\'"+newUser.getName()+"\'"+","
 								    +"\'"+newUser.getSurname()+"\'"+","
 								    +"\'"+newUser.getSex()+"\'" + ","
 								    +"\'"+newUser.getEmail()+"\'"+","
-								    +"\'"+newUser.getUserName()+"\'"+","
 								    +"\'"+newUser.getPassword()+"\'"+","
 								    +"\'"+CurrentDate+"\'"+","
 								    +"\'null\'"
 								    +")";
 			statement.executeUpdate(InsertNewUser);
-			statement.clearBatch();
-			
-		}catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
-        }
+			statement.close();
 		
 	}
 	public ArrayList<User> getUserbyName(String name) {
@@ -86,8 +79,8 @@ public class UserDAO extends CurrentDate{
 		return null;
 	}
 	
-	public ArrayList<User> getUserList() {
-		try {
+	public ArrayList<User> getUserList() throws SQLException {
+	
 			
 			preparedStatement = connection.prepareStatement("SELECT *"
 															+ "	FROM progettobd_unina_social_network.utente");
@@ -111,14 +104,9 @@ public class UserDAO extends CurrentDate{
 			preparedStatement.clearBatch();
 			queryRS.close();
 			return userData;
-		}catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
-        }
-		return null;
 	}
-	public ArrayList<User> getUserbyUsername(String username) {
-		try {
+	public ArrayList<User> getUserbyUsername(String username) throws SQLException {
+			
 			
 			preparedStatement = connection.prepareStatement("SELECT *"
 															+ "	FROM progettobd_unina_social_network.utente "
@@ -144,11 +132,6 @@ public class UserDAO extends CurrentDate{
 			preparedStatement.clearBatch();
 			queryRS.close();
 			return userData;
-		}catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
-        }
-		return null;
 	}
 	
 	

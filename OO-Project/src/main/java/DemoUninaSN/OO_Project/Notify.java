@@ -1,21 +1,22 @@
 package DemoUninaSN.OO_Project;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Notify {
-	private User user;
+	private ArrayList<User> userNotified;
 	private Post post;
 	private Date notifyDate;
 	
 	public Notify() {
 	}
 
-	public User getUser() {
-		return user;
+	public ArrayList<User> getUserNotified() {
+		return userNotified;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserNotified(ArrayList<User> user) {
+		this.userNotified = user;
 	}
 
 	public Post getPost() {
