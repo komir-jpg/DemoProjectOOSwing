@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -45,8 +45,8 @@ public class UserDAO extends CurrentDate{
 			statement.close();
 		
 	}
-	public ArrayList<User> getUserbyName(String name) {
-		try {
+	public ArrayList<User> getUserbyName(String name) throws SQLException {
+		
 			
 			preparedStatement = connection.prepareStatement("SELECT *"
 															+ "	FROM progettobd_unina_social_network.utente "
@@ -72,12 +72,7 @@ public class UserDAO extends CurrentDate{
 			preparedStatement.clearBatch();
 			queryRS.close();
 			return userData;
-		}catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println( throwables.getClass().getName()+": "+ throwables.getMessage() );
-        }
-		return null;
-	}
+		}
 	
 	public ArrayList<User> getUserList() throws SQLException {
 	

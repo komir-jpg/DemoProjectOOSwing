@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -7,21 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class NotifyDAO extends getIdDAO {
+public class NotifyDAO {
 
 	Connection connection;
 	private PreparedStatement preparedStatement;
 	
-	public NotifyDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException{
-		super(myConnection);
+	public NotifyDAO() {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connection = connectionToDB.getConnection();
 	}
 	
-	public ArrayList<User> getUserNotified(Post post){
-		int postID = getPostID(post);
+	public ArrayList<User> getUserNotified(Post post) throws SQLException{
+		int postID = post.getIdPost();
 		String getNotifyQuery = "SELECT *  FROM progettobd_unina_social_network.INVIA_NOTIFICA as i"
 				+ "join progettobd_unina_social_network.UTENTE as u on u.idUtente = i.idUtente"
 				+ " where i.idPost = ?";
-		try {
+		
 			preparedStatement = connection.prepareStatement(getNotifyQuery);
 			preparedStatement.setInt(1, postID);
 			ResultSet queryRS = preparedStatement.executeQuery();
@@ -37,17 +38,10 @@ public class NotifyDAO extends getIdDAO {
 				user.setUserName(queryRS.getString("nomeutente"));
 				user.setUserType(queryRS.getString("tipoutente"));
 				queryResultUser.add(user);
+				}
 				queryRS.close();
 				preparedStatement.close();
 				return queryResultUser;
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-		
 	}
 
 }

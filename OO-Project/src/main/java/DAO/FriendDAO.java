@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,19 +9,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FriendDAO extends getIdDAO{
+public class FriendDAO {
 
 	Connection connection;
 	Statement statement;
 	PreparedStatement preparedStatement;
 	
-	public FriendDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		super(myConnection);
-		connection = myConnection;
+	public FriendDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connection = connectionToDB.getConnection();
+		
 	}
 	
 	public void addFriend(Friend user,User friend) {
-		int userIDFriend1 = getUserID(user.getUser());
+		String userIDFriend1 = user.getUser().getUserName();
 		String userIDFriend2 = (friend.getUserName());
 		
 		String insertNewFriends = "INSERT INTO progettobd_unina_social_network.AMICIZIA values ("
@@ -36,32 +37,29 @@ public class FriendDAO extends getIdDAO{
 		}
 		
 	}
-	/*
-	public void deleteFriend(Friend friend) {
-		int userIDFriend1 = getUserID(friend.getFriend1());
-		int userIDFriend2 = getUserID(friend.getFriend2());
+	
+	public void deleteFriend(User user,User friend) throws SQLException {
+		String userIDFriend1 = user.getUserName();
+		String userIDFriend2 = friend.getUserName();
 		String deleteFriends = "DELETE FROM progettobd_unina_social_network.AMICIZIA where idUtente1 = ? and idUtente2 = ?";
 		
-		try {
+	
 			preparedStatement = connection.prepareStatement(deleteFriends);
-			preparedStatement.setInt(1, userIDFriend1);
-			preparedStatement.setInt(2, userIDFriend2);
+			preparedStatement.setString(1, userIDFriend1);
+			preparedStatement.setString(2, userIDFriend2);
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
 	}
-	*/
-	public ArrayList<User> getUserFriends(User user) {
-		int userID = getUserID(user);
+	
+	public ArrayList<User> getUserFriends(User user) throws SQLException {
+		String userID = user.getUserName();
 		String getUserFriends = "SELECT * FROM progettobd_unina_social_network.UTENTE "
 								+ "WHERE idUtente IN (SELECT idUtente2 "
 													+"FROM progettobd_unina_social_network.AMICIZIA WHERE idUtente1 = ?)";
-		try {
+		
 			preparedStatement = connection.prepareStatement(getUserFriends);
-			preparedStatement.setInt(1, userID);
+			preparedStatement.setString(1, userID);
 			ResultSet queryRS = preparedStatement.executeQuery();
 			ArrayList<User> queryResultUser = new ArrayList<User>();
 			while(queryRS.next()) {
@@ -75,17 +73,11 @@ public class FriendDAO extends getIdDAO{
 				userResult.setUserName(queryRS.getString("nomeutente"));
 				userResult.setUserType(queryRS.getString("tipoutente"));
 				queryResultUser.add(userResult);
-				
-				
-				
 			}
 			queryRS.close();
 			preparedStatement.close();
 			return queryResultUser;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		
 	}
 	
 

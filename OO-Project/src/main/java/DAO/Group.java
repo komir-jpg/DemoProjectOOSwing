@@ -1,5 +1,6 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class Group {
 	public void setGroupUsers(ArrayList<User> groupUsers) {
 		this.groupUsers = groupUsers;
 	}
-	public void addNewPost() throws SQLException {
+	public void addNewPost() throws SQLException, ClassNotFoundException, IOException, RuntimeException {
 		PostDAO postDAO = new PostDAO();
 		groupPosts.addAll(postDAO.getPostbyGroup(this));
 	}

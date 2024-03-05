@@ -14,13 +14,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.*;
-import DemoUninaSN.OO_Project.Group;
-import DemoUninaSN.OO_Project.GroupDAO;
-import DemoUninaSN.OO_Project.Request;
-import DemoUninaSN.OO_Project.RequestDAO;
-import DemoUninaSN.OO_Project.Tag;
-import DemoUninaSN.OO_Project.TagDAO;
-import DemoUninaSN.OO_Project.User;
+import DAO.Group;
+import DAO.GroupDAO;
+import DAO.Request;
+import DAO.RequestDAO;
+import DAO.Tag;
+import DAO.TagDAO;
+import DAO.User;
 
 public class HomePageController {
 	HomePage homePageFrame;

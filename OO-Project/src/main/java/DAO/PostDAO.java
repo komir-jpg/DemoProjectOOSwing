@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.CallableStatement;
@@ -18,26 +18,21 @@ public class PostDAO{
 	private CallableStatement callablestatement;
 
 	
-	public PostDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		//super(myConnection);
-	}
-	public PostDAO() {
-		
+	public PostDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connection = connectionToDB.getConnection();
 	}
 	
 	
-	public void insertNewPostText(Post newPost,User user,Group group) {
-		try {
-			
-			
-			//int idUser = getUserID(user);
-			//int idGroup = getGroupID(group);
+	public void insertNewPostText(Post newPost,User user,Group group) throws SQLException {
+						
+			String idUser = user.getUserName();
+			String idGroup = group.getGroupName();
 			statement = connection.createStatement();
-			String insertNewPost = "INSERT INTO progettobd_unina_social_network.PUBBLICA VALUES"+"("+
-									
+			String insertNewPost = "INSERT INTO progettobd_unina_social_network.POST VALUES"+"("+
 									 "DEFAULT"+","+
-									// "\""+idUser+"\""+","
-									 "\'"+"1/1/12"+"\'"+","
+									 "\""+idUser+"\""+","
+									 +"\'"+"1/1/12"+"\'"+","
 									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
 									 +"\'"+newPost.getNumberOfComments()+"\'"+","
 									 +"\'"+newPost.getNumberOfShare()+"\'"+","
@@ -45,27 +40,18 @@ public class PostDAO{
 									 +newPost.getFotoFormat()+"," //valore null
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
 									 +"\'"+newPost.isEliminatedPost()+"\'"
-									 //"\""+idGroup+"\""+")";
-									 ;
+									 +"\""+idGroup+"\""+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
-		//newPost.setIdPost(getPostID(idUser));
-		
-					
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
-	public void insertNewPostFoto(Post newPost,User user,Group group ) {
-		try {
-			//int idUser = getUserID(user);
-			//int idGroup = getGroupID(group);
+	public void insertNewPostFoto(Post newPost,User user,Group group ) throws SQLException {
+		
+			String idUser = user.getUserName();
+			String idGroup = group.getGroupName();
 			statement = connection.createStatement();
-			String insertNewPost = "INSERT INTO progettobd_unina_social_network.PUBBLICA VALUES"+"("+
-									
-									
+			String insertNewPost = "INSERT INTO progettobd_unina_social_network.POST VALUES"+"("+
 									 "DEFAULT"+","
-									// +"\""+idUser+"\""+","
+									 +"\""+idUser+"\""+","
 									 +"\'"+"1/1/12"+"\'"+","
 									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
 									 +"\'"+newPost.getNumberOfComments()+"\'"+","
@@ -73,38 +59,30 @@ public class PostDAO{
 									 +newPost.getContent()+"," //valore null
 									 +"\'"+newPost.getFotoFormat()+"\'"+","
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isEliminatedPost()+"\'";
-									// "\""+idGroup+"\""+")";
+									 +"\'"+newPost.isEliminatedPost()+"\'"+","
+									 +"\""+idGroup+"\""+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
-		//newPost.setIdPost(idUser);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		 
 	 }
-	public void setDeletedPost(Post post,Group group) {
+	public void setDeletedPost(Post post,Group group) throws SQLException {
 		 //update sulla tabella dove per quell'id post setto post eliminato a true
 		 //questo fa scattare il trigger
-		 try {
+		 
 			preparedStatement = connection.prepareStatement("UPDATE pubblica set posteliminato = true where idPost = ? and idGruppo = ?");
 		//	preparedStatement.setInt(1, getPostID(post));
 		//	preparedStatement.setInt(2, getGroupID(group));
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 		
 	}
-	public ArrayList<Post> getPostbyUser(User user){
-		try {
-		//	int UserID = getUserID(user);
+	public ArrayList<Post> getPostbyUser(User user) throws SQLException{
+			String UserID = user.getUserName();
 			preparedStatement = connection.prepareStatement("SELECT *"+
 															"FROM progettobd_unina_social_network.post as po join "
 															+ "progettobd_unina_social_network.pubblica as pu"+
 															"WHERE pu.autorepost = ?");
-		//	preparedStatement.setInt(1, UserID);
+			preparedStatement.setString(1, UserID);
 			ResultSet queryRS = preparedStatement.executeQuery();
 			
 			ArrayList<Post> postData = new ArrayList<Post>();
@@ -118,22 +96,17 @@ public class PostDAO{
 				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
 				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
 				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
-				//postQueryResult.setUsername(queryRS.getString("autorepost"));//creare un metodo che prende dall'id l'autore del post
+				postQueryResult.setAuthor(user);//creare un metodo che prende dall'id l'autore del post
+				//postQueryResult.setGroup(null);
 				postData.add(postQueryResult);
 			}
 			queryRS.close();
 			preparedStatement.close();
 			return postData;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	public ArrayList<Post> getPostbyGroup(Group group) throws SQLException{
 			
-			ConnectionToDB connectionDB = new ConnectionToDB();
-			connection = connectionDB.getConnection();
 			preparedStatement = connection.prepareStatement("SELECT *"+
 															"FROM progettobd_unina_social_network.post as po join "
 															+ "progettobd_unina_social_network.pubblica as pu"+

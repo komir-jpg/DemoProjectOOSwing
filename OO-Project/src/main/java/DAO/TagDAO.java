@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,31 +8,28 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TagDAO extends getIdDAO{
+public class TagDAO{
 	Connection connection;
 	Statement statement;
 	PreparedStatement preparedStatement;
 	
 	
-	public TagDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		super(myConnection);
-		connection = myConnection;
+	public TagDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connectionToDB.getConnection();
 	}
 	
-	public void insertNewTag(Tag tag) {
+	public void insertNewTag(Tag tag) throws SQLException {
 		String insertNewTag = "INSERT INTO progettobd_unina_social_network.TAG VALUES ("
 							  +"\'"+tag.getCategory()+"\'"+")";
-		try {
+		
 			statement = connection.createStatement();
 			statement.executeUpdate(insertNewTag);
 			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
-	public ArrayList<Tag> getTag(){
+	public ArrayList<Tag> getTag() throws SQLException{
 		String getTag = "SELECT * FROM progettobd_unina_social_network.TAG";
-		try {
+		
 			preparedStatement = connection.prepareStatement(getTag);
 			ResultSet queryRS = preparedStatement.executeQuery();
 			ArrayList<Tag> queryResultTag = new ArrayList<Tag>();
@@ -45,14 +42,11 @@ public class TagDAO extends getIdDAO{
 			queryRS.close();
 			preparedStatement.close();
 			return queryResultTag;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
-	public Tag getSingleTag(String tag) {
+	
+	public Tag getSingleTag(String tag) throws SQLException {
 		String getTag = ("SELECT * from progettobd_unina_social_network.TAG where categoria = ?");
-		try {
+		
 			preparedStatement = connection.prepareStatement(getTag);
 			preparedStatement.setString(1, tag);
 			ResultSet queryRS = preparedStatement.executeQuery();
@@ -63,11 +57,26 @@ public class TagDAO extends getIdDAO{
 			queryRS.close();
 			preparedStatement.close();
 			return queryResultTag;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	}
+	public ArrayList<Group> getGroupByTag(Tag tag) throws SQLException/*string idTag*/{
+		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where categoria = ?");
+		
+			preparedStatement = connection.prepareStatement(getGroupByTagQuery);
+			preparedStatement.setString(1,tag.getCategory());
+			ResultSet queryRS = preparedStatement.executeQuery();
+			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
+			while(queryRS.next()) {
+				Group groupResult = new Group();
+				groupResult.setCategory(queryRS.getString("categoria"));
+				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDescription(queryRS.getString("descrizione"));
+				groupResult.setGroupName(queryRS.getString("nomegruppo"));
+				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
+				queryResultGroup.add(groupResult);
+			}
+			queryRS.close();
+			preparedStatement.close();
+			return queryResultGroup;
 	}
 	
 	

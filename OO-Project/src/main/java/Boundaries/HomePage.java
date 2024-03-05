@@ -1,5 +1,4 @@
 package Boundaries;
-import DemoUninaSN.OO_Project.*;
 import ExceptionPackage.DBconnectionError;
 import ExceptionPackage.InvalidInsertion;
 
@@ -57,6 +56,7 @@ import com.sanctionco.jmail.net.InvalidAddressException;
 
 import Controllers.HomePageController;
 import Controllers.LoginController;
+import DAO.*;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.SwingConstants;

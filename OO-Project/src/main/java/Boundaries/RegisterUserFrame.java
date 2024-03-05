@@ -1,6 +1,4 @@
 package Boundaries;
-import DemoUninaSN.OO_Project.*;
-
 import ExceptionPackage.*;
 
 import java.awt.Dimension;
@@ -41,6 +39,7 @@ import com.sanctionco.jmail.InvalidEmailException;
 import com.sanctionco.jmail.JMail;
 
 import Controllers.RegisterUserController;
+import DAO.*;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

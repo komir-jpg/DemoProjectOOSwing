@@ -20,8 +20,7 @@ import Boundaries.HomePage;
 import Boundaries.Login;
 import Boundaries.RegisterUserFrame;
 import Boundaries.SearchTag;
-
-import DemoUninaSN.OO_Project.*;
+import DAO.*;
 import ExceptionPackage.DBconnectionError;
 
 public class LoginController {

@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import Boundaries.HomePage;
 import Boundaries.Login;
 import Boundaries.RegisterUserFrame;
-import DemoUninaSN.OO_Project.User;
-import DemoUninaSN.OO_Project.UserDAO;
+import DAO.User;
+import DAO.UserDAO;
 
 public class RegisterUserController {
 

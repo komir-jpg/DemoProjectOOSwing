@@ -1,5 +1,4 @@
 package Boundaries;
-import DemoUninaSN.OO_Project.*;
 import ExceptionPackage.*;
 
 import java.awt.EventQueue;
@@ -37,6 +36,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
 
 import Controllers.LoginController;
+import DAO.*;
 
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;

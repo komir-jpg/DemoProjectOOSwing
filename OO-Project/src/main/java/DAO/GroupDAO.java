@@ -1,4 +1,4 @@
-package DemoUninaSN.OO_Project;
+package DAO;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,22 +8,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class GroupDAO extends getIdDAO{
+public class GroupDAO {
 
 	private Connection connection;
 	private Statement statement;
 	private PreparedStatement preparedstatement;
 	
-	public GroupDAO(Connection myConnection) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		super(myConnection);
-		connection = myConnection;
+	public GroupDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+		ConnectionToDB connectionToDB = new ConnectionToDB();
+		connection = connectionToDB.getConnection();
 	}
-	public void createNewGroup(Group createGroup,User userAdmin) {
-		int userID = getUserID(userAdmin);
-		try {
+	public void createNewGroup(Group createGroup,User userAdmin) throws SQLException {
+		String userID = userAdmin.getUserName();
+		
 			statement = connection.createStatement();
 			String insertNewGroup = ("INSERT INTO progettobd_unina_social_network.gruppo VALUES"+"("+
-									"DEFAULT"+","+
 									"\'"+userID+"\'"+","
 									 +"\'"+createGroup.getGroupName()+"\'"+","
 									 +"\'"+createGroup.getDateOfCreation()+"\'"+","
@@ -33,31 +32,23 @@ public class GroupDAO extends getIdDAO{
 									 ")");
 			statement.executeUpdate(insertNewGroup);
 			statement.close();
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}	
 	}
-	public void deleteGroup(Group group)/*string group name*/ {
-		int groupID = getGroupID(group);
+	public void deleteGroup(Group group) throws SQLException/*string group name*/ {
+		String groupID = group.getGroupName();
 		String deleteGroup = ("DELETE from progettobd_unina_social_network.gruppo WHERE idgruppo = ?");
-		try {
 			preparedstatement = connection.prepareStatement(deleteGroup);
-			preparedstatement.setInt(1, groupID);
+			preparedstatement.setString(1, groupID);
 			preparedstatement.executeUpdate();
 			preparedstatement.close();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
-	public ArrayList<Group> getAdminGroups(User userAdmin)/*String nomeUtente*/{
-		int userID = getUserID(userAdmin);
+	public ArrayList<Group> getAdminGroups(User userAdmin) throws SQLException/*String nomeUtente*/{
+		String userID = userAdmin.getUserName();
 		
 		String getGroupQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where idadmin = ?");
-		try {
+		
 			preparedstatement = connection.prepareStatement(getGroupQuery);
-			preparedstatement.setInt(1, userID);
+			preparedstatement.setString(1, userID);
 			ResultSet queryRS = preparedstatement.executeQuery();
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {
@@ -66,46 +57,16 @@ public class GroupDAO extends getIdDAO{
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				queryResultGroup.add(groupResult);
-				
-				
+				queryResultGroup.add(groupResult);	
 			}
 			queryRS.close();
 			preparedstatement.close();
 			return queryResultGroup;
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return null;
 		
 	}
-	public ArrayList<Group> getGroupByTag(Tag tag)/*string idTag*/{
-		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where categoria = ?");
-		try {
-			preparedstatement = connection.prepareStatement(getGroupByTagQuery);
-			preparedstatement.setString(1,tag.getCategory());
-			ResultSet queryRS = preparedstatement.executeQuery();
-			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
-			while(queryRS.next()) {
-				Group groupResult = new Group();
-				groupResult.setCategory(queryRS.getString("categoria"));
-				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
-				groupResult.setDescription(queryRS.getString("descrizione"));
-				groupResult.setGroupName(queryRS.getString("nomegruppo"));
-				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				queryResultGroup.add(groupResult);
-			}
-			queryRS.close();
-			preparedstatement.close();
-			return queryResultGroup;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;	
-	}
-	public Group GetGroupByName(String groupName){
-		try {
+	
+	public Group GetGroupByName(String groupName) throws SQLException{
+		
 			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.GRUPPO WHERE nomegruppo LIKE ?");
 			preparedstatement.setString(1,groupName);
 			ResultSet queryRS = preparedstatement.executeQuery();
@@ -121,11 +82,6 @@ public class GroupDAO extends getIdDAO{
 			return groupResult;
 			
 			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 }
