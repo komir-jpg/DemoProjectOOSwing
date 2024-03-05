@@ -18,7 +18,7 @@ public class PostDAO{
 	private CallableStatement callablestatement;
 
 	
-	public PostDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public PostDAO(){
 		ConnectionToDB connectionToDB = new ConnectionToDB();
 		connection = connectionToDB.getConnection();
 	}

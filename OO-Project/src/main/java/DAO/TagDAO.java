@@ -14,9 +14,9 @@ public class TagDAO{
 	PreparedStatement preparedStatement;
 	
 	
-	public TagDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public TagDAO() {
 		ConnectionToDB connectionToDB = new ConnectionToDB();
-		connectionToDB.getConnection();
+		connection = connectionToDB.getConnection();
 	}
 	
 	public void insertNewTag(Tag tag) throws SQLException {

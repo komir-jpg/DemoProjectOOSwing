@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.postgresql.util.PSQLException;
 
-import Controllers.LoginController;
+import Controllers.*;
 import ExceptionPackage.DBconnectionError;
 
 import java.awt.Dialog.ModalityType;
@@ -39,7 +39,7 @@ public class SearchTag extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton partecipaButton;
-	private LoginController controller;
+	private HomePageController controller;
 	private JButton cancelButton;
 	private JComboBox<String> tagComboBox;
 	private JList<String> resultGroupList;
@@ -49,7 +49,7 @@ public class SearchTag extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SearchTag(LoginController myController) {
+	public SearchTag(HomePageController myController) {
 		controller = myController;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 271);

@@ -72,7 +72,7 @@ public class Group {
 	public void setGroupUsers(ArrayList<User> groupUsers) {
 		this.groupUsers = groupUsers;
 	}
-	public void addNewPost() throws SQLException, ClassNotFoundException, IOException, RuntimeException {
+	public void setPost() throws SQLException{
 		PostDAO postDAO = new PostDAO();
 		groupPosts.addAll(postDAO.getPostbyGroup(this));
 	}

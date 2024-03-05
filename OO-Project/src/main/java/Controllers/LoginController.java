@@ -51,14 +51,14 @@ public class LoginController {
 		loginFrame.setVisible(true);
 		
 	}
-	public void setCreateGroupDialog() {
-		createGroupDialog = new CreateGroupDialog(this);
-		SetFramePosition(createGroupDialog, GetFramePosition(homePageFrame));
-		createGroupDialog.setVisible(true);
-	}
+//	public void setCreateGroupDialog() {
+//		createGroupDialog = new CreateGroupDialog(this);
+//		SetFramePosition(createGroupDialog, GetFramePosition(homePageFrame));
+//		createGroupDialog.setVisible(true);
+//	}
 	
 	public void setHomePageFrame(JFrame frame) {
-		homePageController = new HomePageController(frame);
+		homePageController = new HomePageController(frame,LogInUser);
 		
 		
 	}
@@ -78,22 +78,22 @@ public class LoginController {
 		loginFrame.setVisible(true);
 		frame.dispose();
 	}
-	public void setSearchTagDialog() {
-		searchTagDialog = new SearchTag(this);
-		SetFramePosition(searchTagDialog, GetFramePosition(homePageFrame));
-		searchTagDialog.setVisible(true);
-	}
+//	public void setSearchTagDialog() {
+//		searchTagDialog = new SearchTag(this);
+//		SetFramePosition(searchTagDialog, GetFramePosition(homePageFrame));
+//		searchTagDialog.setVisible(true);
+//	}
 	
-	public void getDBConnection() throws DBconnectionError{
-		try {
-			ConnectionToDB connection = new ConnectionToDB();
-			this.connection = connection.getConnection();
-			}catch( RuntimeException exc) {
-				exc.printStackTrace();
-				throw new DBconnectionError();
-			}
-		
-	}
+//	public void getDBConnection() throws DBconnectionError{
+//		try {
+//			ConnectionToDB connection = new ConnectionToDB();
+//			this.connection = connection.getConnection();
+//			}catch( RuntimeException exc) {
+//				exc.printStackTrace();
+//				throw new DBconnectionError();
+//			}
+//		
+//	}
 	
 	private Point GetFramePosition(JFrame frame) {
 		Point point;
@@ -156,94 +156,94 @@ public class LoginController {
 		return false;
 	}
 	
-	public void NewGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group newGroup = new Group(groupName,Description,date(),Category);
-		GroupDAO createGroupDao = new GroupDAO(connection);
-		createGroupDao.createNewGroup(newGroup, LogInUser);
-	}
-
-	private String date() {
-		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar calendar = Calendar.getInstance();
-		return dateformat.format(calendar.getTime());
-	}
-	public ArrayList<String> setUserAdminGroup() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		GroupDAO createGroupDAO = new GroupDAO(connection);
-		ArrayList<Group> groupResult = new ArrayList<Group>();
-		ArrayList<String> GroupName = new ArrayList<String>();
-		
-		groupResult = createGroupDAO.getAdminGroups(LogInUser);
-		Iterator<Group> AdminGroupIterator = groupResult.iterator();
-		
-		while(AdminGroupIterator.hasNext()) {
-			GroupName.add(AdminGroupIterator.next().getGroupName());
-		}
-		return  GroupName;
-		
-	}
-	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		TagDAO tagDAO = new TagDAO(connection);
-		Tag tag = new Tag();
-		tag.setCategory(categoria);
-		tagDAO.insertNewTag(tag);
-	}
-	public ArrayList<String> setCategory() throws ClassNotFoundException, SQLException, IOException, RuntimeException{
-		TagDAO tagDAO = new TagDAO(connection);
-		ArrayList<Tag> tagList = tagDAO.getTag();
-		ArrayList<String> tagListString = new ArrayList<String>();
-		Iterator<Tag> tagIterator = tagList.iterator();
-		
-		while(tagIterator.hasNext()) {
-			tagListString.add(tagIterator.next().getCategory());
-		}
-		return tagListString;
-	}
-	public void deleteGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		GroupDAO groupDAO = new GroupDAO(connection);
-		GroupDAO createGroupDAO = new GroupDAO(connection);
-		Group SelectedGroup = groupDAO.GetGroupByName(groupName);
-		createGroupDAO.deleteGroup(SelectedGroup);
-		
-	}
-	
-	public boolean checkGroupName(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group group = getGroup(groupName);
-		if(group.getGroupName() != null)
-			return true;
-		return false;
-	}
-	
-	private Group getGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		GroupDAO groupDAO = new GroupDAO(connection);
-		Group group = new Group();
-		group = groupDAO.GetGroupByName(groupName);
-		return group;
-	}
-	
-	public void newRequest(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group group = getGroup(groupName);
-		Request request = new Request(LogInUser,group);
-		RequestDAO requestDAO = new RequestDAO(connection);
-		requestDAO.insertNewRequest(request);
-	}
-	private ArrayList<Group> getGroupFromTag(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{ 
-		TagDAO tagDAO = new TagDAO(connection);
-		Tag tag = new Tag();
-		GroupDAO createGroupDAO = new GroupDAO(connection);
-		tag = tagDAO.getSingleTag(selectedTag);
-		return createGroupDAO.getGroupByTag(tag);
-	}
-	public ArrayList<String> showGroup(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{
-		ArrayList<String> tagList = new ArrayList<>();
-		ArrayList<Group> group = new ArrayList<Group>();
-		group = getGroupFromTag(selectedTag);
-		Iterator<Group> groupIterator = group.iterator();
-		while(groupIterator.hasNext()) {
-			tagList.add(groupIterator.next().getGroupName());
-		}
-		return tagList;
-	}
-	public boolean checkUser(String username) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//	public void NewGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		Group newGroup = new Group(groupName,Description,date(),Category);
+//		GroupDAO createGroupDao = new GroupDAO();
+//		createGroupDao.createNewGroup(newGroup, LogInUser);
+//	}
+//
+//	private String date() {
+//		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//		Calendar calendar = Calendar.getInstance();
+//		return dateformat.format(calendar.getTime());
+//	}
+//	public ArrayList<String> setUserAdminGroup() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		GroupDAO createGroupDAO = new GroupDAO();
+//		ArrayList<Group> groupResult = new ArrayList<Group>();
+//		ArrayList<String> GroupName = new ArrayList<String>();
+//		
+//		groupResult = createGroupDAO.getAdminGroups(LogInUser);
+//		Iterator<Group> AdminGroupIterator = groupResult.iterator();
+//		
+//		while(AdminGroupIterator.hasNext()) {
+//			GroupName.add(AdminGroupIterator.next().getGroupName());
+//		}
+//		return  GroupName;
+//		
+//	}
+//	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		TagDAO tagDAO = new TagDAO();
+//		Tag tag = new Tag();
+//		tag.setCategory(categoria);
+//		tagDAO.insertNewTag(tag);
+//	}
+//	public ArrayList<String> setCategory() throws ClassNotFoundException, SQLException, IOException, RuntimeException{
+//		TagDAO tagDAO = new TagDAO();
+//		ArrayList<Tag> tagList = tagDAO.getTag();
+//		ArrayList<String> tagListString = new ArrayList<String>();
+//		Iterator<Tag> tagIterator = tagList.iterator();
+//		
+//		while(tagIterator.hasNext()) {
+//			tagListString.add(tagIterator.next().getCategory());
+//		}
+//		return tagListString;
+//	}
+//	public void deleteGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		GroupDAO groupDAO = new GroupDAO();
+//		GroupDAO createGroupDAO = new GroupDAO();
+//		Group SelectedGroup = groupDAO.GetGroupByName(groupName);
+//		createGroupDAO.deleteGroup(SelectedGroup);
+//		
+//	}
+//	
+//	public boolean checkGroupName(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		Group group = getGroup(groupName);
+//		if(group.getGroupName() != null)
+//			return true;
+//		return false;
+//	}
+//	
+//	private Group getGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		GroupDAO groupDAO = new GroupDAO();
+//		Group group = new Group();
+//		group = groupDAO.GetGroupByName(groupName);
+//		return group;
+//	}
+//	
+//	public void newRequest(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		Group group = getGroup(groupName);
+//		Request request = new Request(LogInUser,group);
+//		RequestDAO requestDAO = new RequestDAO();
+//		requestDAO.insertNewRequest(request);
+//	}
+//	private ArrayList<Group> getGroupFromTag(String selectedTag) throws  SQLException{ 
+//		TagDAO tagDAO = new TagDAO();
+//		Tag tag = new Tag();
+//		tag = tagDAO.getSingleTag(selectedTag);
+//		return tagDAO.getGroupByTag(tag);
+//		
+//	}
+//	public ArrayList<String> showGroup(String selectedTag) throws SQLException{
+//		ArrayList<String> tagList = new ArrayList<>();
+//		ArrayList<Group> group = new ArrayList<Group>();
+//		group = getGroupFromTag(selectedTag);
+//		Iterator<Group> groupIterator = group.iterator();
+//		while(groupIterator.hasNext()) {
+//			tagList.add(groupIterator.next().getGroupName());
+//		}
+//		return tagList;
+//	}
+	public boolean checkUser(String username) throws SQLException{
 		ArrayList<User> userList = new ArrayList<User>();
 		userList = GetUser();
 		Iterator <User>UserIterator = userList.iterator();

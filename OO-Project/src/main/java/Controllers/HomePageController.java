@@ -14,19 +14,18 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.*;
-import DAO.Group;
-import DAO.GroupDAO;
-import DAO.Request;
-import DAO.RequestDAO;
-import DAO.Tag;
-import DAO.TagDAO;
-import DAO.User;
+import DAO.*;
 
 public class HomePageController {
 	HomePage homePageFrame;
 	User loginUser;
-	public HomePageController(JFrame previousFrame) {
+	CreateGroupDialog createGroupDialog;
+	SearchTag searchTagDialog;
+	
+	
+	public HomePageController(JFrame previousFrame,User loginUser) {
 		homePageFrame = new HomePage(this);
+		this.loginUser = loginUser; 
 		setHomePageFrame(previousFrame);
 	}
 	public void setHomePageFrame(JFrame previousFrame) {
@@ -41,6 +40,11 @@ public class HomePageController {
 		dialog.dispose();
 		homePageFrame.setVisible(true);
 	}
+	public void setCreateGroupDialog() {
+		createGroupDialog = new CreateGroupDialog(this);
+		SetFramePosition(createGroupDialog, GetFramePosition(homePageFrame));
+		createGroupDialog.setVisible(true);
+	}
 
 	private Point GetFramePosition(JFrame frame) {
 		Point point;
@@ -50,6 +54,9 @@ public class HomePageController {
 	private void SetFramePosition(JFrame frame,Point point) {
 		frame.setLocation(point);
 	}
+	private void SetFramePosition(JDialog dialog,Point point) {
+		dialog.setLocation(point);
+	}
 	
 	private Dimension GetFrameSize(JFrame frame) {
 		Dimension dimension;
@@ -58,6 +65,18 @@ public class HomePageController {
 	}
 	private void SetFrameSize(JFrame frame,Dimension dimension) {
 		frame.setSize(dimension);
+	}
+	public void setSearchTagDialog() {
+		searchTagDialog = new SearchTag(this);
+		SetFramePosition(searchTagDialog, GetFramePosition(homePageFrame));
+		searchTagDialog.setVisible(true);
+	}
+	
+	private ArrayList<User> GetUser() throws SQLException{
+		UserDAO userDao = new UserDAO();
+		ArrayList<User> userResult= new ArrayList<User>();
+		userResult = userDao.getUserList();
+		return userResult;
 	}
 	
 	public void NewGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
@@ -133,9 +152,8 @@ public class HomePageController {
 	private ArrayList<Group> getGroupFromTag(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{ 
 		TagDAO tagDAO = new TagDAO();
 		Tag tag = new Tag();
-		GroupDAO createGroupDAO = new GroupDAO();
-		tag = tagDAO.getSingleTag(selectedTag);
-		return createGroupDAO.getGroupByTag(tag);
+		return tagDAO.getGroupByTag(tag);
+		
 	}
 	public ArrayList<String> showGroup(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{
 		ArrayList<String> tagList = new ArrayList<>();
@@ -158,4 +176,5 @@ public class HomePageController {
 		return false;
 	
 	}
+	
 }

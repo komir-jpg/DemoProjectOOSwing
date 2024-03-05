@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controllers.LoginController;
+import Controllers.*;
 import ExceptionPackage.DBconnectionError;
 
 import javax.swing.DefaultComboBoxModel;
@@ -35,7 +35,7 @@ public class CreateGroupDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private LoginController controller;
+	private HomePageController controller;
 	private JTextField groupNameTextField;
 	private JTextArea descriptionTextArea;
 	private JComboBox<String> TagComboBox;
@@ -48,7 +48,7 @@ public class CreateGroupDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CreateGroupDialog(LoginController myController) {
+	public CreateGroupDialog(HomePageController myController) {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = myController;

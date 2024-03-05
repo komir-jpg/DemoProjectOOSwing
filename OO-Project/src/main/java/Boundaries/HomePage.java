@@ -326,6 +326,7 @@ public class HomePage extends JFrame {
 		textField.setColumns(10);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		lblStateLabel = new JLabel("stato:");
@@ -339,14 +340,14 @@ public class HomePage extends JFrame {
 		
 		lblLikeLabel = new JLabel("mi piace");
 		lblLikeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLikeLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
+		lblLikeLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		lblCommentLabel = new JLabel("commenta");
-		lblCommentLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
+		lblCommentLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		lblShareLabel = new JLabel("condividi");
 		lblShareLabel.setToolTipText("");
-		lblShareLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
+		lblShareLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -359,7 +360,7 @@ public class HomePage extends JFrame {
 							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 							.addGap(55)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -396,9 +397,9 @@ public class HomePage extends JFrame {
 								.addComponent(lblCommentLabel)
 								.addComponent(lblShareLabel))
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
-								.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldMessage, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
 					.addContainerGap())
 		);
