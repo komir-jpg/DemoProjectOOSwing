@@ -1,20 +1,22 @@
 package DAO;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Post {
 	private int idPost;
 	private Date dataPost;
-	private int numberOfLikes;
-	private int numberOfComments;
-	private int numberOfShare;
+//	private int numberOfLikes;
+//	private int numberOfComments;
+//	private int numberOfShare;
 	private String content;
 	private String fotoFormat;
 	private String typeOfPost;
 	private boolean eliminatedPost;
 	private Group group;
 	private User author; 
-	
+	private ArrayList<Like>postLikes;
+	private ArrayList<Comment>postComments;
 	
 
 	public Post() {
@@ -48,39 +50,39 @@ public class Post {
 
 
 
-	public int getNumberOfLikes() {
-		return numberOfLikes;
-	}
-
-
-
-	public void setNumberOfLikes(int numberOfLikes) {
-		this.numberOfLikes = numberOfLikes;
-	}
-
-
-
-	public int getNumberOfComments() {
-		return numberOfComments;
-	}
-
-
-
-	public void setNumberOfComments(int numberOfComments) {
-		this.numberOfComments = numberOfComments;
-	}
-
-
-
-	public int getNumberOfShare() {
-		return numberOfShare;
-	}
-
-
-
-	public void setNumberOfShare(int numberOfShare) {
-		this.numberOfShare = numberOfShare;
-	}
+//	public int getNumberOfLikes() {
+//		return numberOfLikes;
+//	}
+//
+//
+//
+//	public void setNumberOfLikes(int numberOfLikes) {
+//		this.numberOfLikes = numberOfLikes;
+//	}
+//
+//
+//
+//	public int getNumberOfComments() {
+//		return numberOfComments;
+//	}
+//
+//
+//
+//	public void setNumberOfComments(int numberOfComments) {
+//		this.numberOfComments = numberOfComments;
+//	}
+//
+//
+//
+//	public int getNumberOfShare() {
+//		return numberOfShare;
+//	}
+//
+//
+//
+//	public void setNumberOfShare(int numberOfShare) {
+//		this.numberOfShare = numberOfShare;
+//	}
 
 
 
@@ -153,6 +155,19 @@ public class Post {
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-
 	
+	public void addPostLike(Like like) {
+		postLikes.add(like);
+	}
+	public void addPostComment(Comment comment) {
+		postComments.add(comment);
+	}
+	public void removePostLike(Like like) {
+		postLikes.remove(like);
+	}
+	public void removePostComment(Comment comment) {
+		postComments.remove(comment);
+	}
+
 }
+

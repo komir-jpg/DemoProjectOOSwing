@@ -80,9 +80,10 @@ public class HomePageController {
 	}
 	
 	public void NewGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group newGroup = new Group(groupName,Description,date(),Category);
+		Group newGroup = new Group(groupName,Description,date());
 		GroupDAO createGroupDao = new GroupDAO();
 		createGroupDao.createNewGroup(newGroup, loginUser);
+		loginUser.addGroupAdmin(newGroup);
 	}
 
 	private String date() {
@@ -107,7 +108,7 @@ public class HomePageController {
 	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		TagDAO tagDAO = new TagDAO();
 		Tag tag = new Tag();
-		tag.setCategory(categoria);
+		tag.setTag(categoria);
 		tagDAO.insertNewTag(tag);
 	}
 	public ArrayList<String> setCategory() throws ClassNotFoundException, SQLException, IOException, RuntimeException{
@@ -117,7 +118,7 @@ public class HomePageController {
 		Iterator<Tag> tagIterator = tagList.iterator();
 		
 		while(tagIterator.hasNext()) {
-			tagListString.add(tagIterator.next().getCategory());
+			tagListString.add(tagIterator.next().getTag());
 		}
 		return tagListString;
 	}
@@ -140,6 +141,8 @@ public class HomePageController {
 		GroupDAO groupDAO = new GroupDAO();
 		Group group = new Group();
 		group = groupDAO.GetGroupByName(groupName);
+		group.setGroupPosts(new PostDAO().getPostbyGroup(group));
+		group.setGroupUsers(new);
 		return group;
 	}
 	

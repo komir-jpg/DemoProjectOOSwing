@@ -11,18 +11,17 @@ public class Group {
 	private String description;
 	private int numberOfPartecipants;
 	private String dateOfCreation;
-	private String category;
 	private ArrayList<Post>groupPosts;
 	private ArrayList<User>groupUsers;
+	private ArrayList<Tag>groupTags;
 	public Group() {
 		
 	}
-	public Group(String groupName, String description,String dateOfCreation,String category) {
+	public Group(String groupName, String description,String dateOfCreation) {
 		super();
 		this.groupName = groupName;
 		this.description = description;
 		this.dateOfCreation = dateOfCreation;
-		this.category = category;
 	}
 	public String getGroupName() {
 		return groupName;
@@ -35,12 +34,6 @@ public class Group {
 	}
 	public void setUsernameAdmin(User admin) {
 		this.admin = admin;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	public String getCategory() {
-		return category;
 	}
 	public String getDescription() {
 		return description;
@@ -72,9 +65,27 @@ public class Group {
 	public void setGroupUsers(ArrayList<User> groupUsers) {
 		this.groupUsers = groupUsers;
 	}
-	public void setPost() throws SQLException{
-		PostDAO postDAO = new PostDAO();
-		groupPosts.addAll(postDAO.getPostbyGroup(this));
+	public void setPost(ArrayList<Post> groupPosts) throws SQLException{
+		this.groupPosts = groupPosts;
 	}
+	public ArrayList<Tag> getGroupTags() {
+		return groupTags;
+	}
+	public void setGroupTags(ArrayList<Tag> groupTags) {
+		this.groupTags = groupTags;
+	}
+	public void addGroupUser(User user) {
+		groupUsers.add(user);
+	}
+	public void addGroupPosts(Post post) {
+		groupPosts.add(post);
+	}
+	public void removeGroupUser(User user) {
+		groupUsers.remove(user);
+	}
+	public void removeGroupPosts(Post post) {
+		groupPosts.remove(post);
+	}
+	
 
 }

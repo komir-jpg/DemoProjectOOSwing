@@ -9,12 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import ExceptionPackage.DBconnectionError;
 
-public class UserDAO extends CurrentDate{
+public class UserDAO {
 	
 	private Connection connection;
 	private Statement statement;
@@ -27,7 +28,6 @@ public class UserDAO extends CurrentDate{
 	public UserDAO(){
 		ConnectionToDB connectionDB = new ConnectionToDB();
 		connection = connectionDB.getConnection();
-		CurrentDate = date();
 	}
 	public void SaveNewUser(User newUser) throws SQLException {
 			statement = connection.createStatement();
@@ -38,7 +38,7 @@ public class UserDAO extends CurrentDate{
 								    +"\'"+newUser.getSex()+"\'" + ","
 								    +"\'"+newUser.getEmail()+"\'"+","
 								    +"\'"+newUser.getPassword()+"\'"+","
-								    +"\'"+CurrentDate+"\'"+","
+								    +"\'"+newUser.getSubcsriptionDate()+"\'"+","
 								    +"\'null\'"
 								    +")";
 			statement.executeUpdate(InsertNewUser);
@@ -102,7 +102,6 @@ public class UserDAO extends CurrentDate{
 	}
 	public ArrayList<User> getUserbyUsername(String username) throws SQLException {
 			
-			
 			preparedStatement = connection.prepareStatement("SELECT *"
 															+ "	FROM progettobd_unina_social_network.utente "
 															+ "WHERE nomeutente LIKE ?");
@@ -129,6 +128,36 @@ public class UserDAO extends CurrentDate{
 			return userData;
 	}
 	
+	public ArrayList<User>getUserByGroup(Group group) throws SQLException{
+		
+		preparedStatement = connection.prepareStatement("SELECT *"
+														+ "	FROM progettobd_unina_social_network.utente as u join progettobd_unina_social_network.partecipa as p on u.nomeutente = p.idutente"
+														+ "WHERE idgruppo LIKE ?");
+		preparedStatement.setString(1, group.getGroupName());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		
+		//Retrieve the data
+		ArrayList<User> userData = new ArrayList<User>();
+		
+		while(queryRS.next()) {
+			User userResultQuery = new User();
+			userResultQuery.setName(queryRS.getString("nome"));
+			userResultQuery.setSurname(queryRS.getString("cognome"));
+			userResultQuery.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
+			userResultQuery.setEmail(queryRS.getString("email"));
+			userResultQuery.setPassword(queryRS.getString("password"));
+			userResultQuery.setSex(queryRS.getString("sesso"));
+			userResultQuery.setUserName(queryRS.getString("nomeutente"));
+			userResultQuery.setUserType(queryRS.getString("tipoutente"));
+			userData.add(userResultQuery);				
+		}
+		preparedStatement.clearBatch();
+		queryRS.close();
+		return userData;
+
+		
+		
+	}
 	
 	
 }

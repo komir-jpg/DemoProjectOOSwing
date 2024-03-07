@@ -27,8 +27,7 @@ public class GroupDAO {
 									 +"\'"+createGroup.getGroupName()+"\'"+","
 									 +"\'"+createGroup.getDateOfCreation()+"\'"+","
 									 +"\'"+createGroup.getDescription()+"\'"+","
-									 +"\'"+createGroup.getNumberOfPartecipants()+"\'"+","
-									 +"\'"+createGroup.getCategory()+"\'"+
+									 +"\'"+createGroup.getNumberOfPartecipants()+"\'"+
 									 ")");
 			statement.executeUpdate(insertNewGroup);
 			statement.close();
@@ -67,7 +66,8 @@ public class GroupDAO {
 	
 	public Group GetGroupByName(String groupName) throws SQLException{
 		
-			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.GRUPPO WHERE nomegruppo LIKE ?");
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.GRUPPO "
+					+ "WHERE nomegruppo LIKE ?");
 			preparedstatement.setString(1,groupName);
 			ResultSet queryRS = preparedstatement.executeQuery();
 			Group groupResult = new Group();
@@ -76,6 +76,7 @@ public class GroupDAO {
 				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
+				//groupResult.setGroupPosts();
 			}
 			queryRS.close();
 			preparedstatement.close();

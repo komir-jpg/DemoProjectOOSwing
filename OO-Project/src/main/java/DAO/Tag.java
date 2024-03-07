@@ -1,15 +1,18 @@
 package DAO;
 
+import java.util.ArrayList;
+
 public class Tag {
-	private String category;
+	private String tag;
+	private ArrayList<Group> groupsSameTag;
 	public Tag() {
 		
 	}
-	public String getCategory() {
-		return category;
+	public String getTag() {
+		return tag;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+	public void setTag(String category) {
+		this.tag = category;
 	}
 	
 

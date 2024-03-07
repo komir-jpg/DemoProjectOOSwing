@@ -21,7 +21,7 @@ public class TagDAO{
 	
 	public void insertNewTag(Tag tag) throws SQLException {
 		String insertNewTag = "INSERT INTO progettobd_unina_social_network.TAG VALUES ("
-							  +"\'"+tag.getCategory()+"\'"+")";
+							  +"\'"+tag.getTag()+"\'"+")";
 		
 			statement = connection.createStatement();
 			statement.executeUpdate(insertNewTag);
@@ -35,7 +35,7 @@ public class TagDAO{
 			ArrayList<Tag> queryResultTag = new ArrayList<Tag>();
 			while(queryRS.next()) {
 				Tag tag = new Tag();
-				tag.setCategory(queryRS.getString("categoria"));
+				tag.setTag(queryRS.getString("categoria"));
 				queryResultTag.add(tag);
 				
 			}
@@ -52,7 +52,7 @@ public class TagDAO{
 			ResultSet queryRS = preparedStatement.executeQuery();
 			Tag queryResultTag = new Tag();
 			while(queryRS.next()) {
-				queryResultTag.setCategory(queryRS.getString("categoria"));
+				queryResultTag.setTag(queryRS.getString("categoria"));
 			}
 			queryRS.close();
 			preparedStatement.close();
@@ -62,7 +62,7 @@ public class TagDAO{
 		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where categoria = ?");
 		
 			preparedStatement = connection.prepareStatement(getGroupByTagQuery);
-			preparedStatement.setString(1,tag.getCategory());
+			preparedStatement.setString(1,tag.getTag());
 			ResultSet queryRS = preparedStatement.executeQuery();
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {

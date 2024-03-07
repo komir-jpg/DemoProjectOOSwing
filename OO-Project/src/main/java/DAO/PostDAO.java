@@ -33,9 +33,9 @@ public class PostDAO{
 									 "DEFAULT"+","+
 									 "\""+idUser+"\""+","
 									 +"\'"+"1/1/12"+"\'"+","
-									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
-									 +"\'"+newPost.getNumberOfComments()+"\'"+","
-									 +"\'"+newPost.getNumberOfShare()+"\'"+","
+//									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
+//									 +"\'"+newPost.getNumberOfComments()+"\'"+","
+//									 +"\'"+newPost.getNumberOfShare()+"\'"+","
 									 +"\'"+newPost.getContent()+"\'"+","
 									 +newPost.getFotoFormat()+"," //valore null
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
@@ -53,9 +53,9 @@ public class PostDAO{
 									 "DEFAULT"+","
 									 +"\""+idUser+"\""+","
 									 +"\'"+"1/1/12"+"\'"+","
-									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
-									 +"\'"+newPost.getNumberOfComments()+"\'"+","
-									 +"\'"+newPost.getNumberOfShare()+"\'"+","
+//									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
+//									 +"\'"+newPost.getNumberOfComments()+"\'"+","
+//									 +"\'"+newPost.getNumberOfShare()+"\'"+","
 									 +newPost.getContent()+"," //valore null
 									 +"\'"+newPost.getFotoFormat()+"\'"+","
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
@@ -91,9 +91,9 @@ public class PostDAO{
 				postQueryResult.setIdPost(queryRS.getInt("idpost"));
 				postQueryResult.setContent(queryRS.getString("contenuto"));
 				postQueryResult.setDataPost(queryRS.getDate("datapost"));
-				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
-				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
-				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+//				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
+//				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
+//				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
 				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
 				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
 				postQueryResult.setAuthor(user);//creare un metodo che prende dall'id l'autore del post
@@ -120,9 +120,9 @@ public class PostDAO{
 				postQueryResult.setIdPost(queryRS.getInt("idpost"));
 				postQueryResult.setContent(queryRS.getString("contenuto"));
 				postQueryResult.setDataPost(queryRS.getDate("datapost"));
-				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
-				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
-				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+//				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
+//				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
+//				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
 				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
 				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
 				postData.add(postQueryResult);

@@ -17,7 +17,7 @@ public class LikeClassDAO{
 		connection = connectionToDB.getConnection();
 	}
 
-	public void addLike(LikeClass like) throws SQLException {
+	public void addLike(Like like) throws SQLException {
 		String UserID = like.getUser().getUserName();
 		int PostID = like.getPost().getIdPost();
 		String insertNewLike = "INSERT INTO progettobd_unina_social_network.LIKE VALUES ("
@@ -31,7 +31,7 @@ public class LikeClassDAO{
 			statement.close();
 	
 	}
-	public void deleteLike(LikeClass like) throws SQLException {
+	public void deleteLike(Like like) throws SQLException {
 		String UserID = like.getUser().getUserName();
 		int PostID = like.getPost().getIdPost();
 		String deleteLike = "DELETE  FROM progettobd_unina_social_network.LIKE where idPost = ? and idUtente = ?";
@@ -41,7 +41,7 @@ public class LikeClassDAO{
 			preparedStatement.executeUpdate(deleteLike);
 			preparedStatement.close();
 	}
-	public ArrayList<User> likedPostUsers(LikeClass like) throws SQLException{
+	public ArrayList<User> likedPostUsers(Like like) throws SQLException{
 		int PostID = like.getPost().getIdPost();
 		String getUserQuery = "SELECT * from progettobd_unina_social_network.UTENTE where idUtente in (SELECT idUtente from "
 				+ "progettobd_unina_social_network.RICEVE_LIKE where idPost = ?)";

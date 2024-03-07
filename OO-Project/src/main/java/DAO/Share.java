@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Share {
 	
+	private int shareID;
 	private Post postShared;
 	private ArrayList<Group> groupSharedPost;
 	private User userSharing;

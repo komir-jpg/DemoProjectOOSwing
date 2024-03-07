@@ -2,13 +2,13 @@ package DAO;
 
 import java.sql.Date;
 
-public class LikeClass {
+public class Like {
 	private User user;
 	private Post post;
 	private Date likeDate;
 	private int likeID;
 	
-	public LikeClass() {
+	public Like() {
 		// TODO Auto-generated constructor stub
 	}
 	
