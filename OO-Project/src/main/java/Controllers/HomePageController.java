@@ -79,11 +79,50 @@ public class HomePageController {
 		return userResult;
 	}
 	
-	public void NewGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public void newGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		Group newGroup = new Group(groupName,Description,date());
 		GroupDAO createGroupDao = new GroupDAO();
 		createGroupDao.createNewGroup(newGroup, loginUser);
 		loginUser.addGroupAdmin(newGroup);
+	}
+	/**
+	 * creates a new Post in a group from the logged in User
+	 * @param 
+	 * @param 
+	 * @throws SQLException 
+	 * */
+	public void newPost(Group group,String content) throws SQLException {
+		Post post = new Post(content,group,loginUser);
+		PostDAO postDAO = new PostDAO();
+		postDAO.insertNewPostText(post);
+		group.addGroupPosts(post);
+		loginUser.addPost(post);
+		
+	}
+	/**
+	 * user inserted a new comment
+	 * @param
+	 * @param
+	 * @throws SQLException 
+	 * */
+	public void newComment(Post post,String text) throws SQLException {
+		Comment comment = new Comment(loginUser,post,text);
+		CommentDAO commentDAO = new CommentDAO();
+		commentDAO.addComment(comment);
+		post.addPostComment(comment);
+		loginUser.addComment(comment);
+	}
+	/**
+	 * method that inserts a new like of a post in the DB 
+	 * @param
+	 * @throws SQLException 
+	 * */
+	public void newLike(Post post) throws SQLException {
+		Like like = new Like(loginUser,post);
+		LikeDAO likeDAO = new LikeDAO();
+		likeDAO.addLike(like);
+		post.addPostLike(like);
+		loginUser.addLike(like);
 	}
 
 	private String date() {
@@ -142,7 +181,7 @@ public class HomePageController {
 		Group group = new Group();
 		group = groupDAO.GetGroupByName(groupName);
 		group.setGroupPosts(new PostDAO().getPostbyGroup(group));
-		group.setGroupUsers(new);
+		//group.setGroupUsers(new);
 		return group;
 	}
 	

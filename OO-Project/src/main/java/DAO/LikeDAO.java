@@ -1,18 +1,21 @@
 package DAO;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
-public class LikeClassDAO{
+public class LikeDAO{
 	Connection connection;
 	Statement statement;
 	PreparedStatement preparedStatement;
-	public LikeClassDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	private CallableStatement callablestatement;
+	public LikeDAO() {
 		ConnectionToDB connectionToDB = new ConnectionToDB();
 		connection = connectionToDB.getConnection();
 	}
@@ -24,10 +27,10 @@ public class LikeClassDAO{
 				 + "\'DEFAULT\'"
 				 +"\""+UserID+"\""+","
 				 +"\""+PostID+"\""+","
-				 +"\'"+like.getLikeDate()+"\'"+","
-				 +"\'"+like.getLikeAuthor()+"\'"+")";
+				 +"\'"+like.getLikeDate()+"\'"+","+")";
 			statement = connection.createStatement();
 			statement.executeUpdate(insertNewLike);
+			like.setLikeID(getLikeID(like));
 			statement.close();
 	
 	}
@@ -65,6 +68,19 @@ public class LikeClassDAO{
 				queryRS.close();
 				preparedStatement.close();
 				return queryResultUser;
-		} 
+		}
+	
+	public int getLikeID(Like like) throws SQLException {
+		int likeID;
 		
+			callablestatement = connection.prepareCall("{? = call getcommentid(?,?)}");
+			callablestatement.registerOutParameter(1, Types.INTEGER);
+			callablestatement.setInt(2, like.getPost().getIdPost());
+			callablestatement.setString(3, like.getUser().getUserName());
+			callablestatement.execute();
+			likeID = callablestatement.getInt(1);
+			callablestatement.close();
+			return likeID;
+			
+	}
 }

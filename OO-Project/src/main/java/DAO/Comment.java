@@ -1,6 +1,6 @@
 package DAO;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Comment {
 	private User user;
@@ -11,6 +11,14 @@ public class Comment {
 	
 	
 	public Comment() {
+		
+	}
+	public Comment(User author,Post postCommented,String text) {
+		super();
+		user = author;
+		post = postCommented;
+		this.text = text;
+		commentDate = new Date();
 		
 	}
 	

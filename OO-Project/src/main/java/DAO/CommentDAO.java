@@ -24,7 +24,7 @@ public class CommentDAO {
 		connection = connectionToDB.getConnection();
 	}
 
-	public void addComment(Comment comment) {
+	public void addComment(Comment comment) throws SQLException {
 		String UserID = (comment.getUser().getUserName());
 		int PostID = (comment.getPost().getIdPost());
 		String insertNewComment = "INSERT INTO progettobd_unina_social_network.COMMENTO VALUES ("
@@ -34,17 +34,14 @@ public class CommentDAO {
 				 +"\'"+comment.getText()+"\'"+","
 				 +"\'"+comment.getCommentDate()+"\'"+","+")";
 				 
-		try {
+		
 			statement = connection.createStatement();
 			statement.executeUpdate(insertNewComment);
 			statement.close();
 			comment.setCommentID(getCommentID(comment));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 	
 	}
+	
 	public void deleteComment(Comment comment) {
 		int commentID = getCommentID(comment);
 		String deleteComment = "DELETE  FROM progettobd_unina_social_network.COMMENTO where idcommento = ?";

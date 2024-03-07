@@ -1,11 +1,11 @@
 package DAO;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Post {
 	private int idPost;
-	private Date dataPost;
+	private Date datePost;
 //	private int numberOfLikes;
 //	private int numberOfComments;
 //	private int numberOfShare;
@@ -23,6 +23,16 @@ public class Post {
 		
 		
 	}
+	//costruttore per contenuto testuale
+	public Post(String content,Group group,User author ) {
+		super();
+		this.content = content;
+		this.group = group;
+		this.author = author;
+		typeOfPost = "testo";
+		eliminatedPost = false;
+		datePost = new Date();
+	}
 
 
 
@@ -38,14 +48,14 @@ public class Post {
 
 
 
-	public Date getDataPost() {
-		return dataPost;
+	public Date getDatePost() {
+		return datePost;
 	}
 
 
 
-	public void setDataPost(Date dataPost) {
-		this.dataPost = dataPost;
+	public void setDatePost(Date dataPost) {
+		this.datePost = dataPost;
 	}
 
 

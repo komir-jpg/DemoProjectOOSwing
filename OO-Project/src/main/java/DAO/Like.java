@@ -1,6 +1,6 @@
 package DAO;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Like {
 	private User user;
@@ -9,7 +9,12 @@ public class Like {
 	private int likeID;
 	
 	public Like() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	public Like(User user,Post post) {
+		this.user = user;
+		this.post = post;
+		likeDate = new Date();
 	}
 	
 	public User getUser() {
@@ -36,11 +41,11 @@ public class Like {
 		this.likeDate = likeDate;
 	}
 
-	public int getLikeAuthor() {
+	public int getLikeID() {
 		return likeID;
 	}
 
-	public void setLikeAuthor(int likeID) {
+	public void setLikeID(int likeID) {
 		this.likeID = likeID;
 	}
 	

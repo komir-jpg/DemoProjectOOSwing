@@ -24,10 +24,10 @@ public class PostDAO{
 	}
 	
 	
-	public void insertNewPostText(Post newPost,User user,Group group) throws SQLException {
+	public void insertNewPostText(Post newPost) throws SQLException {
 						
-			String idUser = user.getUserName();
-			String idGroup = group.getGroupName();
+			String idUser = newPost.getAuthor().getUserName();
+			String idGroup = newPost.getGroupName().getGroupName();
 			statement = connection.createStatement();
 			String insertNewPost = "INSERT INTO progettobd_unina_social_network.POST VALUES"+"("+
 									 "DEFAULT"+","+
@@ -43,6 +43,7 @@ public class PostDAO{
 									 +"\""+idGroup+"\""+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
+		newPost.setIdPost(getPostID(idUser));
 	}
 	public void insertNewPostFoto(Post newPost,User user,Group group ) throws SQLException {
 		
@@ -90,7 +91,7 @@ public class PostDAO{
 				Post postQueryResult = new Post();
 				postQueryResult.setIdPost(queryRS.getInt("idpost"));
 				postQueryResult.setContent(queryRS.getString("contenuto"));
-				postQueryResult.setDataPost(queryRS.getDate("datapost"));
+				postQueryResult.setDatePost(queryRS.getDate("datapost"));
 //				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
 //				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
 //				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
@@ -119,7 +120,7 @@ public class PostDAO{
 				Post postQueryResult = new Post();
 				postQueryResult.setIdPost(queryRS.getInt("idpost"));
 				postQueryResult.setContent(queryRS.getString("contenuto"));
-				postQueryResult.setDataPost(queryRS.getDate("datapost"));
+				postQueryResult.setDatePost(queryRS.getDate("datapost"));
 //				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
 //				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
 //				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
@@ -132,6 +133,18 @@ public class PostDAO{
 			return postData;
 		
 	}
+	public int getPostID(String userID) throws SQLException {
+		
+		int postID;
+		callablestatement = connection.prepareCall("{? = call getidpost(?)}");
+		callablestatement.registerOutParameter(1,Types.INTEGER);
+		callablestatement.setString(2, userID);
+		callablestatement.execute();
+		postID = callablestatement.getInt(1);
+		callablestatement.close();
+		return postID;
+
+}
 	
 
 	

@@ -52,22 +52,17 @@ public class getIdDAO {
 		
 	}
 	
-	public int getPostID(int userID) {
-		try {
+	public int getPostID(String userID) throws SQLException {
+		
 			int postID;
 			callablestatement = connection.prepareCall("{? = call getidpost(?)}");
 			callablestatement.registerOutParameter(1,Types.INTEGER);
-			callablestatement.setInt(2, userID);
+			callablestatement.setString(2, userID);
 			callablestatement.execute();
 			postID = callablestatement.getInt(1);
 			callablestatement.close();
 			return postID;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	
-		return -1;
-		
 	}
 	
 	public int getGroupID(Group group) {
@@ -102,9 +97,9 @@ public class getIdDAO {
 		return -1;
 			
 		}
-	public int getCommentID(Comment comment) {
+	public int getCommentID(Comment comment) throws SQLException {
 		int commentID;
-		try {
+		
 			callablestatement = connection.prepareCall("{? = call getcommentid(?,?)}");
 			callablestatement.registerOutParameter(1, Types.INTEGER);
 			callablestatement.setInt(2, getPostID(comment.getPost()));
@@ -113,10 +108,19 @@ public class getIdDAO {
 			commentID = callablestatement.getInt(1);
 			callablestatement.close();
 			return commentID;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return -1;
+			
+	}
+	public int getLikeID(Like like) throws SQLException {
+		int likeID;
+		
+			callablestatement = connection.prepareCall("{? = call getcommentid(?,?)}");
+			callablestatement.registerOutParameter(1, Types.INTEGER);
+			callablestatement.setInt(2, like.getPost().getIdPost());
+			callablestatement.setString(3, like.getUser().getUserName());
+			callablestatement.execute();
+			likeID = callablestatement.getInt(1);
+			callablestatement.close();
+			return likeID;
 			
 	}
 
