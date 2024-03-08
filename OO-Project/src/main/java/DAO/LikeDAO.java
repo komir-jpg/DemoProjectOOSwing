@@ -83,4 +83,27 @@ public class LikeDAO{
 			return likeID;
 			
 	}
+
+	public Post getPostByLike(Like like) {
+		
+		return null;
+	}
+
+	public ArrayList<Like> getLikesByPost(Post post) throws SQLException {
+		preparedStatement = connection.prepareStatement("select * from like where idpost = ?");
+		preparedStatement.setInt(1, post.getIdPost());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Like> likeResult = new ArrayList<Like>();
+		while(queryRS.next()) {
+			Like like = new Like();
+			like.setLikeDate(queryRS.getDate("datalike"));
+			like.setLikeID(queryRS.getInt("likeid"));
+			like.setPost(post);
+			like.setUser(new UserDAO().getUserbyUsername(queryRS.getString("userid")));
+			likeResult.add(like);
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return likeResult;
+	}
 }

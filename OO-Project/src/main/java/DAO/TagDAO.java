@@ -67,7 +67,6 @@ public class TagDAO{
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {
 				Group groupResult = new Group();
-				groupResult.setCategory(queryRS.getString("categoria"));
 				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
@@ -78,8 +77,58 @@ public class TagDAO{
 			preparedStatement.close();
 			return queryResultGroup;
 	}
-	
-	
+	public ArrayList<Group> getGroupByTag(String tag) throws SQLException/*string idTag*/{
+		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where categoria = ?");
+		
+			preparedStatement = connection.prepareStatement(getGroupByTagQuery);
+			preparedStatement.setString(1,tag);
+			ResultSet queryRS = preparedStatement.executeQuery();
+			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
+			while(queryRS.next()) {
+				Group groupResult = new Group();
+				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDescription(queryRS.getString("descrizione"));
+				groupResult.setGroupName(queryRS.getString("nomegruppo"));
+				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
+				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
+				groupResult.setGroupTags(getGroupTags(queryRS.getString("nomegruppo")));
+				queryResultGroup.add(groupResult);
+			}
+			queryRS.close();
+			preparedStatement.close();
+			return queryResultGroup;
+	}
+	public ArrayList<Tag> getGroupTags(Group group) throws SQLException{
+		preparedStatement = connection.prepareStatement("select * from tag as t join tagGruppo as tg on t.tag = tg.tag where tg.idGruppo = ?");
+		preparedStatement.setString(1, group.getGroupName());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Tag> tagResult = new ArrayList<Tag>();
+		while(queryRS.next()) {
+			Tag tag = new Tag();
+			tag.setTag(queryRS.getString("tag"));
+			tag.setGroupsSameTag(new TagDAO().getGroupByTag(queryRS.getString("tag")));
+			tagResult.add(tag);
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return tagResult;
+	}
+	public ArrayList<Tag> getGroupTags(String group) throws SQLException{
+		preparedStatement = connection.prepareStatement("select * from tag as t join tagGruppo as tg on t.tag = tg.tag where tg.idGruppo = ?");
+		preparedStatement.setString(1, group);
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Tag> tagResult = new ArrayList<Tag>();
+		while(queryRS.next()) {
+			Tag tag = new Tag();
+			tag.setTag(queryRS.getString("tag"));
+			tag.setGroupsSameTag(getGroupByTag(queryRS.getString("tag")));
+			tagResult.add(tag);
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return tagResult;
+	}
+
 	
 	
 }

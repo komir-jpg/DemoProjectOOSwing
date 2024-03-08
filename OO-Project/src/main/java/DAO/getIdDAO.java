@@ -123,7 +123,20 @@ public class getIdDAO {
 			return likeID;
 			
 	}
-
+	public int getShareID(Share share) throws SQLException {
+		int shareID;
+		
+			callablestatement = connection.prepareCall("{? = call getshareid(?,?,?)}");
+			callablestatement.registerOutParameter(1, Types.INTEGER);
+			callablestatement.setString(2, share.getUserSharing().getUserName());
+			callablestatement.setString(3, share.getGroupSharedPost().getGroupName());
+			callablestatement.setInt(3, share.getPostShared().getIdPost());
+			callablestatement.execute();
+			shareID = callablestatement.getInt(1);
+			callablestatement.close();
+			return shareID;
+			
+	}
 	
 
 }

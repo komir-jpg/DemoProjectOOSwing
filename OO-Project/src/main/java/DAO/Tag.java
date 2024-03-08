@@ -14,6 +14,12 @@ public class Tag {
 	public void setTag(String category) {
 		this.tag = category;
 	}
+	public ArrayList<Group> getGroupsSameTag() {
+		return groupsSameTag;
+	}
+	public void setGroupsSameTag(ArrayList<Group> groupsSameTag) {
+		this.groupsSameTag = groupsSameTag;
+	}
 	
 
 }

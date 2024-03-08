@@ -124,6 +124,36 @@ public class HomePageController {
 		post.addPostLike(like);
 		loginUser.addLike(like);
 	}
+	/**		
+	 * insert a new shared post on the DB
+	 * @param
+	 * @param
+	 * @throws SQLException 
+	 * */
+	public void newShare(Post post,Group group) throws SQLException {
+		Share share = new Share(post,group,loginUser);
+		ShareDAO shareDAO = new ShareDAO();
+		shareDAO.newSharedPost(share, group, loginUser);
+		loginUser.addShare(share);
+	}
+	/**
+	 * this method returns the posts in a group
+	 * @return arrayList Post
+	 * @throws SQLException 
+	 * */
+	public ArrayList<Post>getGroupPosts(String groupName) throws SQLException{
+		PostDAO postDAO = new PostDAO();
+		ArrayList<Post> postList = new ArrayList<Post>();
+		postList = postDAO.getPostsByGroup(groupName);
+		return null;
+	}
+	/**
+	 * this method returns the group partecipants
+	 * @return arrayList User
+	 * */
+	public ArrayList<User>getGroupPartecipants(){
+		return null;
+	}
 
 	private String date() {
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");

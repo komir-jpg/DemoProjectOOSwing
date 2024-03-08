@@ -144,13 +144,13 @@ public class Post {
 
 
 
-	public Group getGroupName() {
+	public Group getGroup() {
 		return group;
 	}
 
 
 
-	public void setGroupName(Group group) {
+	public void setGroup(Group group) {
 		this.group= group;
 	}
 
@@ -178,6 +178,17 @@ public class Post {
 	public void removePostComment(Comment comment) {
 		postComments.remove(comment);
 	}
+	public void setPostLikes(ArrayList<Like> postLikes) {
+		this.postLikes = postLikes;
+	}
+	public ArrayList<Like> getPostLikes() {
+		return postLikes;
+	}
+	public void setPostComment(ArrayList<Comment> postCommments) {
+		this.postComments = postComments;
+	}
+
+
 
 }
 

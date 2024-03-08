@@ -11,6 +11,7 @@ public class Group {
 	private String description;
 	private int numberOfPartecipants;
 	private String dateOfCreation;
+	//RIMUOVERE
 	private ArrayList<Post>groupPosts;
 	private ArrayList<User>groupUsers;
 	private ArrayList<Tag>groupTags;

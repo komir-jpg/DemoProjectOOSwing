@@ -1,17 +1,24 @@
 package DAO;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class Share {
 	
 	private int shareID;
 	private Post postShared;
-	private ArrayList<Group> groupSharedPost;
+	private Group groupSharedPost;
 	private User userSharing;
 	private Date shareDate;
 	
 	public Share() {
+	}
+	public Share(Post postShared,Group groupSharedPost,User userSharing) {
+		this.postShared = postShared;
+		this.groupSharedPost = groupSharedPost;
+		this.userSharing = userSharing;
+		shareDate = new Date();
+		
 	}
 
 	public Post getPostShared() {
@@ -22,11 +29,11 @@ public class Share {
 		this.postShared = postShared;
 	}
 
-	public ArrayList<Group> getGroupSharedPost() {
+	public Group getGroupSharedPost() {
 		return groupSharedPost;
 	}
 
-	public void setGroupSharedPost(ArrayList<Group> groupSharedPost) {
+	public void setGroupSharedPost(Group groupSharedPost) {
 		this.groupSharedPost = groupSharedPost;
 	}
 	
@@ -44,6 +51,14 @@ public class Share {
 
 	public void setShareDate(Date shareDate) {
 		this.shareDate = shareDate;
+	}
+
+	public int getShareID() {
+		return shareID;
+	}
+
+	public void setShareID(int shareID) {
+		this.shareID = shareID;
 	}
 	
 	

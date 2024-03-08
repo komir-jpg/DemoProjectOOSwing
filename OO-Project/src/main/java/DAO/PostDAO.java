@@ -16,6 +16,7 @@ public class PostDAO{
 	private Statement statement;
 	private PreparedStatement preparedStatement;
 	private CallableStatement callablestatement;
+	private PreparedStatement preparedstatement;
 
 	
 	public PostDAO(){
@@ -27,7 +28,7 @@ public class PostDAO{
 	public void insertNewPostText(Post newPost) throws SQLException {
 						
 			String idUser = newPost.getAuthor().getUserName();
-			String idGroup = newPost.getGroupName().getGroupName();
+			String idGroup = newPost.getGroup().getGroupName();
 			statement = connection.createStatement();
 			String insertNewPost = "INSERT INTO progettobd_unina_social_network.POST VALUES"+"("+
 									 "DEFAULT"+","+
@@ -146,7 +147,43 @@ public class PostDAO{
 
 }
 	
-
+	public ArrayList<Post> getPostsByGroup(Group group) throws SQLException{
+		preparedstatement = connection.prepareStatement("select * from post as p join group as g on p.idPost = g.idPost where g.nomeGruppo = ?");
+		preparedstatement.setString(1, group.getGroupName());
+		ResultSet queryRS = preparedstatement.executeQuery();
+		ArrayList<Post> postResult = new ArrayList<Post>();
+		while(queryRS.next()) {
+			Post post = new Post();
+			post.setContent(queryRS.getString("contenuto"));
+			post.setIdPost(queryRS.getInt("idPost"));
+			post.setDatePost(queryRS.getDate("datapost"));
+			post.setTypeOfPost(queryRS.getString("tipoPost"));
+			post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+			post.setGroup(group);
+			post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			post.setPostLikes(new LikeDAO().getLikesByPost(post));
+			postResult.add(post);
+		}
+		return postResult;
+	}
 	
-	
+		public ArrayList<Post> getPostsByGroup(String group) throws SQLException{
+			preparedstatement = connection.prepareStatement("select * from post as p join group as g on p.idPost = g.idPost where g.nomeGruppo = ?");
+			preparedstatement.setString(1, group);
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getDate("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(new GroupDAO().GetGroupByName(group));
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				postResult.add(post);
+			}
+			return postResult;
+		}	
 }

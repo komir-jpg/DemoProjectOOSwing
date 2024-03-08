@@ -14,7 +14,7 @@ public class GroupDAO {
 	private Statement statement;
 	private PreparedStatement preparedstatement;
 	
-	public GroupDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public GroupDAO() {
 		ConnectionToDB connectionToDB = new ConnectionToDB();
 		connection = connectionToDB.getConnection();
 	}
@@ -76,7 +76,9 @@ public class GroupDAO {
 				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				//groupResult.setGroupPosts();
+				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(groupName));
+				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(groupName));
+				groupResult.setGroupTags(new TagDAO().getGroupTags(groupName));
 			}
 			queryRS.close();
 			preparedstatement.close();
@@ -84,5 +86,12 @@ public class GroupDAO {
 			
 			
 	}
+	/*
+	 * select * from post as p join group as g on p.idPost = g.idPost where g.nomeGruppo = ?
+	 * 
+	 */
+	
+	
+	
 	
 }
