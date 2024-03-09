@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 
 public class ShareDAO {
 
@@ -68,6 +70,25 @@ public class ShareDAO {
 			callablestatement.close();
 			return shareID;
 			
+	}
+
+	public ArrayList<Share> getSharesByPost(Post post) throws SQLException {
+		preparedStatement = connection.prepareStatement("select * from condivisione as c where c.postcondiviso = ?");
+		preparedStatement.setInt(1, post.getIdPost());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Share> shareResult = new ArrayList<Share>();
+		while(queryRS.next()) {
+			Share share = new Share();
+			share.setShareID(queryRS.getInt("idcondivisione"));
+			share.setShareDate(queryRS.getDate("datacondivisione"));
+			share.setUserSharing(new UserDAO().getUserbyUsername(queryRS.getString("idUtenteCondivide")));
+			share.setPostShared(post);
+			share.setGroupSharedPost(new GroupDAO().GetGroupByName(queryRS.getString("gruppocondivisione")));
+			shareResult.add(share);
+		}
+		queryRS.close();
+		callablestatement.close();
+		return shareResult;
 	}
 
 }

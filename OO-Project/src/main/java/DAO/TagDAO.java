@@ -67,10 +67,11 @@ public class TagDAO{
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {
 				Group groupResult = new Group();
-				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDateOfCreation(queryRS.getDate("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
+				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
 				queryResultGroup.add(groupResult);
 			}
 			queryRS.close();
@@ -86,12 +87,11 @@ public class TagDAO{
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {
 				Group groupResult = new Group();
-				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDateOfCreation(queryRS.getDate("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
 				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
-				groupResult.setGroupTags(getGroupTags(queryRS.getString("nomegruppo")));
 				queryResultGroup.add(groupResult);
 			}
 			queryRS.close();

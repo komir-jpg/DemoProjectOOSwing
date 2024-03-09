@@ -35,7 +35,7 @@ public class CreateGroupDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private HomePageController controller;
+	private CreateGroupController controller;
 	private JTextField groupNameTextField;
 	private JTextArea descriptionTextArea;
 	private JComboBox<String> TagComboBox;
@@ -48,7 +48,7 @@ public class CreateGroupDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CreateGroupDialog(HomePageController myController) {
+	public CreateGroupDialog(CreateGroupController myController) {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		controller = myController;
@@ -70,7 +70,7 @@ public class CreateGroupDialog extends JDialog {
 		try {
 			comboModel.addAll(controller.setCategory());
 			TagComboBox.setModel(comboModel);
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+		} catch ( SQLException e) {
 			
 			e.printStackTrace();
 		}
@@ -169,12 +169,12 @@ public class CreateGroupDialog extends JDialog {
 		}
 	}
 	private void BackFrame() {
-		controller.setHomePageFrameFromDialog(this);
+		controller.setHomePageFrameFromDialog();
 	}
 	private void createNewGroup() throws DBconnectionError {
 		try {
-			controller.NewGroup(groupNameTextField.getText(),descriptionTextArea.getText(),(String)TagComboBox.getSelectedItem());
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+			controller.newGroup(groupNameTextField.getText(),descriptionTextArea.getText());
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBconnectionError();
 		}
@@ -182,7 +182,7 @@ public class CreateGroupDialog extends JDialog {
 	private void createTag() throws DBconnectionError {
 		try {
 			controller.newTag((String)TagComboBox.getSelectedItem());
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBconnectionError();
 		}

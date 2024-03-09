@@ -36,14 +36,13 @@ public class HomePageController {
 		previousFrame.dispose();
 		homePageFrame.setVisible(true);
 	}
-	public void setHomePageFrameFromDialog(JDialog dialog) {
-		dialog.dispose();
-		homePageFrame.setVisible(true);
-	}
+	
+//	public void setHomePageFrameFromDialog(JDialog dialog) {
+//		dialog.dispose();
+//		homePageFrame.setVisible(true);
+//	}
 	public void setCreateGroupDialog() {
-		createGroupDialog = new CreateGroupDialog(this);
-		SetFramePosition(createGroupDialog, GetFramePosition(homePageFrame));
-		createGroupDialog.setVisible(true);
+		new CreateGroupController(loginUser,this,homePageFrame);
 	}
 
 	private Point GetFramePosition(JFrame frame) {
@@ -78,13 +77,16 @@ public class HomePageController {
 		userResult = userDao.getUserList();
 		return userResult;
 	}
-	
-	public void newGroup(String groupName,String Description,String Category) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group newGroup = new Group(groupName,Description,date());
-		GroupDAO createGroupDao = new GroupDAO();
-		createGroupDao.createNewGroup(newGroup, loginUser);
-		loginUser.addGroupAdmin(newGroup);
-	}
+//	/**
+//	 * creates a new group 
+//	 * @param
+//	 * @param
+//	 * */
+//	public void newGroup(String groupName,String Description) throws SQLException{
+//		Group newGroup = new Group(groupName,Description,loginUser);
+//		GroupDAO createGroupDao = new GroupDAO();
+//		createGroupDao.createNewGroup(newGroup, loginUser);
+//	}
 	/**
 	 * creates a new Post in a group from the logged in User
 	 * @param 
@@ -96,7 +98,6 @@ public class HomePageController {
 		PostDAO postDAO = new PostDAO();
 		postDAO.insertNewPostText(post);
 		group.addGroupPosts(post);
-		loginUser.addPost(post);
 		
 	}
 	/**
@@ -110,7 +111,6 @@ public class HomePageController {
 		CommentDAO commentDAO = new CommentDAO();
 		commentDAO.addComment(comment);
 		post.addPostComment(comment);
-		loginUser.addComment(comment);
 	}
 	/**
 	 * method that inserts a new like of a post in the DB 
@@ -122,7 +122,6 @@ public class HomePageController {
 		LikeDAO likeDAO = new LikeDAO();
 		likeDAO.addLike(like);
 		post.addPostLike(like);
-		loginUser.addLike(like);
 	}
 	/**		
 	 * insert a new shared post on the DB
@@ -134,7 +133,7 @@ public class HomePageController {
 		Share share = new Share(post,group,loginUser);
 		ShareDAO shareDAO = new ShareDAO();
 		shareDAO.newSharedPost(share, group, loginUser);
-		loginUser.addShare(share);
+		post.addShare(share);
 	}
 	/**
 	 * this method returns the posts in a group
@@ -145,7 +144,7 @@ public class HomePageController {
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = new ArrayList<Post>();
 		postList = postDAO.getPostsByGroup(groupName);
-		return null;
+		return postList;
 	}
 	/**
 	 * this method returns the group partecipants
@@ -174,23 +173,23 @@ public class HomePageController {
 		return  GroupName;
 		
 	}
-	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		TagDAO tagDAO = new TagDAO();
-		Tag tag = new Tag();
-		tag.setTag(categoria);
-		tagDAO.insertNewTag(tag);
-	}
-	public ArrayList<String> setCategory() throws ClassNotFoundException, SQLException, IOException, RuntimeException{
-		TagDAO tagDAO = new TagDAO();
-		ArrayList<Tag> tagList = tagDAO.getTag();
-		ArrayList<String> tagListString = new ArrayList<String>();
-		Iterator<Tag> tagIterator = tagList.iterator();
-		
-		while(tagIterator.hasNext()) {
-			tagListString.add(tagIterator.next().getTag());
-		}
-		return tagListString;
-	}
+//	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		TagDAO tagDAO = new TagDAO();
+//		Tag tag = new Tag();
+//		tag.setTag(categoria);
+//		tagDAO.insertNewTag(tag);
+//	}
+//	public ArrayList<String> setCategory() throws SQLException {
+//		TagDAO tagDAO = new TagDAO();
+//		ArrayList<Tag> tagList = tagDAO.getTag();
+//		ArrayList<String> tagListString = new ArrayList<String>();
+//		Iterator<Tag> tagIterator = tagList.iterator();
+//		
+//		while(tagIterator.hasNext()) {
+//			tagListString.add(tagIterator.next().getTag());
+//		}
+//		return tagListString;
+//	}
 	public void deleteGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		GroupDAO groupDAO = new GroupDAO();
 		GroupDAO createGroupDAO = new GroupDAO();
@@ -217,9 +216,9 @@ public class HomePageController {
 	
 	public void newRequest(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		Group group = getGroup(groupName);
-		Request request = new Request(loginUser,group);
-		RequestDAO requestDAO = new RequestDAO();
-		requestDAO.insertNewRequest(request);
+//		Request request = new Request(loginUser,group);
+//		RequestDAO requestDAO = new RequestDAO();
+//		requestDAO.insertNewRequest(request);
 	}
 	private ArrayList<Group> getGroupFromTag(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{ 
 		TagDAO tagDAO = new TagDAO();

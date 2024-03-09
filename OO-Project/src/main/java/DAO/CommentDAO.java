@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 public class CommentDAO {
 	
 	
@@ -86,6 +88,24 @@ public class CommentDAO {
 		}
 		return null;
 		
+	}
+	public ArrayList<Comment>getCommentByPost(Post post) throws SQLException {
+		preparedStatement = connection.prepareStatement("select * from commento where idpost = ?");
+		preparedStatement.setInt(1, post.getIdPost());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Comment>CommentResult = new ArrayList<Comment>();
+		while(queryRS.next()) {
+			Comment comment = new Comment();
+			comment.setCommentID(queryRS.getInt("idcommento"));
+			comment.setCommentDate(queryRS.getDate("datacommento"));
+			comment.setText(queryRS.getString("testo"));
+			comment.setPost(post);
+			comment.setUser(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			CommentResult.add(comment);
+		}
+		queryRS.close();
+		preparedStatement.close();
+		return CommentResult;
 	}
 	private int getCommentID(Comment comment) {
 		int commentID;

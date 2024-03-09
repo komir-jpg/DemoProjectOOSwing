@@ -24,8 +24,9 @@ public class RegisterUserController {
 	
 	
 	
-	public RegisterUserController(JFrame previousFrame) {
+	public RegisterUserController(JFrame previousFrame,LoginController loginController) {
 		setRegisterFrame(previousFrame);
+		this.loginController = loginController;
 	}
 	
 	public void setRegisterFrame(JFrame previousFrame) {
@@ -40,7 +41,6 @@ public class RegisterUserController {
 	
 	
 	public void setLoginFrame(JFrame previousFrame) {
-		loginController = new LoginController();
 		loginController.setLoginFrame(previousFrame);
 	}
 	

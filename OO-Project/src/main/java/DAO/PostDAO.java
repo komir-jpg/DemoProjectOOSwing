@@ -78,6 +78,7 @@ public class PostDAO{
 		
 		
 	}
+	
 	public ArrayList<Post> getPostbyUser(User user) throws SQLException{
 			String UserID = user.getUserName();
 			preparedStatement = connection.prepareStatement("SELECT *"+
@@ -162,6 +163,7 @@ public class PostDAO{
 			post.setGroup(group);
 			post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
 			post.setPostLikes(new LikeDAO().getLikesByPost(post));
+			post.setPostShare(new ShareDAO().getSharesByPost(post));
 			postResult.add(post);
 		}
 		return postResult;
@@ -182,6 +184,7 @@ public class PostDAO{
 				post.setGroup(new GroupDAO().GetGroupByName(group));
 				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
 				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
 				postResult.add(post);
 			}
 			return postResult;

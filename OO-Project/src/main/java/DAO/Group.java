@@ -1,7 +1,7 @@
 package DAO;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -10,19 +10,19 @@ public class Group {
 	private User admin;
 	private String description;
 	private int numberOfPartecipants;
-	private String dateOfCreation;
-	//RIMUOVERE
+	private Date dateOfCreation;
 	private ArrayList<Post>groupPosts;
 	private ArrayList<User>groupUsers;
-	private ArrayList<Tag>groupTags;
+	
 	public Group() {
 		
 	}
-	public Group(String groupName, String description,String dateOfCreation) {
+	public Group(String groupName, String description,User admin) {
 		super();
 		this.groupName = groupName;
 		this.description = description;
-		this.dateOfCreation = dateOfCreation;
+		this.admin = admin;
+		dateOfCreation = new Date();
 	}
 	public String getGroupName() {
 		return groupName;
@@ -48,10 +48,10 @@ public class Group {
 	public void setNumberOfPartecipants(int numberOfPartecipants) {
 		this.numberOfPartecipants = numberOfPartecipants;
 	}
-	public String getDateOfCreation() {
+	public Date getDateOfCreation() {
 		return dateOfCreation;
 	}
-	public void setDateOfCreation(String dateOfCreation) {
+	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
 	public ArrayList<Post> getGroupPosts() {
@@ -69,12 +69,12 @@ public class Group {
 	public void setPost(ArrayList<Post> groupPosts) throws SQLException{
 		this.groupPosts = groupPosts;
 	}
-	public ArrayList<Tag> getGroupTags() {
-		return groupTags;
-	}
-	public void setGroupTags(ArrayList<Tag> groupTags) {
-		this.groupTags = groupTags;
-	}
+//	public ArrayList<Tag> getGroupTags() {
+//		return groupTags;
+//	}
+//	public void setGroupTags(ArrayList<Tag> groupTags) {
+//		this.groupTags = groupTags;
+//	}
 	public void addGroupUser(User user) {
 		groupUsers.add(user);
 	}
@@ -87,6 +87,6 @@ public class Group {
 	public void removeGroupPosts(Post post) {
 		groupPosts.remove(post);
 	}
-	
+//	
 
 }

@@ -45,7 +45,6 @@ public class LoginController {
 		new LoginController();
 	}
 	
-	
 	public LoginController() {
 		loginFrame = new Login(this);
 		loginFrame.setVisible(true);
@@ -59,15 +58,17 @@ public class LoginController {
 	
 	public void setHomePageFrame(JFrame frame) {
 		homePageController = new HomePageController(frame,LogInUser);
-		
-		
 	}
+	public void setLoginFrameVisible(){
+		loginFrame.setVisible(true);
+	}
+	
 //	public void setHomePageFrameFromDialog(JDialog dialog) {
 //		dialog.dispose();
 //		homePageFrame.setVisible(true);
 //	}
 	public void setRegisterFrame(JFrame frame) {
-		registerController = new RegisterUserController(frame);
+		registerController = new RegisterUserController(frame,this);
 	}
 	
 	public void setLoginFrame(JFrame frame) {
@@ -118,10 +119,7 @@ public class LoginController {
 	
 	public void userLogIn(String username) throws  SQLException{
 		UserDAO userDao = new UserDAO();
-		ArrayList<User> userResult = new ArrayList<User>();
-		userResult = userDao.getUserbyUsername(username);
-		Iterator<User> userIterator = userResult.iterator();
-		this.LogInUser = userIterator.next();
+		this.LogInUser = userDao.getUserbyUsername(username);
 	}
 	
 	

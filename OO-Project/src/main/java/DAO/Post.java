@@ -17,6 +17,7 @@ public class Post {
 	private User author; 
 	private ArrayList<Like>postLikes;
 	private ArrayList<Comment>postComments;
+	private ArrayList<Share>postShare;
 	
 
 	public Post() {
@@ -184,8 +185,18 @@ public class Post {
 	public ArrayList<Like> getPostLikes() {
 		return postLikes;
 	}
-	public void setPostComment(ArrayList<Comment> postCommments) {
+	public void setPostComment(ArrayList<Comment> postComments) {
 		this.postComments = postComments;
+	}
+	public ArrayList<Share> getPostShare() {
+		return postShare;
+	}
+	public void setPostShare(ArrayList<Share> postShare) {
+		this.postShare = postShare;
+	}
+	public void addShare(Share share) {
+		postShare.add(share);
+		
 	}
 
 

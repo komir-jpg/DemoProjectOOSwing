@@ -22,9 +22,9 @@ public class GroupDAO {
 		String userID = userAdmin.getUserName();
 		
 			statement = connection.createStatement();
-			String insertNewGroup = ("INSERT INTO progettobd_unina_social_network.gruppo VALUES"+"("+
-									"\'"+userID+"\'"+","
+			String insertNewGroup = ("INSERT INTO progettobd_unina_social_network.gruppo VALUES"+"("
 									 +"\'"+createGroup.getGroupName()+"\'"+","
+									 +"\'"+userID+"\'"+","
 									 +"\'"+createGroup.getDateOfCreation()+"\'"+","
 									 +"\'"+createGroup.getDescription()+"\'"+","
 									 +"\'"+createGroup.getNumberOfPartecipants()+"\'"+
@@ -52,7 +52,7 @@ public class GroupDAO {
 			ArrayList<Group> queryResultGroup = new ArrayList<Group>();
 			while(queryRS.next()) {
 				Group groupResult = new Group();
-				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDateOfCreation(queryRS.getDate("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
@@ -73,12 +73,11 @@ public class GroupDAO {
 			Group groupResult = new Group();
 			while(queryRS.next()) {
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
-				groupResult.setDateOfCreation(queryRS.getString("datacreazione"));
+				groupResult.setDateOfCreation(queryRS.getDate("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
 				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(groupName));
 				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(groupName));
-				groupResult.setGroupTags(new TagDAO().getGroupTags(groupName));
 			}
 			queryRS.close();
 			preparedstatement.close();
