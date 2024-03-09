@@ -202,9 +202,8 @@ public class Post {
 
 	@Override
 	public String toString() {
-		String string = author.getUserName()+"\n"+
-						content+"\n"+
-						datePost+"\n";
+		String string = author.getUserName()+": "+datePost+"\n"+
+						content+"\r";
 		//number of Likes 
 		//number of comments
 		//numbero of share

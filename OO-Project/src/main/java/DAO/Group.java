@@ -11,8 +11,8 @@ public class Group {
 	private String description;
 	private int numberOfPartecipants;
 	private Date dateOfCreation;
-	private ArrayList<Post>groupPosts;
-	private ArrayList<User>groupUsers;
+//	private ArrayList<Post>groupPosts;
+//	private ArrayList<User>groupUsers;
 	
 	public Group() {
 		
@@ -54,42 +54,42 @@ public class Group {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public ArrayList<Post> getGroupPosts() {
-		return groupPosts;
-	}
-	public void setGroupPosts(ArrayList<Post> groupPosts) {
-		this.groupPosts = groupPosts;
-	}
-	public ArrayList<User> getGroupUsers() {
-		return groupUsers;
-	}
-	public void setGroupUsers(ArrayList<User> groupUsers) {
-		this.groupUsers = groupUsers;
-	}
-	public void setPost(ArrayList<Post> groupPosts) throws SQLException{
-		this.groupPosts = groupPosts;
-	}
+//	public ArrayList<Post> getGroupPosts() {
+//		return groupPosts;
+//	}
+//	public void setGroupPosts(ArrayList<Post> groupPosts) {
+//		this.groupPosts = groupPosts;
+//	}
+//	public ArrayList<User> getGroupUsers() {
+//		return groupUsers;
+//	}
+//	public void setGroupUsers(ArrayList<User> groupUsers) {
+//		this.groupUsers = groupUsers;
+//	}
+//	public void setPost(ArrayList<Post> groupPosts) throws SQLException{
+//		this.groupPosts = groupPosts;
+//	}
 //	public ArrayList<Tag> getGroupTags() {
 //		return groupTags;
 //	}
 //	public void setGroupTags(ArrayList<Tag> groupTags) {
 //		this.groupTags = groupTags;
 //	}
-	public void addGroupUser(User user) {
-		groupUsers.add(user);
-	}
-	public void addGroupPosts(Post post) {
-		groupPosts.add(post);
-	}
-	public void removeGroupUser(User user) {
-		groupUsers.remove(user);
-	}
-	public void removeGroupPosts(Post post) {
-		groupPosts.remove(post);
-	}
+//	public void addGroupUser(User user) {
+//		groupUsers.add(user);
+//	}
+//	public void addGroupPosts(Post post) {
+//		groupPosts.add(post);
+//	}
+//	public void removeGroupUser(User user) {
+//		groupUsers.remove(user);
+//	}
+//	public void removeGroupPosts(Post post) {
+//		groupPosts.remove(post);
+//	}
 	@Override
 	public String toString() {
-		return "groupName" + "["+numberOfPartecipants+"]";
+		return groupName;
 	}
 	
 

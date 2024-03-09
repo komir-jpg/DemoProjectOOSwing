@@ -21,7 +21,6 @@ public class ConnectionToDB {
 			return null;
 		}
 		else {
-			System.out.println("Connessione riuscita");
 			return connection;
 		}
 		

@@ -90,7 +90,7 @@ public class CommentDAO {
 		
 	}
 	public ArrayList<Comment>getCommentByPost(Post post) throws SQLException {
-		preparedStatement = connection.prepareStatement("select * from commento where idpost = ?");
+		preparedStatement = connection.prepareStatement("select * from  progettobd_unina_social_network.commento where idpost = ?");
 		preparedStatement.setInt(1, post.getIdPost());
 		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<Comment>CommentResult = new ArrayList<Comment>();

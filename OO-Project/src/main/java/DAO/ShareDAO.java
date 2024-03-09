@@ -73,7 +73,7 @@ public class ShareDAO {
 	}
 
 	public ArrayList<Share> getSharesByPost(Post post) throws SQLException {
-		preparedStatement = connection.prepareStatement("select * from condivisione as c where c.postcondiviso = ?");
+		preparedStatement = connection.prepareStatement("select * from  progettobd_unina_social_network.condivisione as c where c.postcondiviso = ?");
 		preparedStatement.setInt(1, post.getIdPost());
 		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<Share> shareResult = new ArrayList<Share>();
@@ -87,7 +87,7 @@ public class ShareDAO {
 			shareResult.add(share);
 		}
 		queryRS.close();
-		callablestatement.close();
+		preparedStatement.close();
 		return shareResult;
 	}
 

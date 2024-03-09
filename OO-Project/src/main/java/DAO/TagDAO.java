@@ -71,7 +71,7 @@ public class TagDAO{
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
+//				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
 				queryResultGroup.add(groupResult);
 			}
 			queryRS.close();
@@ -91,7 +91,7 @@ public class TagDAO{
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
+//				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("idgruppo")));
 				queryResultGroup.add(groupResult);
 			}
 			queryRS.close();

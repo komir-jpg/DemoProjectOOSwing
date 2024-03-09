@@ -98,7 +98,6 @@ public class HomePageController {
 		Post post = new Post(content,group,loginUser);
 		PostDAO postDAO = new PostDAO();
 		postDAO.insertNewPostText(post);
-		group.addGroupPosts(post);
 		
 	}
 	/**
@@ -162,11 +161,10 @@ public class HomePageController {
 		groupsToString = groupToString(groups);
 		return groupsToString;
 	}
-	public ArrayList<String> getGroupPosts(){
-		ArrayList<Post> post = new ArrayList<Post>();
-		ArrayList<String> postToString = new ArrayList<String>();
-		post = groupSelected.getGroupPosts();
-		postToString = postToString(post);
+	public ArrayList<String> getGroupPosts() throws SQLException{
+		PostDAO postDAO = new PostDAO();
+		ArrayList<Post> post = postDAO.getPostsByGroup(groupSelected);
+		ArrayList<String> postToString = postToString(post);
 		return postToString;
 		
 	}

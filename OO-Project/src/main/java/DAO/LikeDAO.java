@@ -90,7 +90,7 @@ public class LikeDAO{
 	}
 
 	public ArrayList<Like> getLikesByPost(Post post) throws SQLException {
-		preparedStatement = connection.prepareStatement("select * from like where idpost = ?");
+		preparedStatement = connection.prepareStatement("select * from  progettobd_unina_social_network.like where idpost = ?");
 		preparedStatement.setInt(1, post.getIdPost());
 		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<Like> likeResult = new ArrayList<Like>();

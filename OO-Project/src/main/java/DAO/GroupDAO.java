@@ -56,8 +56,8 @@ public class GroupDAO {
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("nomegruppo")));
-				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(queryRS.getString("nomegruppo")));
+//				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("nomegruppo")));
+//				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(queryRS.getString("nomegruppo")));
 				queryResultGroup.add(groupResult);	
 			}
 			queryRS.close();
@@ -78,8 +78,8 @@ public class GroupDAO {
 				groupResult.setDateOfCreation(queryRS.getDate("datacreazione"));
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
-				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(groupName));
-				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(groupName));
+//				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(groupName));
+//				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(groupName));
 			}
 			queryRS.close();
 			preparedstatement.close();

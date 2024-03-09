@@ -64,6 +64,8 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import java.awt.SystemColor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class HomePage extends JFrame {
 
@@ -101,14 +103,16 @@ public class HomePage extends JFrame {
 	private ImageIcon requestFriendshipIcon;
 	private JLabel lblStateLabel;
 	private JLabel lblStatusLabel;
-	private JLabel lblLikeLabel;
-	private JLabel lblCommentLabel;
-	private JLabel lblShareLabel;
+	private JTextArea textArea;
 	
 	/**
 	 * Launch the application.
 	 */
-
+	/*
+	 * TODO inviare messaggio 
+	 * TODO mi piace commento e share 
+	 * TODO TextArea scrollabile
+	 * */
 	/**
 	 * Create the frame.
 	 */
@@ -334,19 +338,7 @@ public class HomePage extends JFrame {
 		lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-online-status-3864663.png"));
 		lblStatusLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
-		lblLikeLabel = new JLabel("mi piace");
-		lblLikeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLikeLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		
-		lblCommentLabel = new JLabel("commenta");
-		lblCommentLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		
-		lblShareLabel = new JLabel("condividi");
-		lblShareLabel.setToolTipText("");
-		lblShareLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		
-		JList TextMessageList = new JList();
-		TextMessageList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		JScrollPane scrollPane = new JScrollPane();
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -357,28 +349,21 @@ public class HomePage extends JFrame {
 						.addComponent(GroupLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-							.addGap(55)
+							.addGap(46)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(TextMessageList, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnSend)
-									.addPreferredGap(ComponentPlacement.RELATED))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblStateLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(lblStatusLabel))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblLikeLabel)
-									.addGap(14)
-									.addComponent(lblCommentLabel)
-									.addGap(18)
-									.addComponent(lblShareLabel)))))
-					.addGap(44))
+									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnSend))
+								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(22)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -388,20 +373,20 @@ public class HomePage extends JFrame {
 							.addComponent(lblStatusLabel)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(2)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblLikeLabel, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCommentLabel)
-								.addComponent(lblShareLabel))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textFieldMessage, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-							.addComponent(TextMessageList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(textFieldMessage, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
+		
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		scrollPane.setViewportView(textArea);
 		
 		GroupTabList = new JList();
 		GroupTabList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -409,9 +394,19 @@ public class HomePage extends JFrame {
 		tabbedPane.setEnabledAt(0, true);
 		
 		adminGroupList = new JList<String>();
+		adminGroupList.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				adminGroupList.setSelectedIndex(adminGroupList.getAnchorSelectionIndex());
+			}
+		});
+		
 		adminGroupList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				mnGroupManagmentMenu.setEnabled(true);
+				if(e.getValueIsAdjusting()) {
+					showGroupPosts(adminGroupList.getSelectedValue());
+				}
 			}
 		});
 		adminGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -424,11 +419,8 @@ public class HomePage extends JFrame {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				try {
-					
 					adminGroupList.setModel(showListModel());
 					adminGroupList.setCellRenderer(new DefaultListCellRenderer());
-					
-					
 				}catch(DBconnectionError exc) {
 					ShowMessage("Errore", "OPS! Qualcosa è andato storto nel caricamento dei gruppi");
 				}
@@ -517,5 +509,27 @@ public class HomePage extends JFrame {
 			//controller
 		else if(result == 1)
 			showFriendShipDialog();
+	}
+	private DefaultListModel<String> setGroupPostsListModel() throws SQLException {
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		listModel.addAll(controller.getGroupPosts());
+		return listModel;
+	}
+	private void setGroupPosts() throws SQLException {
+		ArrayList<String>post = controller.getGroupPosts();
+		Iterator<String> postIterator = post.iterator();
+		while(postIterator.hasNext()) {
+			textArea.append(postIterator.next());
+			textArea.append("\n\n");
+		}
+	}
+	private void showGroupPosts(String selectedValue) {
+		try{
+			controller.selectedGroup(selectedValue);
+			setGroupPosts();
+		}catch (SQLException e1) {
+			e1.printStackTrace();
+			ShowMessage("Errore","si è verificato un errore nel selezionare il gruppo "+e1.getMessage());
+		}
 	}
 }
