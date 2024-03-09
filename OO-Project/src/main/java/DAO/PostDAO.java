@@ -149,7 +149,7 @@ public class PostDAO{
 }
 	
 	public ArrayList<Post> getPostsByGroup(Group group) throws SQLException{
-		preparedstatement = connection.prepareStatement("select * from post as p join group as g on p.idPost = g.idPost where g.nomeGruppo = ?");
+		preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post as p where p.gruppo = ?");
 		preparedstatement.setString(1, group.getGroupName());
 		ResultSet queryRS = preparedstatement.executeQuery();
 		ArrayList<Post> postResult = new ArrayList<Post>();
@@ -170,7 +170,7 @@ public class PostDAO{
 	}
 	
 		public ArrayList<Post> getPostsByGroup(String group) throws SQLException{
-			preparedstatement = connection.prepareStatement("select * from post as p join group as g on p.idPost = g.idPost where g.nomeGruppo = ?");
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post as p where p.gruppo = ?");
 			preparedstatement.setString(1, group);
 			ResultSet queryRS = preparedstatement.executeQuery();
 			ArrayList<Post> postResult = new ArrayList<Post>();

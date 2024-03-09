@@ -87,6 +87,10 @@ public class Group {
 	public void removeGroupPosts(Post post) {
 		groupPosts.remove(post);
 	}
-//	
+	@Override
+	public String toString() {
+		return "groupName" + "["+numberOfPartecipants+"]";
+	}
+	
 
 }

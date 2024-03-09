@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Post {
+	
 	private int idPost;
 	private Date datePost;
 //	private int numberOfLikes;
@@ -199,7 +200,16 @@ public class Post {
 		
 	}
 
-
+	@Override
+	public String toString() {
+		String string = author.getUserName()+"\n"+
+						content+"\n"+
+						datePost+"\n";
+		//number of Likes 
+		//number of comments
+		//numbero of share
+		return string;
+	}
 
 }
 

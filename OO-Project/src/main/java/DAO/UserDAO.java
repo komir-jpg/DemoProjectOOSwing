@@ -229,7 +229,8 @@ public class UserDAO {
 		return userResult;
 	}
 	public ArrayList<User> getUsersByGroup(String group) throws SQLException{
-		preparedStatement = connection.prepareStatement("select * from utente as u join partecipa as p on p.idutente = p.idutente where p.idgruppo = ?");
+		preparedStatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.utente as u "
+				+ "JOIN progettobd_unina_social_network.partecipa as p ON p.idutente = u.nomeutente where p.idgruppo = ?");
 		preparedStatement.setString(1, group);
 		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<User> userResult = new ArrayList<User>();

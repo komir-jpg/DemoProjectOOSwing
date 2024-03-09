@@ -19,6 +19,7 @@ import DAO.*;
 public class HomePageController {
 	HomePage homePageFrame;
 	User loginUser;
+	Group groupSelected;
 	CreateGroupDialog createGroupDialog;
 	SearchTag searchTagDialog;
 	
@@ -153,26 +154,42 @@ public class HomePageController {
 	public ArrayList<User>getGroupPartecipants(){
 		return null;
 	}
+	public ArrayList<String> getUserAdminGroups() throws SQLException{
+		GroupDAO groupDAO = new GroupDAO();
+		ArrayList<Group> groups = new ArrayList<Group>();
+		ArrayList<String> groupsToString = new ArrayList<String>();
+		groups = groupDAO.getAdminGroups(loginUser);
+		groupsToString = groupToString(groups);
+		return groupsToString;
+	}
+	public ArrayList<String> getGroupPosts(){
+		ArrayList<Post> post = new ArrayList<Post>();
+		ArrayList<String> postToString = new ArrayList<String>();
+		post = groupSelected.getGroupPosts();
+		postToString = postToString(post);
+		return postToString;
+		
+	}
 
 	private String date() {
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();
 		return dateformat.format(calendar.getTime());
 	}
-	public ArrayList<String> setUserAdminGroup() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		GroupDAO createGroupDAO = new GroupDAO();
-		ArrayList<Group> groupResult = new ArrayList<Group>();
-		ArrayList<String> GroupName = new ArrayList<String>();
-		
-		groupResult = createGroupDAO.getAdminGroups(loginUser);
-		Iterator<Group> AdminGroupIterator = groupResult.iterator();
-		
-		while(AdminGroupIterator.hasNext()) {
-			GroupName.add(AdminGroupIterator.next().getGroupName());
-		}
-		return  GroupName;
-		
-	}
+//	public ArrayList<String> setUserAdminGroup() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+//		GroupDAO createGroupDAO = new GroupDAO();
+//		ArrayList<Group> groupResult = new ArrayList<Group>();
+//		ArrayList<String> GroupName = new ArrayList<String>();
+//		
+//		groupResult = createGroupDAO.getAdminGroups(loginUser);
+//		Iterator<Group> AdminGroupIterator = groupResult.iterator();
+//		
+//		while(AdminGroupIterator.hasNext()) {
+//			GroupName.add(AdminGroupIterator.next().getGroupName());
+//		}
+//		return  GroupName;
+//		
+//	}
 //	public void newTag(String categoria) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 //		TagDAO tagDAO = new TagDAO();
 //		Tag tag = new Tag();
@@ -205,12 +222,10 @@ public class HomePageController {
 		return false;
 	}
 	
-	private Group getGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	private Group getGroup(String groupName) throws SQLException{
 		GroupDAO groupDAO = new GroupDAO();
 		Group group = new Group();
 		group = groupDAO.GetGroupByName(groupName);
-		group.setGroupPosts(new PostDAO().getPostbyGroup(group));
-		//group.setGroupUsers(new);
 		return group;
 	}
 	
@@ -246,6 +261,25 @@ public class HomePageController {
 		}
 		return false;
 	
+	}
+	private ArrayList<String> groupToString(ArrayList<Group> groups){
+		Iterator<Group> groupIterator = groups.iterator();
+		ArrayList<String>groupToString = new ArrayList<String>();
+		while(groupIterator.hasNext()) {
+			groupToString.add(groupIterator.next().toString());
+		}
+		return groupToString;
+	}
+	private ArrayList<String> postToString(ArrayList<Post> post){
+		Iterator<Post> postIterator = post.iterator();
+		ArrayList<String>postToString = new ArrayList<String>();
+		while(postIterator.hasNext()) {
+			postToString.add(postIterator.next().toString());
+		}
+		return postToString;
+	}
+	public void selectedGroup(String groupName) throws SQLException {
+		this.groupSelected = getGroup(groupName);
 	}
 	
 }

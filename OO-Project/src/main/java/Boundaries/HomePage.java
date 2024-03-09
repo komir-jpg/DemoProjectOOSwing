@@ -90,7 +90,6 @@ public class HomePage extends JFrame {
 	private JMenu mnGroupMenu;
 	private JMenuItem mntmLeaveGroupMenuItem;
 	private JMenuItem mntmSilenceGroupMenuItem;
-	private JTextField textField;
 	private JList GroupTabList;
 	private JList<String> adminGroupList;
 	private JMenu mnGroupManagmentMenu;
@@ -118,7 +117,7 @@ public class HomePage extends JFrame {
 		
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 632, 388);
 		
 		menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -322,9 +321,6 @@ public class HomePage extends JFrame {
 		JButton btnSend = new JButton("invia");
 		btnSend.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -349,6 +345,9 @@ public class HomePage extends JFrame {
 		lblShareLabel.setToolTipText("");
 		lblShareLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
+		JList TextMessageList = new JList();
+		TextMessageList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -360,9 +359,9 @@ public class HomePage extends JFrame {
 							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 							.addGap(55)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+								.addComponent(TextMessageList, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnSend)
 									.addPreferredGap(ComponentPlacement.RELATED))
@@ -390,8 +389,6 @@ public class HomePage extends JFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblLikeLabel, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblCommentLabel)
@@ -400,7 +397,9 @@ public class HomePage extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textFieldMessage, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+							.addComponent(TextMessageList, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		
@@ -452,9 +451,9 @@ public class HomePage extends JFrame {
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		try {
-			listModel.addAll(controller.setUserAdminGroup());
+			listModel.addAll(controller.getUserAdminGroups());
 			return listModel;
-		}catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBconnectionError();
 		}

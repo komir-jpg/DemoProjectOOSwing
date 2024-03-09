@@ -56,6 +56,8 @@ public class GroupDAO {
 				groupResult.setDescription(queryRS.getString("descrizione"));
 				groupResult.setGroupName(queryRS.getString("nomegruppo"));
 				groupResult.setNumberOfPartecipants(queryRS.getInt("numeropartecipanti"));
+				groupResult.setGroupPosts(new PostDAO().getPostsByGroup(queryRS.getString("nomegruppo")));
+				groupResult.setGroupUsers(new UserDAO().getUsersByGroup(queryRS.getString("nomegruppo")));
 				queryResultGroup.add(groupResult);	
 			}
 			queryRS.close();
