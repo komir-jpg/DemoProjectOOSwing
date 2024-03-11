@@ -66,6 +66,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class HomePage extends JFrame {
 
@@ -92,7 +94,7 @@ public class HomePage extends JFrame {
 	private JMenu mnGroupMenu;
 	private JMenuItem mntmLeaveGroupMenuItem;
 	private JMenuItem mntmSilenceGroupMenuItem;
-	private JList GroupTabList;
+	private JList<String> GroupTabList;
 	private JList<String> adminGroupList;
 	private JMenu mnGroupManagmentMenu;
 	private JMenuItem mntmRequestStatusItem;
@@ -104,14 +106,15 @@ public class HomePage extends JFrame {
 	private JLabel lblStateLabel;
 	private JLabel lblStatusLabel;
 	private JTextArea textArea;
-	
+	private JButton btnSend;
+	private JTabbedPane tabbedPane;
 	/**
 	 * Launch the application.
 	 */
 	/*
 	 * TODO inviare messaggio 
 	 * TODO mi piace commento e share 
-	 * TODO TextArea scrollabile
+	 * 
 	 * */
 	/**
 	 * Create the frame.
@@ -165,9 +168,6 @@ public class HomePage extends JFrame {
 					
 				} catch (InvalidInsertion e1) {
 					ShowMessage("Errore", "il nome che hai inserito non corrisponde ad alcun gruppo");
-				}catch (ClassNotFoundException | IOException | RuntimeException e2) {
-					ShowMessage("Errore", "qualcosa è andato storto");
-					e2.printStackTrace();
 				} catch (SQLException e1) {
 					ShowMessage("Errore", "la richiesta non è andata a buon fine\n"+e1.getMessage());
 				}
@@ -286,9 +286,9 @@ public class HomePage extends JFrame {
 				String selectedValue = adminGroupList.getSelectedValue();
 				if(result == 0 && selectedValue != null) {
 					try {
-						
-						controller.deleteGroup(selectedValue);
-					} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e1) {
+						controller.deleteGroup();
+						textArea.setText("");
+					} catch (SQLException e1) {
 						e1.printStackTrace();
 						ShowMessage("Errore", "OPS! Qualcosa è andato storto nella cancellazione del gruppo");
 					}
@@ -322,10 +322,40 @@ public class HomePage extends JFrame {
 		textFieldMessage = new JTextField();
 		textFieldMessage.setColumns(10);
 		
-		JButton btnSend = new JButton("invia");
+		btnSend = new JButton("invia");
+		btnSend.setEnabled(false);
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!textFieldMessage.getText().isBlank())
+					try {
+						sendTextToScreen(textFieldMessage.getText());
+						textFieldMessage.setText(null);
+					} catch (SQLException e1 ) {
+						e1.printStackTrace();
+						ShowMessage("Errore", "OPS! Qualcosa è andato storto nell'invio del messagio "+e1.getMessage());
+					}
+				else
+					System.out.println("NO");
+			}
+		});
 		btnSend.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(tabbedPane.getSelectedIndex() == 0) { 
+					mnGroupManagmentMenu.setEnabled(false);
+					GroupTabList.clearSelection();
+					btnSend.setEnabled(false);
+				}
+				else if(tabbedPane.getSelectedIndex() == 1)
+					adminGroupList.clearSelection();
+					btnSend.setEnabled(false);
+			}
+		});
+
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
@@ -385,27 +415,49 @@ public class HomePage extends JFrame {
 		);
 		
 		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
 		
-		GroupTabList = new JList();
+		GroupTabList = new JList<String>();
+		GroupTabList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()) {
+					btnSend.setEnabled(true);
+					try {
+						textArea.setText("");
+						controller.selectedGroup(GroupTabList.getSelectedValue());
+						showGroupPosts();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+						ShowMessage("Errore", "OPS! Qualcosa è andato storto nel caricamento del gruppo");
+					}
+				}
+				
+			}
+		});
 		GroupTabList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabbedPane.addTab("Gruppi", null, GroupTabList, null);
 		tabbedPane.setEnabledAt(0, true);
 		
 		adminGroupList = new JList<String>();
-		adminGroupList.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				adminGroupList.setSelectedIndex(adminGroupList.getAnchorSelectionIndex());
-			}
-		});
+
 		
 		adminGroupList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				mnGroupManagmentMenu.setEnabled(true);
 				if(e.getValueIsAdjusting()) {
-					showGroupPosts(adminGroupList.getSelectedValue());
+					btnSend.setEnabled(true);
+					try {
+						textArea.setText("");
+						controller.selectedGroup(adminGroupList.getSelectedValue());
+						showGroupPosts();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+						ShowMessage("Errore", "OPS! Qualcosa è andato storto nel caricamento del gruppo");
+					}
+					
 				}
 			}
 		});
@@ -419,8 +471,10 @@ public class HomePage extends JFrame {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				try {
-					adminGroupList.setModel(showListModel());
+					adminGroupList.setModel(showListModelAdmin());
 					adminGroupList.setCellRenderer(new DefaultListCellRenderer());
+					GroupTabList.setModel(showListModelGroups());
+					GroupTabList.setCellRenderer(new DefaultListCellRenderer());
 				}catch(DBconnectionError exc) {
 					ShowMessage("Errore", "OPS! Qualcosa è andato storto nel caricamento dei gruppi");
 				}
@@ -439,11 +493,21 @@ public class HomePage extends JFrame {
 	private void ShowInfoMassage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
-	private DefaultListModel<String> showListModel() throws DBconnectionError {
+	private DefaultListModel<String> showListModelAdmin() throws DBconnectionError {
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		try {
 			listModel.addAll(controller.getUserAdminGroups());
+			return listModel;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBconnectionError();
+		}
+	}
+	private DefaultListModel<String> showListModelGroups() throws DBconnectionError{
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		try {
+			listModel.addAll(controller.getUserGroups());
 			return listModel;
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -455,10 +519,11 @@ public class HomePage extends JFrame {
 		result = JOptionPane.showConfirmDialog(this, "Sicuro? la cancellazione del gruppo comporta l'eliminazione di tutti i messaggi");
 		return result;
 	}
-	private void showSearchDialog() throws InvalidInsertion, ClassNotFoundException, SQLException, IOException, RuntimeException {
+	private void showSearchDialog() throws InvalidInsertion, SQLException {
 		searchIcon = new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-magnifying-glass-1497539.png");
 		boolean result;
 		String userInput = (String) JOptionPane.showInputDialog(this,"nome del gruppo","cerca",JOptionPane.DEFAULT_OPTION,searchIcon,null,null);
+		System.out.println(userInput);
 		if(userInput != null) {
 			result = controller.checkGroupName(userInput);
 			if(result == false)
@@ -470,14 +535,13 @@ public class HomePage extends JFrame {
 			
 		
 	}
-	private void requestGroup(String groupName) throws InvalidInsertion, ClassNotFoundException, SQLException, IOException, RuntimeException {
+	private void requestGroup(String groupName) throws SQLException, InvalidInsertion {
 		int result;
 		result = JOptionPane.showConfirmDialog(this, "vuoi inviare una richiesta di partecipazione a questo gruppo?");
 		if (result == 0) {
 			controller.newRequest(groupName);
 			ShowInfoMassage("Richiesta", "richiesta di partecipazione al gruppo andata a buon fine");
 		}
-			
 		else if (result == 1)
 			showSearchDialog();
 		else
@@ -505,8 +569,9 @@ public class HomePage extends JFrame {
 	private void requestFriendshipDialog() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 		int result;
 		result = JOptionPane.showConfirmDialog(this,"vuoi inviare una richiesta di amicizia a questo utente?");
-		if(result == 0) {}
-			//controller
+		if(result == 0) {
+			//new friendship request
+		}
 		else if(result == 1)
 			showFriendShipDialog();
 	}
@@ -519,17 +584,24 @@ public class HomePage extends JFrame {
 		ArrayList<String>post = controller.getGroupPosts();
 		Iterator<String> postIterator = post.iterator();
 		while(postIterator.hasNext()) {
-			textArea.append(postIterator.next());
-			textArea.append("\n\n");
-		}
+			String currentPost = postIterator.next();
+				textArea.append(currentPost);
+				textArea.append("\n\n");
+			}
+			
 	}
-	private void showGroupPosts(String selectedValue) {
+	private void showGroupPosts() {
 		try{
-			controller.selectedGroup(selectedValue);
 			setGroupPosts();
 		}catch (SQLException e1) {
 			e1.printStackTrace();
 			ShowMessage("Errore","si è verificato un errore nel selezionare il gruppo "+e1.getMessage());
 		}
+	}
+	private void sendTextToScreen(String message) throws SQLException {
+		String post;
+		post = controller.newPost(message);
+		textArea.append(post);
+		textArea.append("\n\n");
 	}
 }

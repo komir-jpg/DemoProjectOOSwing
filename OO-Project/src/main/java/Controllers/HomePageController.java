@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.swing.JDialog;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 
 import Boundaries.*;
 import DAO.*;
+import ExceptionPackage.PostComparator;
 
 public class HomePageController {
 	HomePage homePageFrame;
@@ -38,10 +40,6 @@ public class HomePageController {
 		homePageFrame.setVisible(true);
 	}
 	
-//	public void setHomePageFrameFromDialog(JDialog dialog) {
-//		dialog.dispose();
-//		homePageFrame.setVisible(true);
-//	}
 	public void setCreateGroupDialog() {
 		new CreateGroupController(loginUser,this,homePageFrame);
 	}
@@ -78,27 +76,18 @@ public class HomePageController {
 		userResult = userDao.getUserList();
 		return userResult;
 	}
-//	/**
-//	 * creates a new group 
-//	 * @param
-//	 * @param
-//	 * */
-//	public void newGroup(String groupName,String Description) throws SQLException{
-//		Group newGroup = new Group(groupName,Description,loginUser);
-//		GroupDAO createGroupDao = new GroupDAO();
-//		createGroupDao.createNewGroup(newGroup, loginUser);
-//	}
+
 	/**
 	 * creates a new Post in a group from the logged in User
 	 * @param 
 	 * @param 
 	 * @throws SQLException 
 	 * */
-	public void newPost(Group group,String content) throws SQLException {
-		Post post = new Post(content,group,loginUser);
+	public String newPost(String content) throws SQLException {
+		Post post = new Post(content,groupSelected,loginUser);
 		PostDAO postDAO = new PostDAO();
 		postDAO.insertNewPostText(post);
-		
+		return post.toString();
 	}
 	/**
 	 * user inserted a new comment
@@ -135,15 +124,21 @@ public class HomePageController {
 		shareDAO.newSharedPost(share, group, loginUser);
 		post.addShare(share);
 	}
+	public void newRequest(String groupName) throws SQLException {
+		RequestDAO requestDAO = new RequestDAO();
+		Group group = getGroup(groupName);
+		Request request = new Request(loginUser,group);
+		requestDAO.insertNewRequest(request);
+	}
 	/**
 	 * this method returns the posts in a group
 	 * @return arrayList Post
 	 * @throws SQLException 
 	 * */
-	public ArrayList<Post>getGroupPosts(String groupName) throws SQLException{
+	public ArrayList<Post>GroupPosts(String groupName) throws SQLException{
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = new ArrayList<Post>();
-		postList = postDAO.getPostsByGroup(groupName);
+		postList = postDAO.getPostsByGroupNoUser(groupName,loginUser.getUserName());
 		return postList;
 	}
 	/**
@@ -158,22 +153,49 @@ public class HomePageController {
 		ArrayList<Group> groups = new ArrayList<Group>();
 		ArrayList<String> groupsToString = new ArrayList<String>();
 		groups = groupDAO.getAdminGroups(loginUser);
-		groupsToString = groupToString(groups);
+		groupsToString = listToString(groups);
+		return groupsToString;
+	}
+	public ArrayList<String>getUserGroups() throws SQLException{
+		GroupDAO groupDAO = new GroupDAO();
+		ArrayList<Group> groups = groupDAO.getUserGroup(loginUser);
+		ArrayList<String>groupsToString = listToString(groups);
 		return groupsToString;
 	}
 	public ArrayList<String> getGroupPosts() throws SQLException{
 		PostDAO postDAO = new PostDAO();
-		ArrayList<Post> post = postDAO.getPostsByGroup(groupSelected);
-		ArrayList<String> postToString = postToString(post);
+		ArrayList<Post> post = new ArrayList<Post>(); 
+		ArrayList<Post> noUserPosts = postDAO.getPostsByGroupNoUser(groupSelected,loginUser);
+		ArrayList<Post> userPosts = postDAO.getUserPostsByGroup(groupSelected, loginUser);
+		post.addAll(userPosts);
+		post.addAll(noUserPosts);
+		post.sort(new PostComparator());
+		ArrayList<String> postToString = listToString(post);
 		return postToString;
 		
 	}
-
-	private String date() {
-		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar calendar = Calendar.getInstance();
-		return dateformat.format(calendar.getTime());
+	
+	public void selectedGroup(String groupName) throws SQLException {
+		this.groupSelected = getGroup(groupName);
 	}
+	public String getCurrentUser() {
+		return loginUser.getUserName();
+	}
+	
+	private <T> ArrayList<String> listToString(ArrayList<T> list){
+		Iterator<T> postIterator = list.iterator();
+		ArrayList<String>postToString = new ArrayList<String>();
+		while(postIterator.hasNext()) {
+			postToString.add(postIterator.next().toString());
+		}
+		return postToString;
+	}
+	
+//	private String date() {
+//		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+//		Calendar calendar = Calendar.getInstance();
+//		return dateformat.format(calendar.getTime());
+//	}
 //	public ArrayList<String> setUserAdminGroup() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
 //		GroupDAO createGroupDAO = new GroupDAO();
 //		ArrayList<Group> groupResult = new ArrayList<Group>();
@@ -205,15 +227,14 @@ public class HomePageController {
 //		}
 //		return tagListString;
 //	}
-	public void deleteGroup(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public void deleteGroup() throws SQLException{
 		GroupDAO groupDAO = new GroupDAO();
-		GroupDAO createGroupDAO = new GroupDAO();
-		Group SelectedGroup = groupDAO.GetGroupByName(groupName);
-		createGroupDAO.deleteGroup(SelectedGroup);
+		groupDAO.deleteGroup(groupSelected);
+		groupSelected = null;
 		
 	}
 	
-	public boolean checkGroupName(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public boolean checkGroupName(String groupName) throws SQLException {
 		Group group = getGroup(groupName);
 		if(group.getGroupName() != null)
 			return true;
@@ -227,19 +248,13 @@ public class HomePageController {
 		return group;
 	}
 	
-	public void newRequest(String groupName) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		Group group = getGroup(groupName);
-//		Request request = new Request(loginUser,group);
-//		RequestDAO requestDAO = new RequestDAO();
-//		requestDAO.insertNewRequest(request);
-	}
-	private ArrayList<Group> getGroupFromTag(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{ 
+	private ArrayList<Group> getGroupFromTag(String selectedTag) throws SQLException { 
 		TagDAO tagDAO = new TagDAO();
 		Tag tag = new Tag();
 		return tagDAO.getGroupByTag(tag);
 		
 	}
-	public ArrayList<String> showGroup(String selectedTag) throws ClassNotFoundException, SQLException, IOException, RuntimeException{
+	public ArrayList<String> showGroup(String selectedTag) throws SQLException {
 		ArrayList<String> tagList = new ArrayList<>();
 		ArrayList<Group> group = new ArrayList<Group>();
 		group = getGroupFromTag(selectedTag);
@@ -249,7 +264,7 @@ public class HomePageController {
 		}
 		return tagList;
 	}
-	public boolean checkUser(String username) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public boolean checkUser(String username) throws SQLException {
 		ArrayList<User> userList = new ArrayList<User>();
 		userList = GetUser();
 		Iterator <User>UserIterator = userList.iterator();
@@ -259,25 +274,6 @@ public class HomePageController {
 		}
 		return false;
 	
-	}
-	private ArrayList<String> groupToString(ArrayList<Group> groups){
-		Iterator<Group> groupIterator = groups.iterator();
-		ArrayList<String>groupToString = new ArrayList<String>();
-		while(groupIterator.hasNext()) {
-			groupToString.add(groupIterator.next().toString());
-		}
-		return groupToString;
-	}
-	private ArrayList<String> postToString(ArrayList<Post> post){
-		Iterator<Post> postIterator = post.iterator();
-		ArrayList<String>postToString = new ArrayList<String>();
-		while(postIterator.hasNext()) {
-			postToString.add(postIterator.next().toString());
-		}
-		return postToString;
-	}
-	public void selectedGroup(String groupName) throws SQLException {
-		this.groupSelected = getGroup(groupName);
 	}
 	
 }

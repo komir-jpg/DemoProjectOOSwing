@@ -7,9 +7,9 @@ public class Post {
 	
 	private int idPost;
 	private Date datePost;
-//	private int numberOfLikes;
-//	private int numberOfComments;
-//	private int numberOfShare;
+	private int numberOfLikes;
+	private int numberOfComments;
+	private int numberOfShare;
 	private String content;
 	private String fotoFormat;
 	private String typeOfPost;
@@ -34,6 +34,9 @@ public class Post {
 		typeOfPost = "testo";
 		eliminatedPost = false;
 		datePost = new Date();
+		numberOfComments = 0;
+		numberOfLikes = 0;
+		numberOfShare = 0;
 	}
 
 
@@ -62,39 +65,39 @@ public class Post {
 
 
 
-//	public int getNumberOfLikes() {
-//		return numberOfLikes;
-//	}
-//
-//
-//
-//	public void setNumberOfLikes(int numberOfLikes) {
-//		this.numberOfLikes = numberOfLikes;
-//	}
-//
-//
-//
-//	public int getNumberOfComments() {
-//		return numberOfComments;
-//	}
-//
-//
-//
-//	public void setNumberOfComments(int numberOfComments) {
-//		this.numberOfComments = numberOfComments;
-//	}
-//
-//
-//
-//	public int getNumberOfShare() {
-//		return numberOfShare;
-//	}
-//
-//
-//
-//	public void setNumberOfShare(int numberOfShare) {
-//		this.numberOfShare = numberOfShare;
-//	}
+	public int getNumberOfLikes() {
+		return numberOfLikes;
+	}
+
+
+
+	public void setNumberOfLikes(int numberOfLikes) {
+		this.numberOfLikes = numberOfLikes;
+	}
+
+
+
+	public int getNumberOfComments() {
+		return numberOfComments;
+	}
+
+
+
+	public void setNumberOfComments(int numberOfComments) {
+		this.numberOfComments = numberOfComments;
+	}
+
+
+
+	public int getNumberOfShare() {
+		return numberOfShare;
+	}
+
+
+
+	public void setNumberOfShare(int numberOfShare) {
+		this.numberOfShare = numberOfShare;
+	}
 
 
 

@@ -30,10 +30,10 @@ public class Group {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	public User getUsernameAdmin() {
+	public User getAdmin() {
 		return admin;
 	}
-	public void setUsernameAdmin(User admin) {
+	public void setAdmin(User admin) {
 		this.admin = admin;
 	}
 	public String getDescription() {

@@ -271,6 +271,42 @@ public class UserDAO {
 		return userResultQuery;
 			
 		}
+	public User getUserAdmin(Group group) throws SQLException {
+		preparedStatement = connection.prepareStatement("select * from progettobd_unina_social_network.gruppo as g join utente as u on u.nomeutente = g.idadmin where nomegruppo = ?");
+		preparedStatement.setString(1, group.getGroupName());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		User user = new User();
+		while(queryRS.next()) {
+			user.setName(queryRS.getString("nome"));
+			user.setSurname(queryRS.getString("cognome"));
+			user.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
+			user.setPassword(queryRS.getString("password"));
+			user.setSex(queryRS.getString("sesso"));
+			user.setUserName(queryRS.getString("nomeutente"));
+			user.setUserType(queryRS.getString("tipoutente"));
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return user;
 	}
+	public User getUserAdmin(String groupName) throws SQLException {
+		preparedStatement = connection.prepareStatement("select * from progettobd_unina_social_network.gruppo as g join progettobd_unina_social_network.utente as u on u.nomeutente = g.idadmin where nomegruppo = ?");
+		preparedStatement.setString(1, groupName);
+		ResultSet queryRS = preparedStatement.executeQuery();
+		User user = new User();
+		while(queryRS.next()) {
+			user.setName(queryRS.getString("nome"));
+			user.setSurname(queryRS.getString("cognome"));
+			user.setSubsriptionDate(queryRS.getDate("dataiscrizione"));
+			user.setPassword(queryRS.getString("password"));
+			user.setSex(queryRS.getString("sesso"));
+			user.setUserName(queryRS.getString("nomeutente"));
+			user.setUserType(queryRS.getString("tipoutente"));
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return user;
+	}
+}
 	
 

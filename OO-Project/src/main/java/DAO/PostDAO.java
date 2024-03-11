@@ -32,16 +32,16 @@ public class PostDAO{
 			statement = connection.createStatement();
 			String insertNewPost = "INSERT INTO progettobd_unina_social_network.POST VALUES"+"("+
 									 "DEFAULT"+","+
-									 "\""+idUser+"\""+","
-									 +"\'"+"1/1/12"+"\'"+","
-//									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
-//									 +"\'"+newPost.getNumberOfComments()+"\'"+","
-//									 +"\'"+newPost.getNumberOfShare()+"\'"+","
+									 "\'"+idUser+"\'"+","
+									 +"\'"+newPost.getDatePost()+"\'"+","
+									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
+									 +"\'"+newPost.getNumberOfComments()+"\'"+","
+									 +"\'"+newPost.getNumberOfShare()+"\'"+","
 									 +"\'"+newPost.getContent()+"\'"+","
 									 +newPost.getFotoFormat()+"," //valore null
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
-									 +"\'"+newPost.isEliminatedPost()+"\'"
-									 +"\""+idGroup+"\""+")";
+									 +"\'"+newPost.isEliminatedPost()+"\'"+","
+									 +"\'"+idGroup+"\'"+")";
 		statement.executeUpdate(insertNewPost);
 		statement.close();
 		newPost.setIdPost(getPostID(idUser));
@@ -79,34 +79,34 @@ public class PostDAO{
 		
 	}
 	
-	public ArrayList<Post> getPostbyUser(User user) throws SQLException{
-			String UserID = user.getUserName();
-			preparedStatement = connection.prepareStatement("SELECT *"+
-															"FROM progettobd_unina_social_network.post as po join "
-															+ "progettobd_unina_social_network.pubblica as pu"+
-															"WHERE pu.autorepost = ?");
-			preparedStatement.setString(1, UserID);
-			ResultSet queryRS = preparedStatement.executeQuery();
-			
-			ArrayList<Post> postData = new ArrayList<Post>();
-			while(queryRS.next()) {
-				Post postQueryResult = new Post();
-				postQueryResult.setIdPost(queryRS.getInt("idpost"));
-				postQueryResult.setContent(queryRS.getString("contenuto"));
-				postQueryResult.setDatePost(queryRS.getDate("datapost"));
-//				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
-//				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
-//				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
-				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
-				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
-				postQueryResult.setAuthor(user);//creare un metodo che prende dall'id l'autore del post
-				//postQueryResult.setGroup(null);
-				postData.add(postQueryResult);
-			}
-			queryRS.close();
-			preparedStatement.close();
-			return postData;
-	}
+//	public ArrayList<Post> getPostbyUser(User user) throws SQLException{
+//			String UserID = user.getUserName();
+//			preparedStatement = connection.prepareStatement("SELECT *"+
+//															"FROM progettobd_unina_social_network.post as po join "
+//															+ "progettobd_unina_social_network.pubblica as pu"+
+//															"WHERE pu.autorepost = ?");
+//			preparedStatement.setString(1, UserID);
+//			ResultSet queryRS = preparedStatement.executeQuery();
+//			
+//			ArrayList<Post> postData = new ArrayList<Post>();
+//			while(queryRS.next()) {
+//				Post postQueryResult = new Post();
+//				postQueryResult.setIdPost(queryRS.getInt("idpost"));
+//				postQueryResult.setContent(queryRS.getString("contenuto"));
+//				postQueryResult.setDatePost(queryRS.getDate("datapost"));
+////				postQueryResult.setNumberOfLikes(queryRS.getInt("numerolike"));
+////				postQueryResult.setNumberOfComments(queryRS.getInt("numerocommenti"));
+////				postQueryResult.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+//				postQueryResult.setFotoFormat(queryRS.getString("formatofoto"));
+//				postQueryResult.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+//				postQueryResult.setAuthor(user);//creare un metodo che prende dall'id l'autore del post
+//				//postQueryResult.setGroup(null);
+//				postData.add(postQueryResult);
+//			}
+//			queryRS.close();
+//			preparedStatement.close();
+//			return postData;
+//	}
 	
 //	public ArrayList<Post> getPostbyGroup(Group group) throws SQLException{
 //			
@@ -138,7 +138,7 @@ public class PostDAO{
 	public int getPostID(String userID) throws SQLException {
 		
 		int postID;
-		callablestatement = connection.prepareCall("{? = call getidpost(?)}");
+		callablestatement = connection.prepareCall("{? = call progettobd_unina_social_network.getidpost(?)}");
 		callablestatement.registerOutParameter(1,Types.INTEGER);
 		callablestatement.setString(2, userID);
 		callablestatement.execute();
@@ -148,16 +148,17 @@ public class PostDAO{
 
 }
 	
-	public ArrayList<Post> getPostsByGroup(Group group) throws SQLException{
-		preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ?");
+	public ArrayList<Post> getPostsByGroupNoUser(Group group,User user) throws SQLException{
+		preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ? and autorepost <> ?");
 		preparedstatement.setString(1, group.getGroupName());
+		preparedstatement.setString(2, user.getUserName());
 		ResultSet queryRS = preparedstatement.executeQuery();
 		ArrayList<Post> postResult = new ArrayList<Post>();
 		while(queryRS.next()) {
 			Post post = new Post();
 			post.setContent(queryRS.getString("contenuto"));
 			post.setIdPost(queryRS.getInt("idPost"));
-			post.setDatePost(queryRS.getDate("datapost"));
+			post.setDatePost(queryRS.getTimestamp("datapost"));
 			post.setTypeOfPost(queryRS.getString("tipoPost"));
 			post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
 			post.setGroup(group);
@@ -171,16 +172,17 @@ public class PostDAO{
 		return postResult;
 	}
 	
-		public ArrayList<Post> getPostsByGroup(String group) throws SQLException{
-			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ?");
+		public ArrayList<Post> getPostsByGroupNoUser(String group,String username) throws SQLException{
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ? and autorepost <> ?");
 			preparedstatement.setString(1, group);
+			preparedstatement.setString(2, username);
 			ResultSet queryRS = preparedstatement.executeQuery();
 			ArrayList<Post> postResult = new ArrayList<Post>();
 			while(queryRS.next()) {
 				Post post = new Post();
 				post.setContent(queryRS.getString("contenuto"));
 				post.setIdPost(queryRS.getInt("idPost"));
-				post.setDatePost(queryRS.getDate("datapost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
 				post.setTypeOfPost(queryRS.getString("tipoPost"));
 				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
 				post.setGroup(new GroupDAO().GetGroupByName(group));
@@ -190,5 +192,49 @@ public class PostDAO{
 				postResult.add(post);
 			}
 			return postResult;
-		}	
+		}
+		public ArrayList<Post> getUserPostsByGroup(String group,String username) throws SQLException{
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ? and autorepost = ?");
+			preparedstatement.setString(1, group);
+			preparedstatement.setString(2, username);
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(new GroupDAO().GetGroupByName(group));
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
+				postResult.add(post);
+			}
+			return postResult;
+		}
+		public ArrayList<Post> getUserPostsByGroup(Group group,User user) throws SQLException{
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ? and autorepost = ?");
+			preparedstatement.setString(1, group.getGroupName());
+			preparedstatement.setString(2, user.getUserName());
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(group);
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostShare(new ShareDAO().getSharesByPost(post));
+				postResult.add(post);
+			}
+			queryRS.close();
+			preparedstatement.close();
+			return postResult;
+		}
 }
