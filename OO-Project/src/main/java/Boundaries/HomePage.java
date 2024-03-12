@@ -275,6 +275,14 @@ public class HomePage extends JFrame {
 		menuBar.add(mnGroupManagmentMenu);
 		
 		mntmRequestStatusItem = new JMenuItem("gestione richieste");
+		mntmRequestStatusItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(adminGroupList.isSelectionEmpty())
+					ShowMessage("Errore", "devi selezionare un gruppo per poter accedere alle richieste");
+				else
+					controller.setGroupRequestDialog();
+			}
+		});
 		mntmRequestStatusItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mnGroupManagmentMenu.add(mntmRequestStatusItem);
 		

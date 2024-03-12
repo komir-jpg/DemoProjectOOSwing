@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RequestDAO {
 
@@ -57,6 +58,40 @@ public class RequestDAO {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		
+	}
+	public ArrayList<Request> getGroupRequests(Group group) throws SQLException{
+		preparedStatement = connection.prepareStatement("Select * from progettobd_unina_social_network.richiesta_partecipazione where Gruppo = ?");
+		preparedStatement.setString(1,group.getGroupName());
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Request>resultRequest = new ArrayList<Request>();
+		while(queryRS.next()) {
+			Request request = new Request();
+			request.setIdRequest(queryRS.getInt("idrichiesta"));
+			request.setRequestState(queryRS.getString("statorichiesta"));
+			request.setGroupRequesting(group);
+			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			resultRequest.add(request);
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return resultRequest;
+	}
+	public ArrayList<Request> getGroupRequests(String groupName) throws SQLException{
+		preparedStatement = connection.prepareStatement("Select * from progettobd_unina_social_network.richiesta_partecipazione where idGruppo = ?");
+		preparedStatement.setString(1,groupName);
+		ResultSet queryRS = preparedStatement.executeQuery();
+		ArrayList<Request>resultRequest = new ArrayList<Request>();
+		while(queryRS.next()) {
+			Request request = new Request();
+			request.setIdRequest(queryRS.getInt("idrichiesta"));
+			request.setRequestState(queryRS.getString("statorichiesta"));
+			request.setGroupRequesting(new GroupDAO().GetGroupByName(groupName));
+			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			resultRequest.add(request);
+		}
+		preparedStatement.close();
+		queryRS.close();
+		return resultRequest;
 	}
 	public int getRequestID(Request request) throws SQLException {
 			int requestID;

@@ -38,5 +38,10 @@ public class Request {
 	public void setGroupRequesting(Group groupRequesting) {
 		this.groupRequesting = groupRequesting;
 	}
+	@Override
+	public String toString() {
+		return "utente=" + user.getUserName() +"data di iscrizione="+ user.getSubcsriptionDate()+" requestState=" + requestState;
+	}
 
+	
 }

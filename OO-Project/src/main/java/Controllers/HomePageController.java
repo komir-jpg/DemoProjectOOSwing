@@ -43,6 +43,10 @@ public class HomePageController {
 	public void setCreateGroupDialog() {
 		new CreateGroupController(loginUser,this,homePageFrame);
 	}
+	
+	public void setGroupRequestDialog() {
+		new GroupRequestsController(homePageFrame,groupSelected,loginUser);
+	}
 
 	private Point GetFramePosition(JFrame frame) {
 		Point point;
