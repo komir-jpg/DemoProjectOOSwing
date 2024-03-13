@@ -20,9 +20,8 @@ import ExceptionPackage.PostComparator;
 
 public class HomePageController {
 	HomePage homePageFrame;
-	User loginUser;
-	Group groupSelected;
-	CreateGroupDialog createGroupDialog;
+	private User loginUser;
+	private Group groupSelected;
 	SearchTag searchTagDialog;
 	
 	
@@ -45,7 +44,7 @@ public class HomePageController {
 	}
 	
 	public void setGroupRequestDialog() {
-		new GroupRequestsController(homePageFrame,groupSelected,loginUser);
+		new GroupRequestsController(homePageFrame,groupSelected,this);
 	}
 
 	private Point GetFramePosition(JFrame frame) {

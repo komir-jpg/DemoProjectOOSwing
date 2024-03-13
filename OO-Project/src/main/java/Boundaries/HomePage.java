@@ -279,8 +279,9 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty())
 					ShowMessage("Errore", "devi selezionare un gruppo per poter accedere alle richieste");
-				else
+				else {
 					controller.setGroupRequestDialog();
+				}
 			}
 		});
 		mntmRequestStatusItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));

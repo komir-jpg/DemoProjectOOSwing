@@ -35,7 +35,7 @@ public class RequestDAO {
 	public void requestAccepted(Request request) throws SQLException {
 		String userID = request.getUser().getUserName();
 		String groupID = request.getGroupRequesting().getGroupName();
-		String requestAccepted = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = accettata where idGruppo = ? and idUtente = ?";
+		String requestAccepted = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = 'accettata' where Gruppo = ? and Utente = ?";
 		
 		
 			preparedStatement = connection.prepareStatement(requestAccepted);
@@ -49,7 +49,7 @@ public class RequestDAO {
 	public void requestDenied(Request request) throws SQLException {
 		String userID = request.getUser().getUserName();
 		String groupID = request.getGroupRequesting().getGroupName();
-		String requestAccepted = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = rifiutata where idGruppo = ? and idUtente = ?";
+		String requestAccepted = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = rifiutata where Gruppo = ? and Utente = ?";
 		
 		
 			preparedStatement = connection.prepareStatement(requestAccepted);
@@ -69,7 +69,7 @@ public class RequestDAO {
 			request.setIdRequest(queryRS.getInt("idrichiesta"));
 			request.setRequestState(queryRS.getString("statorichiesta"));
 			request.setGroupRequesting(group);
-			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("utente")));
 			resultRequest.add(request);
 		}
 		preparedStatement.close();
@@ -86,7 +86,7 @@ public class RequestDAO {
 			request.setIdRequest(queryRS.getInt("idrichiesta"));
 			request.setRequestState(queryRS.getString("statorichiesta"));
 			request.setGroupRequesting(new GroupDAO().GetGroupByName(groupName));
-			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("idutente")));
+			request.setUser(new UserDAO().getUserbyUsername(queryRS.getString("utente")));
 			resultRequest.add(request);
 		}
 		preparedStatement.close();
@@ -104,5 +104,17 @@ public class RequestDAO {
 			callablestatement.close();
 			return requestID;
 			
+	}
+
+	public void requestAccepted(String user, Group selectedGroup) throws SQLException {
+		String userID = user;
+		String groupID = selectedGroup.getGroupName();
+		String requestAccepted = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = 'accettata' where Gruppo = ? and Utente = ?";
+		preparedStatement = connection.prepareStatement(requestAccepted);
+		preparedStatement.setString(1, groupID);
+		preparedStatement.setString(2, userID);
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
+		
 	}
 }

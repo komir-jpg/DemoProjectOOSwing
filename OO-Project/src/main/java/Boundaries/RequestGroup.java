@@ -9,18 +9,29 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controllers.*;
+import DAO.Request;
+import ExceptionPackage.DBconnectionError;
 
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Dialog.ModalityType;
+import javax.swing.ListSelectionModel;
 
 public class RequestGroup extends JDialog {
 
@@ -37,6 +48,19 @@ public class RequestGroup extends JDialog {
 	 * Create the dialog.
 	 */
 	public RequestGroup(GroupRequestsController myController) {
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		setModal(true);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				try {
+					requestedGroupList.setModel(setListModel());
+					requestedGroupList.setCellRenderer(new DefaultListCellRenderer());
+				} catch (DBconnectionError e1) {
+					ShowMessage("Errore", "Qualcosa è andato storto nel caricare le richieste");
+				}
+			}
+		});
 		controller = myController;
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -44,6 +68,8 @@ public class RequestGroup extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		requestedGroupList = new JList<String>();
+		
+		
 		
 		JLabel FriendLabel = new JLabel("richieste di partecipazione");
 		FriendLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
@@ -75,8 +101,15 @@ public class RequestGroup extends JDialog {
 				JButton acceptButton = new JButton("Accetta richieste");
 				acceptButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						List<String> selectedValues = requestedGroupList.getSelectedValuesList();
-						
+						try {
+							List<String> selectedValues = requestedGroupList.getSelectedValuesList();
+							if(selectedValues.isEmpty())
+								ShowMessage("Errore", "devi selezionare prima una richiesta");
+							requestAccepted(selectedValues);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+							ShowMessage("Errore", "Ops!,Qualcosa è andato storto");
+						}
 					}
 				});
 				acceptButton.setActionCommand("OK");
@@ -93,10 +126,45 @@ public class RequestGroup extends JDialog {
 			}
 		}
 	}
-	private void requestAccepted(List<String> selectedValues) {
+	private void requestAccepted(List<String> selectedValues) throws SQLException {
 		Iterator<String> iterator = selectedValues.iterator();
+		String username;
 		while(iterator.hasNext()) {
-			iterator.next().subSequence( ABORT, defaultCloseOperation)
+			username = splitUserNameString(iterator.next());
+			controller.requestAccepted(username);
 		}
+	}
+	/**
+	 * this method splits, the request string, in the {@link JList}
+	 * and return a string containing only the username.
+	 * <p>First the request string is split by the ":", see {@link Request#toString()},
+	 * so the result would be: [<b>[username]   data di iscrizione</b>.]
+	 * Then the result string is split again removing the space and data di iscrizione
+	 * @param string
+	 * @return
+	 */
+	private String splitUserNameString(String string) {
+		String[] stringArray = string.split(":");
+		String splittedString = stringArray[1];
+		stringArray = splittedString.split("   ");
+		String resultString = stringArray[0].strip();
+		System.out.println(resultString);
+		return resultString;
+	}
+	private DefaultListModel<String> setListModel() throws DBconnectionError {
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		try {
+			listModel.addAll(controller.getRequestList());
+			return listModel;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DBconnectionError();
+		}
+	}
+	private void ShowMessage(String titolo,String testo) {
+		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
+	}
+	private void ShowInfoMassage(String titolo,String testo) {
+		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
 }
