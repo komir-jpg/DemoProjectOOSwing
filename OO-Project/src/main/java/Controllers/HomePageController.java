@@ -22,7 +22,7 @@ public class HomePageController {
 	HomePage homePageFrame;
 	private User loginUser;
 	private Group groupSelected;
-	SearchTag searchTagDialog;
+	SearchTagDialog searchTagDialog;
 	
 	
 	public HomePageController(JFrame previousFrame,User loginUser) {
@@ -68,9 +68,7 @@ public class HomePageController {
 		frame.setSize(dimension);
 	}
 	public void setSearchTagDialog() {
-		searchTagDialog = new SearchTag(this);
-		SetFramePosition(searchTagDialog, GetFramePosition(homePageFrame));
-		searchTagDialog.setVisible(true);
+		new SearchTagController(homePageFrame);
 	}
 	
 	private ArrayList<User> GetUser() throws SQLException{

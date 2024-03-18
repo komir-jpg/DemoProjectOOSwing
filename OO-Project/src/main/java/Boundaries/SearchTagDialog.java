@@ -32,14 +32,15 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class SearchTag extends JDialog {
+public class SearchTagDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton partecipaButton;
-	private HomePageController controller;
+	private SearchTagController controller;
 	private JButton cancelButton;
 	private JComboBox<String> tagComboBox;
 	private JList<String> resultGroupList;
@@ -49,7 +50,7 @@ public class SearchTag extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public SearchTag(HomePageController myController) {
+	public SearchTagDialog(SearchTagController myController) {
 		controller = myController;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 271);
@@ -153,12 +154,12 @@ public class SearchTag extends JDialog {
 		}
 	}
 	private void back() {
-		controller.setHomePageFrameFromDialog(this);
+		controller.setHomePageFrameFromDialog();
 	}
-	private DefaultListModel<String> showGroupModel(String selectedTag) throws DBconnectionError {
+	private DefaultListModel<String> showGroupModel(ArrayList<String> selectedTags) throws DBconnectionError {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		try {
-			listModel.addAll(controller.showGroup(selectedTag));
+			listModel.addAll(controller.showGroup(selectedTags));
 			return listModel;
 		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
 			e.printStackTrace();
@@ -166,7 +167,7 @@ public class SearchTag extends JDialog {
 		}
 	}
 	private void newGroupRequest() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		controller.newRequest(resultGroupList.getSelectedValue());
+		controller.newRequest(resultGroupList.getSelectedValuesList());
 	}
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);

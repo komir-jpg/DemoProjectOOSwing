@@ -117,4 +117,13 @@ public class RequestDAO {
 		preparedStatement.close();
 		
 	}
+	public void requestDenied(String user,Group selectedGroup) throws SQLException {
+		String groupID = selectedGroup.getGroupName();
+		String requestDenied = "UPDATE progettobd_unina_social_network.richiesta_partecipazione set statoRichiesta = 'rifiutata where Gruppo = ? and Utente = ?";
+		preparedStatement = connection.prepareStatement(requestDenied);
+		preparedStatement.setString(1, groupID);
+		preparedStatement.setString(2, user);
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
+	}
 }

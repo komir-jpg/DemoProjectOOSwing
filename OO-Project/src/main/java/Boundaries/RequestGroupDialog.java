@@ -33,7 +33,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Dialog.ModalityType;
 import javax.swing.ListSelectionModel;
 
-public class RequestGroup extends JDialog {
+public class RequestGroupDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -47,7 +47,7 @@ public class RequestGroup extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public RequestGroup(GroupRequestsController myController) {
+	public RequestGroupDialog(GroupRequestsController myController) {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setModal(true);
 		addWindowListener(new WindowAdapter() {
@@ -118,6 +118,19 @@ public class RequestGroup extends JDialog {
 			}
 			
 			JButton refuseButton = new JButton("Rifiuta richieste");
+			refuseButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						List<String> selectedValues = requestedGroupList.getSelectedValuesList();
+						if(selectedValues.isEmpty())
+							ShowMessage("Errore", "devi selezionare prima una richiesta");
+							requestDenied(selectedValues);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+						ShowMessage("Errore", "Ops!,Qualcosa è andato storto");
+					}
+				}
+			});
 			buttonPane.add(refuseButton);
 			{
 				JButton cancelButton = new JButton("Annulla");
@@ -132,6 +145,14 @@ public class RequestGroup extends JDialog {
 		while(iterator.hasNext()) {
 			username = splitUserNameString(iterator.next());
 			controller.requestAccepted(username);
+		}
+	}
+	private void requestDenied(List<String> selectedValues) throws SQLException {
+		Iterator<String> iterator = selectedValues.iterator();
+		String username;
+		while(iterator.hasNext()) {
+			username = splitUserNameString(iterator.next());
+			controller.requestDenied(username);
 		}
 	}
 	/**

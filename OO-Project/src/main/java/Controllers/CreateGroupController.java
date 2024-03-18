@@ -5,10 +5,15 @@ import java.awt.Point;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+
+
 
 import Boundaries.*;
 import DAO.*;
@@ -55,7 +60,7 @@ public class CreateGroupController {
 	
 	
 	
-	public ArrayList<String> setCategory() throws SQLException {
+	public ArrayList<String> setTag() throws SQLException {
 		TagDAO tagDAO = new TagDAO();
 		ArrayList<Tag> tagList = tagDAO.getTag();
 		ArrayList<String> tagListString = new ArrayList<String>();
@@ -66,11 +71,11 @@ public class CreateGroupController {
 		}
 		return tagListString;
 	}
-	//TODO modificato il DAO
-	public void newTag(String categoria) throws SQLException{
+
+	public void newTag(String userTag) throws SQLException{
 		TagDAO tagDAO = new TagDAO();
 		Tag tag = new Tag();
-		tag.setTag(categoria);
+		tag.setTag(userTag);
 		tagDAO.insertNewTag(tag);
 	}
 	
@@ -83,5 +88,16 @@ public class CreateGroupController {
 		Group newGroup = new Group(groupName,Description,loggedInUser);
 		GroupDAO createGroupDao = new GroupDAO();
 		createGroupDao.createNewGroup(newGroup, loggedInUser);
+	}
+	public void setGroupTags(String groupName, String selectedTag) throws SQLException {
+		TagDAO tagDAO = new TagDAO();
+		tagDAO.setGroupTag(groupName,selectedTag);
+	}
+	public void checkTag(String tag)throws InputMismatchException {
+		Pattern pattern = Pattern.compile("^\\w+$");
+		Matcher matcher = pattern.matcher(tag);
+		if(!matcher.find())
+			throw new InputMismatchException();
+		
 	}
 }

@@ -1,17 +1,20 @@
 package DAO;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
 public class TagDAO{
 	Connection connection;
 	Statement statement;
 	PreparedStatement preparedStatement;
+	private CallableStatement callableStatement;
 	
 	
 	public TagDAO() {
@@ -79,7 +82,7 @@ public class TagDAO{
 			return queryResultGroup;
 	}
 	public ArrayList<Group> getGroupByTag(String tag) throws SQLException/*string idTag*/{
-		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.gruppo where categoria = ?");
+		String getGroupByTagQuery = ("SELECT * FROM progettobd_unina_social_network.tag:gruppo where categoria = ?");
 		
 			preparedStatement = connection.prepareStatement(getGroupByTagQuery);
 			preparedStatement.setString(1,tag);
@@ -129,6 +132,30 @@ public class TagDAO{
 		return tagResult;
 	}
 
-	
+	public void setGroupTag(String groupName, String selectedTag) throws SQLException {
+		String insertNewGroupTag = ("insert into progettobd_unina_social_network.tag_gruppo values("+
+									"\'"+selectedTag+"\'"+","+"\'"+groupName+"\'"+")");
+		statement = connection.createStatement();
+		statement.executeUpdate(insertNewGroupTag);
+		statement.close();
+	}
+	public ArrayList<String>setGroupByTag(String tag) throws SQLException{
+		ResultSet queryRS = getGroupFunction(tag);
+		ArrayList<String> resultString = new ArrayList<String>();
+		while(queryRS.next()) {
+			resultString.add(queryRS.getString("nomegruppo"));
+		}
+		queryRS.close();
+		return resultString;
+	}
+
+	private ResultSet getGroupFunction(String tags) throws SQLException {
+		callableStatement = connection.prepareCall("{? = call progettobd_unina_social_network.getgroupbytag(?)}");
+		callableStatement.registerOutParameter(1, Types.ARRAY);
+		callableStatement.setString(2, tags);
+		callableStatement.execute();
+		ResultSet queryRS = callableStatement.getArray("nomegruppo").getResultSet();
+		return queryRS;
+	}
 	
 }

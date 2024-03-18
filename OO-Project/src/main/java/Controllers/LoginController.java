@@ -19,7 +19,7 @@ import Boundaries.CreateGroupDialog;
 import Boundaries.HomePage;
 import Boundaries.Login;
 import Boundaries.RegisterUserFrame;
-import Boundaries.SearchTag;
+import Boundaries.SearchTagDialog;
 import DAO.*;
 import ExceptionPackage.DBconnectionError;
 
@@ -28,7 +28,7 @@ public class LoginController {
 	private HomePage homePageFrame;
 	private RegisterUserFrame RegisterFrame;
 	private CreateGroupDialog createGroupDialog;
-	private SearchTag searchTagDialog;
+	private SearchTagDialog searchTagDialog;
 	private User LogInUser;
 	private Connection connection;
 	private User user;

@@ -8,11 +8,11 @@ import java.util.Iterator;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import Boundaries.RequestGroup;
+import Boundaries.RequestGroupDialog;
 import DAO.*;
 
 public class GroupRequestsController {
-	private RequestGroup groupRequestsDialog;
+	private RequestGroupDialog groupRequestsDialog;
 	private HomePageController homePageController;
 	private Group selectedGroup;
 	
@@ -46,7 +46,7 @@ public class GroupRequestsController {
 		return point;
 	}
 	private void setRequestGroup(JFrame previousFrame) {
-		groupRequestsDialog = new RequestGroup(this);
+		groupRequestsDialog = new RequestGroupDialog(this);
 		SetFramePosition(groupRequestsDialog, GetFramePosition(previousFrame));
 		groupRequestsDialog.setVisible(true);
 	}
@@ -57,5 +57,9 @@ public class GroupRequestsController {
 			postToString.add(postIterator.next().toString());
 		}
 		return postToString;
+	}
+	public void requestDenied(String username) throws SQLException {
+		RequestDAO requestDAO = new RequestDAO();
+		requestDAO.requestDenied(username, selectedGroup);
 	}
 }
