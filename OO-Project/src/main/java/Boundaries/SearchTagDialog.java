@@ -39,6 +39,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class SearchTagDialog extends JDialog {
 
@@ -121,10 +123,26 @@ public class SearchTagDialog extends JDialog {
 		);
 		
 		resultGroupList = new JList<String>();
+		
 		resultGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(resultGroupList);
 		
 		tagList = new JList<String>();
+		tagList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tagList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()){
+					try {
+						resultGroupList.setModel(showGroupModel((ArrayList<String>) tagList.getSelectedValuesList()));
+						resultGroupList.setCellRenderer(new DefaultListCellRenderer());
+					} catch (SQLException e1) {
+						ShowMessage("Errore","OPS!,Qualcosa è andato storto");
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+		});
 		tagList.setVisibleRowCount(3);
 		scrollPane.setViewportView(tagList);
 		contentPanel.setLayout(gl_contentPanel);
@@ -137,11 +155,13 @@ public class SearchTagDialog extends JDialog {
 				partecipaButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-							newGroupRequest();
-							ShowInfoMassage("Partecipa", "la richiesta di partecipazione è andata a buon fine");
-							back();
-						} catch (ClassNotFoundException | IOException | RuntimeException e1) {
-							e1.printStackTrace();
+							if(resultGroupList.isSelectionEmpty())
+								ShowMessage("Errore", "devi selezionare un gruppo");
+							else {
+								newGroupRequest();
+								ShowInfoMassage("Partecipa", "la richiesta di partecipazione è andata a buon fine");
+								back();
+							}
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 							ShowMessage("Errore", "la richiesta non è andata a buon fine!\n"+e1.getMessage());
@@ -173,18 +193,17 @@ public class SearchTagDialog extends JDialog {
 		listModel.addAll(controller.getTags());
 		return listModel;
 	}
-	private DefaultListModel<String> showGroupModel(ArrayList<String> selectedTags) throws DBconnectionError {
+	private DefaultListModel<String> showGroupModel(ArrayList<String> selectedTags) throws SQLException {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		try {
+		
 			listModel.addAll(controller.showGroup(selectedTags));
 			return listModel;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DBconnectionError();
-		}
 	}
-	private void newGroupRequest() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		//controller.newRequest(resultGroupList.getSelectedValuesList());
+	 
+	
+	
+	private void newGroupRequest() throws SQLException{
+		controller.newGroupRequest(resultGroupList.getSelectedValue());
 	}
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);

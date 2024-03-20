@@ -68,7 +68,7 @@ public class HomePageController {
 		frame.setSize(dimension);
 	}
 	public void setSearchTagDialog() {
-		new SearchTagController(homePageFrame);
+		new SearchTagController(homePageFrame,loginUser);
 	}
 	
 	private ArrayList<User> GetUser() throws SQLException{

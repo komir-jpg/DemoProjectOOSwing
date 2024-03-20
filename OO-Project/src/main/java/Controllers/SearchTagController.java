@@ -10,13 +10,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.SearchTagDialog;
-import DAO.TagDAO;
+import DAO.*;
 
 public class SearchTagController {
 	SearchTagDialog searchTagDialog;
+	User loggedUser;
 
-	public SearchTagController(JFrame previousFrame) {
-			setSearchTagDialog(previousFrame);
+	public SearchTagController(JFrame previousFrame,User loggedUser) {
+		this.loggedUser = loggedUser;	
+		setSearchTagDialog(previousFrame);
+			
 	}
 
 	private void setSearchTagDialog(JFrame previousFrame) {
@@ -44,8 +47,11 @@ public class SearchTagController {
 		}
 		return postToString;
 	}
-	public ArrayList<String> getGroups(ArrayList<String> groupTags){
-		return null;
+	public void newGroupRequest(String groupname) throws SQLException {
+		RequestDAO requestDAO = new RequestDAO();
+		GroupDAO groupDAO = new GroupDAO();
+		Request request = new Request(loggedUser, groupDAO.GetGroupByName(groupname));
+		requestDAO.insertNewRequest(request);
 	}
 	public ArrayList<String>getTags() throws SQLException{
 		TagDAO tagDAO = new TagDAO();
@@ -60,8 +66,8 @@ public class SearchTagController {
 		String tagString = "";
 		Iterator<String> selectedTagIterator = selectedTags.iterator();
 		while(selectedTagIterator.hasNext()) {
-			tagString = tagString.concat(","+selectedTagIterator.next());
+			tagString = tagString.concat(selectedTagIterator.next()+",");
 		}
-		return tagString;
+		return tagString.substring(0, tagString.length()-1);
 	}
 }

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -140,22 +141,29 @@ public class TagDAO{
 		statement.close();
 	}
 	public ArrayList<String>setGroupByTag(String tag) throws SQLException{
-		ResultSet queryRS = getGroupFunction(tag);
+		resetBufferTable();
+		getGroupFunction(tag);
+		preparedStatement = connection.prepareStatement("select * from progettobd_unina_social_network.bufferResultTable");
+		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<String> resultString = new ArrayList<String>();
 		while(queryRS.next()) {
-			resultString.add(queryRS.getString("nomegruppo"));
+			resultString.add(queryRS.getString("idgruppo"));
 		}
 		queryRS.close();
 		return resultString;
 	}
 
-	private ResultSet getGroupFunction(String tags) throws SQLException {
-		callableStatement = connection.prepareCall("{? = call progettobd_unina_social_network.getgroupbytag(?)}");
-		callableStatement.registerOutParameter(1, Types.ARRAY);
+	private void getGroupFunction(String tags) throws SQLException {
+		callableStatement = connection.prepareCall("{? = CALL progettobd_unina_social_network.getgroupbytag(?)}");
+		callableStatement.registerOutParameter(1, Types.VARCHAR);
 		callableStatement.setString(2, tags);
-		callableStatement.execute();
-		ResultSet queryRS = callableStatement.getArray("nomegruppo").getResultSet();
-		return queryRS;
+		callableStatement.executeUpdate();
+		callableStatement.close();
 	}
-	
+	private void resetBufferTable() throws SQLException {
+		String resetBufferTable = "delete from progettobd_unina_social_network.bufferResultTable";
+		statement = connection.createStatement();
+		statement.executeUpdate(resetBufferTable);
+		statement.close();
+	}
 }
