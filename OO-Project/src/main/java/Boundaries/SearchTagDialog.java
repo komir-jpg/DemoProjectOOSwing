@@ -34,6 +34,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.Choice;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
+import java.awt.Dimension;
 
 public class SearchTagDialog extends JDialog {
 
@@ -42,7 +47,9 @@ public class SearchTagDialog extends JDialog {
 	private JButton partecipaButton;
 	private SearchTagController controller;
 	private JButton cancelButton;
-	private JComboBox<String> tagComboBox;
+	private JScrollPane scrollPane;
+	private JList<String> tagList;
+	private JScrollPane scrollPane_1;
 	private JList<String> resultGroupList;
 
 	
@@ -51,6 +58,20 @@ public class SearchTagDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public SearchTagDialog(SearchTagController myController) {
+		setMinimumSize(new Dimension(500, 400));
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				try {
+					tagList.setModel(showTags());
+					tagList.setCellRenderer(new DefaultListCellRenderer());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					ShowMessage("Errore", "ops! qualcosa è andato storto");
+				}
+				
+			}
+		});
 		controller = myController;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 271);
@@ -61,34 +82,13 @@ public class SearchTagDialog extends JDialog {
 		JLabel lbTagLabel = new JLabel("Tag");
 		lbTagLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lbTagLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		
-		tagComboBox = new JComboBox<String>();
-		tagComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(tagComboBox.getSelectedIndex() != -1) {
-					try {
-						resultGroupList.setModel(showGroupModel((String) tagComboBox.getSelectedItem()));
-						resultGroupList.setCellRenderer(new DefaultListCellRenderer());
-					} catch (DBconnectionError e1) {
-						e1.printStackTrace();
-						ShowMessage("Errore", "OPS! qualcosa è andato storto nel caricamento dei gruppi");
-					}
-					
-				}
-			}
-		});
-		DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>();
-		try {
-			comboModel.addAll(controller.setCategory());
-			tagComboBox.setModel(comboModel);
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
-			e.printStackTrace();
-		}
-		resultGroupList = new JList<String>();
-		resultGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel lblResultLabel = new JLabel("gruppi");
 		lblResultLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblResultLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		scrollPane = new JScrollPane();
+		
+		scrollPane_1 = new JScrollPane();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
@@ -99,23 +99,34 @@ public class SearchTagDialog extends JDialog {
 						.addComponent(lbTagLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(resultGroupList, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-						.addComponent(tagComboBox, 0, 184, Short.MAX_VALUE))
+						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
 					.addGap(115))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tagComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbTagLabel))
-					.addGap(18)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblResultLabel)
-						.addComponent(resultGroupList, GroupLayout.PREFERRED_SIZE, 203, GroupLayout.PREFERRED_SIZE))
-					.addGap(38))
+						.addComponent(lbTagLabel)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblResultLabel))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(14)
+							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
+		
+		resultGroupList = new JList<String>();
+		resultGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane_1.setViewportView(resultGroupList);
+		
+		tagList = new JList<String>();
+		tagList.setVisibleRowCount(3);
+		scrollPane.setViewportView(tagList);
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
@@ -152,22 +163,28 @@ public class SearchTagDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
 	}
 	private void back() {
 		controller.setHomePageFrameFromDialog();
+	}
+	private DefaultListModel<String>showTags() throws SQLException{
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		listModel.addAll(controller.getTags());
+		return listModel;
 	}
 	private DefaultListModel<String> showGroupModel(ArrayList<String> selectedTags) throws DBconnectionError {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		try {
 			listModel.addAll(controller.showGroup(selectedTags));
 			return listModel;
-		} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DBconnectionError();
 		}
 	}
 	private void newGroupRequest() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		controller.newRequest(resultGroupList.getSelectedValuesList());
+		//controller.newRequest(resultGroupList.getSelectedValuesList());
 	}
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);

@@ -47,11 +47,14 @@ public class SearchTagController {
 	public ArrayList<String> getGroups(ArrayList<String> groupTags){
 		return null;
 	}
-
+	public ArrayList<String>getTags() throws SQLException{
+		TagDAO tagDAO = new TagDAO();
+		return listToString(tagDAO.getTag());
+	}
 	public ArrayList<String> showGroup(ArrayList<String> selectedTags) throws SQLException {
 		String stringTags = stringTags(selectedTags);
 		TagDAO tagDAO = new TagDAO();
-		tagDAO.getGroupByTag(stringTags);
+		return tagDAO.setGroupByTag(stringTags);
 	}
 	private String stringTags(ArrayList<String> selectedTags) {
 		String tagString = "";
