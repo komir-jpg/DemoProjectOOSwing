@@ -209,8 +209,9 @@ public class UserDAO {
 	
 	
 	public ArrayList<User> getUsersByGroup(Group group) throws SQLException{
-		preparedStatement = connection.prepareStatement("select * from utente as u join partecipa as p on p.idutente = p.idutente where p.idgruppo = ?");
+		preparedStatement = connection.prepareStatement("select * from progettobd_unina_social_network.utente as u join progettobd_unina_social_network.partecipa as p on p.idutente = u.nomeutente where p.idgruppo = ? and p.idUtente<> ?");
 		preparedStatement.setString(1, group.getGroupName());
+		preparedStatement.setString(2, group.getAdmin().getUserName());
 		ResultSet queryRS = preparedStatement.executeQuery();
 		ArrayList<User> userResult = new ArrayList<User>();
 		while(queryRS.next()) {

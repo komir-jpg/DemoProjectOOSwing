@@ -184,12 +184,12 @@ public class HomePageController {
 	}
 	
 	private <T> ArrayList<String> listToString(ArrayList<T> list){
-		Iterator<T> postIterator = list.iterator();
-		ArrayList<String>postToString = new ArrayList<String>();
-		while(postIterator.hasNext()) {
-			postToString.add(postIterator.next().toString());
+		Iterator<T> listIterator = list.iterator();
+		ArrayList<String> ToString = new ArrayList<String>();
+		while(listIterator.hasNext()) {
+			ToString.add(listIterator.next().toString());
 		}
-		return postToString;
+		return ToString;
 	}
 	
 //	private String date() {
@@ -275,6 +275,16 @@ public class HomePageController {
 		}
 		return false;
 	
+	}
+	public void deletePartecipantDialog() {
+		new deletePartecipantController(homePageFrame, groupSelected);
+	}
+	public void deleteMessageDialog() {
+		new DeleteMessageController(homePageFrame, groupSelected, loginUser);
+	}
+	public void leaveGroup() throws SQLException {
+		GroupDAO groupDAO = new GroupDAO();
+		groupDAO.deletePartecipant(groupSelected, loginUser.getUserName());
 	}
 	
 }

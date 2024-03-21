@@ -212,6 +212,9 @@ public class Post {
 		//numbero of share
 		return string;
 	}
+	public String deletePostToString() {
+		return content + "    "+ datePost;
+	}
 
 }
 

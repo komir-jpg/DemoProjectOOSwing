@@ -113,6 +113,13 @@ public class GroupDAO {
 		preparedstatement.close();
 		return groupResult;
 	}
+	public void deletePartecipant(Group group,String username) throws SQLException {
+		preparedstatement = connection.prepareStatement("delete from progettobd_unina_social_network.partecipa where idGruppo = ? and idUtente = ?");
+		preparedstatement.setString(1, group.getGroupName());
+		preparedstatement.setString(2, username);
+		preparedstatement.executeUpdate();
+		preparedstatement.close();
+	}
 	
 	
 	

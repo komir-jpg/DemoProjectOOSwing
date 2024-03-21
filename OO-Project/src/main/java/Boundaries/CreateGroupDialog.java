@@ -245,7 +245,7 @@ public class CreateGroupDialog extends JDialog {
 	
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
-		}
+	}
 	private void ShowInfoMassage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}

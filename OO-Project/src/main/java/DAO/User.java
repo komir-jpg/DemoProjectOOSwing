@@ -236,11 +236,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "nome->"+this.name+"\r\n"+
-			   "cognome->"+this.surname+"\r\n"+
-			   "sesso->"+this.sex+"\r\n"+
-			   "username->"+this.userName+"\r\n"+
-			   "email->"+this.email;
+		return userName;
 	}
 
 

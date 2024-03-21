@@ -68,6 +68,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.MenuListener;
+import javax.swing.event.MenuEvent;
 
 public class HomePage extends JFrame {
 
@@ -233,6 +235,14 @@ public class HomePage extends JFrame {
 		menuBar.add(mnDeleteMenu);
 		
 		mntmDeleteMsgMenuItem = new JMenuItem("Elimina messaggio");
+		mntmDeleteMsgMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(adminGroupList.getSelectedIndex() != -1 || GroupTabList.getSelectedIndex() != -1)
+					controller.deleteMessageDialog();
+				else
+					ShowMessage("Errore", "devi prima selezionare un gruppo");
+			}
+		});
 		mntmDeleteMsgMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mntmDeleteMsgMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-delete-message-1167872.png"));
 		mnDeleteMenu.add(mntmDeleteMsgMenuItem);
@@ -259,6 +269,20 @@ public class HomePage extends JFrame {
 		mnGroupMenu.add(mntmCreateGroupMenuItem);
 		
 		mntmLeaveGroupMenuItem = new JMenuItem("Abbandona gruppo");
+		mntmLeaveGroupMenuItem.setEnabled(false);
+		mntmLeaveGroupMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(GroupTabList.getSelectedValue() != null) {
+						leaveGroup();
+					}else
+						ShowMessage("Errore", "devi selezionare prima un gruppo");
+				} catch (SQLException e1) {
+					ShowMessage("Errore", "OPS! Qualcosa è andato storto");
+					e1.printStackTrace();
+				}
+			}
+		});
 		mntmLeaveGroupMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mntmLeaveGroupMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\leaveGroup.png"));
 		mnGroupMenu.add(mntmLeaveGroupMenuItem);
@@ -310,6 +334,11 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeleteGroupItem);
 		
 		mntmDeletePartecipantItem = new JMenuItem("elimina partecipante");
+		mntmDeletePartecipantItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.deletePartecipantDialog();
+			}
+		});
 		mntmDeletePartecipantItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mnGroupManagmentMenu.add(mntmDeletePartecipantItem);
 		
@@ -355,7 +384,6 @@ public class HomePage extends JFrame {
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(tabbedPane.getSelectedIndex() == 0) { 
-					mnGroupManagmentMenu.setEnabled(false);
 					GroupTabList.clearSelection();
 					btnSend.setEnabled(false);
 				}
@@ -434,6 +462,7 @@ public class HomePage extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()) {
 					btnSend.setEnabled(true);
+					mntmLeaveGroupMenuItem.setEnabled(true);
 					try {
 						textArea.setText("");
 						controller.selectedGroup(GroupTabList.getSelectedValue());
@@ -458,6 +487,7 @@ public class HomePage extends JFrame {
 				mnGroupManagmentMenu.setEnabled(true);
 				if(e.getValueIsAdjusting()) {
 					btnSend.setEnabled(true);
+					mntmLeaveGroupMenuItem.setEnabled(false);
 					try {
 						textArea.setText("");
 						controller.selectedGroup(adminGroupList.getSelectedValue());
@@ -612,5 +642,14 @@ public class HomePage extends JFrame {
 		post = controller.newPost(message);
 		textArea.append(post);
 		textArea.append("\n\n");
+	}
+	private void leaveGroup() throws SQLException {
+		int userInput;
+		userInput = JOptionPane.showConfirmDialog(this, "sicuro di voler lasciare il gruppo?", "abbandona", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(userInput == 0) {
+			controller.leaveGroup();
+			ShowInfoMassage("info", "hai abbandonato il gruppo");
+		}
+		
 	}
 }
