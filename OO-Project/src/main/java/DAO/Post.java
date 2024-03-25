@@ -202,18 +202,19 @@ public class Post {
 		postShare.add(share);
 		
 	}
+	 
 
 	@Override
 	public String toString() {
 		String string = author.getUserName()+": "+datePost+"\n"+
 						content+"\r";
-		//number of Likes 
-		//number of comments
-		//numbero of share
 		return string;
 	}
 	public String deletePostToString() {
 		return content + "    "+ datePost;
+	}
+	public String deletePostAdminToString() {
+		return author + "    "+content+"    "+datePost;
 	}
 
 }

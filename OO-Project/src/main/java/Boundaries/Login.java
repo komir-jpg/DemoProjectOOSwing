@@ -1,15 +1,12 @@
 package Boundaries;
 import ExceptionPackage.*;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,28 +16,19 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.ActionMap;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Cursor;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
 
 import Controllers.LoginController;
-import DAO.*;
-
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
 
 public class Login extends JFrame {
 

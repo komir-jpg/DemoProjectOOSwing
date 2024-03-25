@@ -8,14 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.postgresql.util.PSQLException;
-
 import Controllers.*;
-import ExceptionPackage.DBconnectionError;
-
-import java.awt.Dialog.ModalityType;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -23,18 +16,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import java.awt.Choice;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JScrollPane;

@@ -23,15 +23,11 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.Dialog.ModalityType;
-import javax.swing.ListSelectionModel;
 
 public class RequestGroupDialog extends JDialog {
 

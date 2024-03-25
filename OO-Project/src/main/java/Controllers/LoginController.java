@@ -2,41 +2,20 @@ package Controllers;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import Boundaries.CreateGroupDialog;
-import Boundaries.HomePage;
 import Boundaries.Login;
-import Boundaries.RegisterUserFrame;
-import Boundaries.SearchTagDialog;
 import DAO.*;
-import ExceptionPackage.DBconnectionError;
 
 public class LoginController {
 	private Login loginFrame;
-	private HomePage homePageFrame;
-	private RegisterUserFrame RegisterFrame;
-	private CreateGroupDialog createGroupDialog;
-	private SearchTagDialog searchTagDialog;
 	private User LogInUser;
-	private Connection connection;
-	private User user;
 	private UserDAO userDao;
-	private Post post;
-	private PostDAO postDAO;
-	private RegisterUserController registerController;
-	private HomePageController homePageController;
 	
 	
 	
@@ -57,7 +36,7 @@ public class LoginController {
 //	}
 	
 	public void setHomePageFrame(JFrame frame) {
-		homePageController = new HomePageController(frame,LogInUser);
+		new HomePageController(frame,LogInUser);
 	}
 	public void setLoginFrameVisible(){
 		loginFrame.setVisible(true);
@@ -68,7 +47,7 @@ public class LoginController {
 //		homePageFrame.setVisible(true);
 //	}
 	public void setRegisterFrame(JFrame frame) {
-		registerController = new RegisterUserController(frame,this);
+		new RegisterUserController(frame,this);
 	}
 	
 	public void setLoginFrame(JFrame frame) {
@@ -252,6 +231,7 @@ public class LoginController {
 		return false;
 	
 	}
+	//implementazione controllo credenziali più semplice
 	
 	
 }

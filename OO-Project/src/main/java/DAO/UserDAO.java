@@ -1,20 +1,11 @@
 package DAO;
 
-import java.io.IOException;
-import java.lang.reflect.Executable;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import ExceptionPackage.DBconnectionError;
 
 public class UserDAO {
 	

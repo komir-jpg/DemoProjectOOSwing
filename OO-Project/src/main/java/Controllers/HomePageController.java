@@ -2,13 +2,8 @@ package Controllers;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Iterator;
 
 import javax.swing.JDialog;
@@ -44,7 +39,10 @@ public class HomePageController {
 	}
 	
 	public void setGroupRequestDialog() {
-		new GroupRequestsController(homePageFrame,groupSelected,this);
+		new GroupRequestsController(homePageFrame,groupSelected);
+	}
+	public void setInsightsFrame() {
+		new InsightsController(homePageFrame, groupSelected);
 	}
 
 	private Point GetFramePosition(JFrame frame) {
@@ -163,6 +161,7 @@ public class HomePageController {
 		ArrayList<String>groupsToString = listToString(groups);
 		return groupsToString;
 	}
+	//refactor
 	public ArrayList<String> getGroupPosts() throws SQLException{
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> post = new ArrayList<Post>(); 
@@ -256,7 +255,7 @@ public class HomePageController {
 		
 	}
 	public ArrayList<String> showGroup(String selectedTag) throws SQLException {
-		ArrayList<String> tagList = new ArrayList<>();
+		ArrayList<String> tagList = new ArrayList<String>();
 		ArrayList<Group> group = new ArrayList<Group>();
 		group = getGroupFromTag(selectedTag);
 		Iterator<Group> groupIterator = group.iterator();
@@ -282,9 +281,16 @@ public class HomePageController {
 	public void deleteMessageDialog() {
 		new DeleteMessageController(homePageFrame, groupSelected, loginUser);
 	}
+	public void deleteMessageAdminDialog() {
+		new DeleteMessageAdminController(homePageFrame, groupSelected, loginUser);
+	}
 	public void leaveGroup() throws SQLException {
 		GroupDAO groupDAO = new GroupDAO();
 		groupDAO.deletePartecipant(groupSelected, loginUser.getUserName());
+	}
+	public void deleteLastMessage() throws SQLException {
+		PostDAO postDAO = new PostDAO();
+		postDAO.deleteLastMessage(loginUser, groupSelected);
 	}
 	
 }

@@ -1,9 +1,6 @@
 package DAO;
 
-import java.io.IOException;
 import java.util.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Group {
 	private String groupName;

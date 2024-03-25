@@ -16,8 +16,7 @@ public class GroupRequestsController {
 	private HomePageController homePageController;
 	private Group selectedGroup;
 	
-	public GroupRequestsController(JFrame previousFrame,Group selectedGroup,HomePageController homePageController) {
-		this.homePageController = homePageController;
+	public GroupRequestsController(JFrame previousFrame,Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 		setRequestGroup(previousFrame);
 	}

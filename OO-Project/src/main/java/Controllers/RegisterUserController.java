@@ -2,16 +2,9 @@ package Controllers;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import Boundaries.HomePage;
-import Boundaries.Login;
 import Boundaries.RegisterUserFrame;
 import DAO.User;
 import DAO.UserDAO;

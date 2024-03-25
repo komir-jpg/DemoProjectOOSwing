@@ -3,8 +3,6 @@ import ExceptionPackage.DBconnectionError;
 import ExceptionPackage.InvalidInsertion;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,62 +12,36 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListModel;
-import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
 import javax.swing.JMenu;
-import java.awt.Button;
-import javax.swing.JTextPane;
 import javax.swing.JTextField;
-import java.awt.ScrollPane;
-import java.awt.TextArea;
 import javax.swing.JTextArea;
-import javax.swing.JFormattedTextField;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JTabbedPane;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.sanctionco.jmail.net.InvalidAddressException;
-
 import Controllers.HomePageController;
-import Controllers.LoginController;
-import DAO.*;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import java.awt.SystemColor;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.MenuListener;
-import javax.swing.event.MenuEvent;
 
 public class HomePage extends JFrame {
 
@@ -78,11 +50,9 @@ public class HomePage extends JFrame {
 	private final int minHeigth = 350;
 	private final int minWidth = 640;
 	HomePageController controller;
-	private JTextField textFieldMessage;
 	private JMenuItem mntmCreateGroupMenuItem;
 	private JMenuBar menuBar;
 	private JMenu mnSearchMenu;
-	private JMenuItem mntmSearchUsernameMenuItem;
 	private JMenuItem mntmSearchGroupByTagItem;
 	private JMenuItem mntmSearchGrpupByNameMenuItem;
 	private JMenu mnStatusMenu;
@@ -95,7 +65,6 @@ public class HomePage extends JFrame {
 	private JMenuItem mntmDeleteLastItem;
 	private JMenu mnGroupMenu;
 	private JMenuItem mntmLeaveGroupMenuItem;
-	private JMenuItem mntmSilenceGroupMenuItem;
 	private JList<String> GroupTabList;
 	private JList<String> adminGroupList;
 	private JMenu mnGroupManagmentMenu;
@@ -107,9 +76,11 @@ public class HomePage extends JFrame {
 	private ImageIcon requestFriendshipIcon;
 	private JLabel lblStateLabel;
 	private JLabel lblStatusLabel;
-	private JTextArea textArea;
+	private JTextArea showMessageTextArea;
 	private JButton btnSend;
 	private JTabbedPane tabbedPane;
+	private JMenuItem mntmInsightsMenuItem;
+	private JTextArea sendMessageTextArea;
 	/**
 	 * Launch the application.
 	 */
@@ -126,7 +97,7 @@ public class HomePage extends JFrame {
 		
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 632, 388);
+		setBounds(100, 100, 700, 500);
 		
 		menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -135,21 +106,6 @@ public class HomePage extends JFrame {
 		mnSearchMenu = new JMenu("cerca");
 		mnSearchMenu.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		menuBar.add(mnSearchMenu);
-		
-		mntmSearchUsernameMenuItem = new JMenuItem("Cerca nomeutente");
-		mntmSearchUsernameMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmSearchUsernameMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					showFriendShipDialog();
-				} catch (ClassNotFoundException | SQLException | IOException | RuntimeException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		mntmSearchUsernameMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-contacts-1126684.png"));
-		mnSearchMenu.add(mntmSearchUsernameMenuItem);
 		
 		mntmSearchGroupByTagItem = new JMenuItem("Cerca  tag");
 		mntmSearchGroupByTagItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -167,7 +123,6 @@ public class HomePage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					showSearchDialog();
-					
 				} catch (InvalidInsertion e1) {
 					ShowMessage("Errore", "il nome che hai inserito non corrisponde ad alcun gruppo");
 				} catch (SQLException e1) {
@@ -237,8 +192,10 @@ public class HomePage extends JFrame {
 		mntmDeleteMsgMenuItem = new JMenuItem("Elimina messaggio");
 		mntmDeleteMsgMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(adminGroupList.getSelectedIndex() != -1 || GroupTabList.getSelectedIndex() != -1)
+				if(adminGroupList.getSelectedIndex() != -1 || GroupTabList.getSelectedIndex() != -1) {
 					controller.deleteMessageDialog();
+					showMessageTextArea.repaint();
+				}
 				else
 					ShowMessage("Errore", "devi prima selezionare un gruppo");
 			}
@@ -248,6 +205,20 @@ public class HomePage extends JFrame {
 		mnDeleteMenu.add(mntmDeleteMsgMenuItem);
 		
 		mntmDeleteLastItem = new JMenuItem("Elimina ultimo messaggio");
+		mntmDeleteLastItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(GroupTabList.getSelectedIndex() != -1 || adminGroupList.getSelectedIndex() != -1)
+					try {
+						deleteLastMessage();
+						showMessageTextArea.repaint();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+						ShowMessage("Errore", "OPS! Qualcosa è andato storto");
+					}
+				else
+					ShowMessage("Errore","devi selezionare prima un gruppo");
+			}
+		});
 		mntmDeleteLastItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mntmDeleteLastItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-delete-message-1167872.png"));
 		mnDeleteMenu.add(mntmDeleteLastItem);
@@ -287,12 +258,6 @@ public class HomePage extends JFrame {
 		mntmLeaveGroupMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\leaveGroup.png"));
 		mnGroupMenu.add(mntmLeaveGroupMenuItem);
 		
-		mntmSilenceGroupMenuItem = new JMenuItem("Silenzia gruppo");
-		mntmSilenceGroupMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmSilenceGroupMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-mute-1126720.png"));
-		mntmSilenceGroupMenuItem.setSelectedIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-mute-1076301.png"));
-		mnGroupMenu.add(mntmSilenceGroupMenuItem);
-		
 		mnGroupManagmentMenu = new JMenu("gestione gruppo");
 		mnGroupManagmentMenu.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mnGroupManagmentMenu.setEnabled(false);
@@ -320,7 +285,7 @@ public class HomePage extends JFrame {
 				if(result == 0 && selectedValue != null) {
 					try {
 						controller.deleteGroup();
-						textArea.setText("");
+						showMessageTextArea.setText("");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 						ShowMessage("Errore", "OPS! Qualcosa è andato storto nella cancellazione del gruppo");
@@ -343,8 +308,23 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeletePartecipantItem);
 		
 		mntmDeleteMessageItem = new JMenuItem("elimina messaggio");
-		mntmDeleteMessageItem.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 12));
+		mntmDeleteMessageItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.deleteMessageAdminDialog();
+				showMessageTextArea.repaint();
+			}
+		});
+		mntmDeleteMessageItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mnGroupManagmentMenu.add(mntmDeleteMessageItem);
+		
+		mntmInsightsMenuItem = new JMenuItem("insigths");
+		mntmInsightsMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setInsightsFrame();
+			}
+		});
+		mntmInsightsMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+		mnGroupManagmentMenu.add(mntmInsightsMenuItem);
 		
 		
 		contentPane = new JPanel();
@@ -357,17 +337,14 @@ public class HomePage extends JFrame {
 		JLabel GroupLabel = new JLabel("Gruppi");
 		GroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
 		
-		textFieldMessage = new JTextField();
-		textFieldMessage.setColumns(10);
-		
 		btnSend = new JButton("invia");
 		btnSend.setEnabled(false);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!textFieldMessage.getText().isBlank())
+				if(!sendMessageTextArea.getText().isBlank())
 					try {
-						sendTextToScreen(textFieldMessage.getText());
-						textFieldMessage.setText(null);
+						sendTextToScreen(sendMessageTextArea.getText());
+						sendMessageTextArea.setText(null);
 					} catch (SQLException e1 ) {
 						e1.printStackTrace();
 						ShowMessage("Errore", "OPS! Qualcosa è andato storto nell'invio del messagio "+e1.getMessage());
@@ -407,6 +384,8 @@ public class HomePage extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -417,16 +396,16 @@ public class HomePage extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 							.addGap(46)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPane)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 									.addComponent(lblStateLabel)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(lblStatusLabel))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(textFieldMessage, GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnSend))
-								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))))
+									.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -440,22 +419,25 @@ public class HomePage extends JFrame {
 							.addComponent(lblStatusLabel)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(2)
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textFieldMessage, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnSend)
+								.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap())
 		);
 		
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		textArea.setLineWrap(true);
-		scrollPane.setViewportView(textArea);
+		sendMessageTextArea = new JTextArea();
+		sendMessageTextArea.setColumns(10);
+		scrollPane_1.setViewportView(sendMessageTextArea);
+		
+		showMessageTextArea = new JTextArea();
+		showMessageTextArea.setEditable(false);
+		showMessageTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+		showMessageTextArea.setLineWrap(true);
+		scrollPane.setViewportView(showMessageTextArea);
 		
 		GroupTabList = new JList<String>();
 		GroupTabList.addListSelectionListener(new ListSelectionListener() {
@@ -463,8 +445,9 @@ public class HomePage extends JFrame {
 				if(e.getValueIsAdjusting()) {
 					btnSend.setEnabled(true);
 					mntmLeaveGroupMenuItem.setEnabled(true);
+					mnGroupManagmentMenu.setEnabled(false);
 					try {
-						textArea.setText("");
+						showMessageTextArea.setText("");
 						controller.selectedGroup(GroupTabList.getSelectedValue());
 						showGroupPosts();
 					} catch (SQLException e1) {
@@ -488,8 +471,9 @@ public class HomePage extends JFrame {
 				if(e.getValueIsAdjusting()) {
 					btnSend.setEnabled(true);
 					mntmLeaveGroupMenuItem.setEnabled(false);
+					mnGroupManagmentMenu.setEnabled(true);
 					try {
-						textArea.setText("");
+						showMessageTextArea.setText("");
 						controller.selectedGroup(adminGroupList.getSelectedValue());
 						showGroupPosts();
 					} catch (SQLException e1) {
@@ -624,8 +608,8 @@ public class HomePage extends JFrame {
 		Iterator<String> postIterator = post.iterator();
 		while(postIterator.hasNext()) {
 			String currentPost = postIterator.next();
-				textArea.append(currentPost);
-				textArea.append("\n\n");
+				showMessageTextArea.append(currentPost);
+				showMessageTextArea.append("\n\n");
 			}
 			
 	}
@@ -640,8 +624,8 @@ public class HomePage extends JFrame {
 	private void sendTextToScreen(String message) throws SQLException {
 		String post;
 		post = controller.newPost(message);
-		textArea.append(post);
-		textArea.append("\n\n");
+		showMessageTextArea.append(post);
+		showMessageTextArea.append("\n\n");
 	}
 	private void leaveGroup() throws SQLException {
 		int userInput;
@@ -650,6 +634,12 @@ public class HomePage extends JFrame {
 			controller.leaveGroup();
 			ShowInfoMassage("info", "hai abbandonato il gruppo");
 		}
-		
+	}
+	private void deleteLastMessage() throws SQLException {
+		int userInput;
+		userInput = JOptionPane.showConfirmDialog(this, "vuoi eliminare il tuo ultimo messaggio?","elimina messaggio",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+		if(userInput == 0) {
+			controller.deleteLastMessage();
+		}
 	}
 }

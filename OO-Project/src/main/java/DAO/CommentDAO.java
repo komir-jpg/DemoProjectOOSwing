@@ -1,17 +1,13 @@
 package DAO;
 
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-
-import javax.naming.spi.DirStateFactory.Result;
 
 public class CommentDAO {
 	

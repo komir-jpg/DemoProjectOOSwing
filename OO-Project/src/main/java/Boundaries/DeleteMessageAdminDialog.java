@@ -2,77 +2,84 @@ package Boundaries;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controllers.DeleteMessageController;
+import Controllers.*;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
-public class DeleteMessageDialog extends JDialog {
+public class DeleteMessageAdminDialog extends JDialog{
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private DeleteMessageController controller;
-	private JList<String> messageList;
+	DeleteMessageAdminController controller;
+	JList<String> deleteMessageList;
 
 	/**
 	 * Launch the application.
 	 */
 	
-
 	/**
 	 * Create the dialog.
 	 */
-	public DeleteMessageDialog(DeleteMessageController myController) {
+	public DeleteMessageAdminDialog(DeleteMessageAdminController myController) {
+		setMinimumSize(new Dimension(455, 306));
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		controller = myController;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				try {
-					messageList.setModel(setUserMessages());
-					messageList.setCellRenderer(new DefaultListCellRenderer());
+					deleteMessageList.setModel(setListModel());
+					deleteMessageList.setCellRenderer(new DefaultListCellRenderer());
 				} catch (SQLException e1) {
-					ShowMessage("Errore", "OPS! Qualcosa è andato storto");
 					e1.printStackTrace();
+					ShowMessage("Errore", "OPS! Qualcosa è andato storto");
 				}
-				
 			}
 		});
-		controller = myController;
-		setBounds(100, 100, 450, 300);
+		
+		setBounds(100, 100, 455, 306);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		messageList = new JList<String>();
+		
+		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(messageList, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(25)
-					.addComponent(messageList, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		
+		deleteMessageList = new JList<String>();
+		scrollPane.setViewportView(deleteMessageList);
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
@@ -82,13 +89,13 @@ public class DeleteMessageDialog extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String[] splltedString = splitMessageString(messageList.getSelectedValue());
+						String[] splittedString = splitMessageString(deleteMessageList.getSelectedValue());
 						try {
-							deleteMessage(splltedString);
-							ShowInfoMassage("Messaggio eliminato", "messaggio eliminato con successo");
+							deleteMessage(splittedString);
+							ShowInfoMassage("Messsaggio eliminato", "messaggio eliminato con successo");
 						} catch (SQLException e1) {
+							ShowMessage("Errore", "OPS! qualcosa è andato storto");
 							e1.printStackTrace();
-							ShowMessage("Error", "OPS! Qualcosa è andato storto");
 						}
 					}
 				});
@@ -108,10 +115,21 @@ public class DeleteMessageDialog extends JDialog {
 			}
 		}
 	}
-	private DefaultListModel<String>setUserMessages() throws SQLException{
+	private DefaultListModel<String> setListModel() throws SQLException{
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		listModel.addAll(controller.showUserMessages());
+		listModel.addAll(controller.showMessages());
 		return listModel;
+	}
+	private String[] splitMessageString(String selectedMessage) {
+		String messageString = selectedMessage;
+		String[] splittedString = messageString.split("    ");
+		return splittedString;
+	}
+	private void deleteMessage(String[] splittedString) throws SQLException {
+		String user = splittedString[0];
+		String message = splittedString[1];
+		String date = splittedString[2];
+		controller.deleteMessage(user, message, date);
 	}
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
@@ -119,16 +137,4 @@ public class DeleteMessageDialog extends JDialog {
 	private void ShowInfoMassage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
-	private String[] splitMessageString(String selectedMessage){
-		String messageString = selectedMessage;
-		String[] splittedString = messageString.split("    ");
-		return splittedString;
-	}
-	private void deleteMessage(String[] splittedString) throws SQLException {
-		String message = splittedString[0];
-		String date = splittedString[1];
-		controller.deleteMessage(message,date);
-		
-	}
-
 }

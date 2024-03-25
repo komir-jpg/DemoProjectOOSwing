@@ -2,8 +2,6 @@ package Boundaries;
 import ExceptionPackage.*;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,35 +16,18 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.JCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
-
 import com.sanctionco.jmail.InvalidEmailException;
 import com.sanctionco.jmail.JMail;
 
 import Controllers.RegisterUserController;
-import DAO.*;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JFormattedTextField;
-import javax.swing.UIManager;
-import java.awt.SystemColor;
 
 public class RegisterUserFrame extends JFrame {
 

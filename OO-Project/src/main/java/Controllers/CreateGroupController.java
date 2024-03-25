@@ -1,8 +1,6 @@
 package Controllers;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -41,22 +39,10 @@ public class CreateGroupController {
 		point = frame.getLocationOnScreen();
 		return point;
 	}
-	private void SetFramePosition(JFrame frame,Point point) {
-		frame.setLocation(point);
-	}
+	
 	private void SetFramePosition(JDialog dialog,Point point) {
 		dialog.setLocation(point);
 	}
-	
-	private Dimension GetFrameSize(JFrame frame) {
-		Dimension dimension;
-		dimension = frame.getSize();
-		return dimension;
-	}
-	private void SetFrameSize(JFrame frame,Dimension dimension) {
-		frame.setSize(dimension);
-	}
-	
 	
 	
 	

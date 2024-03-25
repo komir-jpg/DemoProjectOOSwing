@@ -15,19 +15,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
-import javax.swing.SwingConstants;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Dialog.ModalityType;
 
 public class DeletePartecipantDialog extends JDialog {
 

@@ -38,7 +38,6 @@ import ExceptionPackage.DBconnectionError;
 import java.awt.SystemColor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JCheckBox;
 
 public class CreateGroupDialog extends JDialog {
 
