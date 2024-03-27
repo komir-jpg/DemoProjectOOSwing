@@ -42,7 +42,7 @@ public class HomePageController {
 		new GroupRequestsController(homePageFrame,groupSelected);
 	}
 	public void setInsightsFrame() {
-		new InsightsController(homePageFrame, groupSelected);
+		new InsightsController(homePageFrame, groupSelected,loginUser);
 	}
 
 	private Point GetFramePosition(JFrame frame) {

@@ -201,6 +201,7 @@ public class PostDAO{
 				post.setPostComment(new CommentDAO().getCommentByPost(post));;
 				postResult.add(post);
 			}
+			preparedstatement.close();
 			return postResult;
 		}
 			
@@ -232,18 +233,118 @@ public class PostDAO{
 			preparedstatement.executeUpdate();
 			preparedstatement.close();
 		}
-		public ArrayList<Post> getPostsByMonth(int month,Group group) throws SQLException{
+		public ArrayList<Post> getPostsMostNuberOfLikes(int month,Group group) throws SQLException{
 			getPostByMonthFunction(month, group);
-			statement = connection.createStatement();
-			statement.executeUpdate("select * from progettobd_unina_social_network.postbuffertable");
-			statement.close();
-			
+			preparedstatement = connection.prepareStatement("select * from progettobd_unina_social_network.postbuffertable as p where numerolike = (select max(numerolike)"
+																																				+ " from progettobd_unina_social_network.postbuffertable);");
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setNumberOfLikes(queryRS.getInt("numerolike"));
+				post.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+				post.setNumberOfComments(queryRS.getInt("numerocommenti"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(group);
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
+				postResult.add(post);
+			}
+			preparedstatement.close();
+			return postResult;
 		}
+			
 		public void getPostByMonthFunction(int month,Group group) throws SQLException {
 			callablestatement = connection.prepareCall("{call progettobd_unina_social_network.getpostbymonth(?,?)}");
 			callablestatement.setInt(1, month);
 			callablestatement.setString(2, group.getGroupName());
 			callablestatement.execute();
 			callablestatement.close();
+		}
+
+
+		public ArrayList<Post> getPostsMostNuberOfComments(int month, Group group) throws SQLException {
+			getPostByMonthFunction(month, group);
+			preparedstatement = connection.prepareStatement("select * from progettobd_unina_social_network.postbuffertable as p where numerocommenti = (select max(numerocommenti)"
+																																				+ " from progettobd_unina_social_network.postbuffertable);");
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setNumberOfLikes(queryRS.getInt("numerolike"));
+				post.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+				post.setNumberOfComments(queryRS.getInt("numerocommenti"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(group);
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
+				postResult.add(post);
+			}
+			preparedstatement.close();
+			return postResult;
+		}
+
+
+		public ArrayList<Post> getPostsLeastNuberOfLikes(int month, Group group) throws SQLException {
+			getPostByMonthFunction(month, group);
+			preparedstatement = connection.prepareStatement("select * from progettobd_unina_social_network.postbuffertable as p where numerolike = (select min(numerolike)"
+																																				+ " from progettobd_unina_social_network.postbuffertable);");
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setNumberOfLikes(queryRS.getInt("numerolike"));
+				post.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+				post.setNumberOfComments(queryRS.getInt("numerocommenti"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(group);
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
+				postResult.add(post);
+			}
+			preparedstatement.close();
+			return postResult;
+		}
+
+
+		public ArrayList<Post> getPostsLeastNuberOfComments(int month, Group group) throws SQLException {
+			getPostByMonthFunction(month, group);
+			preparedstatement = connection.prepareStatement("select * from progettobd_unina_social_network.postbuffertable as p where numerocommenti = (select min(numerocommenti)"
+																																				+ " from progettobd_unina_social_network.postbuffertable);");
+			ResultSet queryRS = preparedstatement.executeQuery();
+			ArrayList<Post> postResult = new ArrayList<Post>();
+			while(queryRS.next()) {
+				Post post = new Post();
+				post.setContent(queryRS.getString("contenuto"));
+				post.setIdPost(queryRS.getInt("idPost"));
+				post.setDatePost(queryRS.getTimestamp("datapost"));
+				post.setTypeOfPost(queryRS.getString("tipoPost"));
+				post.setNumberOfLikes(queryRS.getInt("numerolike"));
+				post.setNumberOfShare(queryRS.getInt("numerocondivisioni"));
+				post.setNumberOfComments(queryRS.getInt("numerocommenti"));
+				post.setEliminatedPost(queryRS.getBoolean("posteliminato"));
+				post.setGroup(group);
+				post.setAuthor(new UserDAO().getUserbyUsername(queryRS.getString("autorepost")));
+				post.setPostLikes(new LikeDAO().getLikesByPost(post));
+				post.setPostComment(new CommentDAO().getCommentByPost(post));;
+				postResult.add(post);
+			}
+			preparedstatement.close();
+			return postResult;
 		}
 }

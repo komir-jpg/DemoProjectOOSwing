@@ -210,19 +210,32 @@ public class Post {
 						content+"\r";
 		return string;
 	}
+	public String toStringLikes() {
+		String string = author.getUserName()+": "+datePost+"\n"+
+				content+"\r\n"+"numero di like: "+numberOfLikes+"\r\n";
+		return string;
+	}
+	public String toStringComments() {
+		String string = author.getUserName()+": "+datePost+"\n"+
+				content+"\r\n"+"numero di commenti: "+numberOfComments+"\r\n";
+		return string;
+	}
 	public String deletePostToString() {
 		return content + "    "+ datePost;
 	}
 	public String deletePostAdminToString() {
 		return author + "    "+content+"    "+datePost;
 	}
-	public Post compareNumberOfLikes(Post post)
+	public Post compareNumberOfLikes(ArrayList<Post> postList)
 	{
-		if(this.numberOfLikes > post.numberOfLikes)
-			return this;
-		else
-			return post;
-		
+		Post returnedPost = new Post();
+		for(Post p : postList) {
+			if(this.numberOfLikes > p.numberOfLikes)
+				returnedPost = this;
+			else
+				returnedPost = p;
+		}
+		return returnedPost;
 	}
 
 }
