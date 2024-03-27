@@ -103,4 +103,9 @@ public class InsightsController {
 		groupsToString = listToString(groups);
 		return groupsToString;
 	}
+
+	public void setSelectedGroup(String selectedItem) throws SQLException {
+		GroupDAO groupDAO = new GroupDAO();
+		groupSelected = groupDAO.GetGroupByName(selectedItem);
+	}
 }

@@ -21,7 +21,10 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
+
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 
 import java.time.Month;
@@ -43,6 +46,7 @@ public class InsightsFrame extends JFrame {
 	private JTextArea leastCommentedPostTextArea;
 	private JTextArea leastLikedPostTextArea;
 	private JTextArea mostCommentedPostTextArea;
+	private JComboBox<String> GroupComboBox;
 	private JComboBox<String> comboBox;
 
 	/**
@@ -57,12 +61,6 @@ public class InsightsFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public InsightsFrame(InsightsController myController) {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated(WindowEvent e) {
-				
-			}
-		});
 		setMaximumSize(new Dimension(1440, 1080));
 		setMinimumSize(new Dimension(400, 300));
 		controller = myController;
@@ -83,10 +81,8 @@ public class InsightsFrame extends JFrame {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					setMostLikedPost(comboBox.getSelectedIndex()+1);
-					setMostCommentedPost(comboBox.getSelectedIndex()+1);
-					setLeastCommentedPost(comboBox.getSelectedIndex()+1);
-					setLeastLikedPost(comboBox.getSelectedIndex()+1);
+					int month = comboBox.getSelectedIndex()+1;
+					setInsights(month);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -118,7 +114,21 @@ public class InsightsFrame extends JFrame {
 		JLabel lblNewLabel_6 = new JLabel("gruppo selezionato");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		try {
+			GroupComboBox = new JComboBox<String>(setGroupModel());
+			GroupComboBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						controller.setSelectedGroup((String)GroupComboBox.getSelectedItem());
+						setInsights(comboBox.getSelectedIndex()+1);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -138,7 +148,7 @@ public class InsightsFrame extends JFrame {
 									.addGap(163)
 									.addComponent(lblNewLabel_6)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addComponent(GroupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblNewLabel_4)
@@ -163,7 +173,7 @@ public class InsightsFrame extends JFrame {
 						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_6)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(GroupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addComponent(lblNewLabel_1)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -189,10 +199,10 @@ public class InsightsFrame extends JFrame {
 		);
 		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
 		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel, lblNewLabel_6});
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, comboBox_1});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, GroupComboBox});
 		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
 		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblNewLabel, lblNewLabel_6});
-		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {comboBox, comboBox_1});
+		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {comboBox, GroupComboBox});
 		
 		mostCommentedPostTextArea = new JTextArea();
 		scrollPane_4.setViewportView(mostCommentedPostTextArea);
@@ -235,8 +245,16 @@ public class InsightsFrame extends JFrame {
 			leastCommentedPostTextArea.setText(s);
 		}
 	}
-	private DefaultListModel<String> setGroupMmodel(){
-		DefaultListModel<String> model = new DefaultListModel<String>();
-		model = controller.getGroupAdminList();
+	private String[] setGroupModel() throws SQLException{
+		ArrayList<String> list = controller.getUserAdminGroups();
+		String[] array = new String[list.size()];
+		list.toArray(array);
+		return array;
+	}
+	private void setInsights(int month) throws SQLException {
+		setMostLikedPost(month);
+		setMostCommentedPost(month);
+		setLeastCommentedPost(month);
+		setLeastLikedPost(month);
 	}
 }
