@@ -232,4 +232,18 @@ public class PostDAO{
 			preparedstatement.executeUpdate();
 			preparedstatement.close();
 		}
+		public ArrayList<Post> getPostsByMonth(int month,Group group) throws SQLException{
+			getPostByMonthFunction(month, group);
+			statement = connection.createStatement();
+			statement.executeUpdate("select * from progettobd_unina_social_network.postbuffertable");
+			statement.close();
+			
+		}
+		public void getPostByMonthFunction(int month,Group group) throws SQLException {
+			callablestatement = connection.prepareCall("{call progettobd_unina_social_network.getpostbymonth(?,?)}");
+			callablestatement.setInt(1, month);
+			callablestatement.setString(2, group.getGroupName());
+			callablestatement.execute();
+			callablestatement.close();
+		}
 }

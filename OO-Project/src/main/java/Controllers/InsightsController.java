@@ -17,7 +17,6 @@ public class InsightsController {
 	public InsightsController(JFrame previousFrame,Group groupSelected) {
 		this.groupSelected = groupSelected;
 		setInsightsFrame(previousFrame);
-		System.out.println(this.groupSelected);
 	}
 	
 	public void setInsightsFrame(JFrame previousFrame) {

@@ -19,6 +19,10 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
+import javax.swing.DefaultComboBoxModel;
+import java.time.Month;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class InsightsFrame extends JFrame {
 
@@ -26,6 +30,7 @@ public class InsightsFrame extends JFrame {
 	private JPanel contentPane;
 	private JScrollPane scrPane;
 	private InsightsController controller;
+	JComboBox<String> comboBox;
 
 	/**
 	 * Launch the application.
@@ -53,7 +58,13 @@ public class InsightsFrame extends JFrame {
 
 		setContentPane(scrPane);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(comboBox.getSelectedIndex()+1);
+			}
+		});
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre ", "Novembre", "Dicembre"}));
 		
 		JLabel lblNewLabel = new JLabel("mese di riferimento");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);

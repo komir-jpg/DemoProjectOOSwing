@@ -216,6 +216,14 @@ public class Post {
 	public String deletePostAdminToString() {
 		return author + "    "+content+"    "+datePost;
 	}
+	public Post compareNumberOfLikes(Post post)
+	{
+		if(this.numberOfLikes > post.numberOfLikes)
+			return this;
+		else
+			return post;
+		
+	}
 
 }
 
