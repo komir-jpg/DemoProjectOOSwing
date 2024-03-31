@@ -9,14 +9,18 @@ import java.util.Iterator;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import org.jfree.chart.ChartFrame;
+
 import Boundaries.InsightsFrame;
 import DAO.*;
+import utils.GroupChart;
 
 public class InsightsController {
 	
-	InsightsFrame insightsFrame;
-	Group groupSelected;
-	User loggedUser;
+	private InsightsFrame insightsFrame;
+	private Group groupSelected;
+	private User loggedUser;
+	private ChartFrame currentChart;
 	
 	public InsightsController(JFrame previousFrame,Group groupSelected,User loggedUser) {
 		this.groupSelected = groupSelected;
@@ -27,7 +31,7 @@ public class InsightsController {
 	public void setInsightsFrame(JFrame previousFrame) {
 		insightsFrame = new InsightsFrame(this);
 		SetFramePositionOffset(insightsFrame, GetFramePosition(previousFrame));
-		SetFrameSize(insightsFrame, GetFrameSize(previousFrame));
+		SetFrameSize(insightsFrame, new Dimension(1240,800));
 		insightsFrame.setVisible(true);
 	}
 	
@@ -107,5 +111,25 @@ public class InsightsController {
 	public void setSelectedGroup(String selectedItem) throws SQLException {
 		GroupDAO groupDAO = new GroupDAO();
 		groupSelected = groupDAO.GetGroupByName(selectedItem);
+	}
+	public String getSelectedGroup() {
+		return groupSelected.getGroupName();
+	}
+	private void setChart(String groupName) throws SQLException {
+		GroupChart groupChart = new GroupChart();
+		currentChart = groupChart.getChart(groupName);
+		currentChart.pack();
+		currentChart.setVisible(true);
+	}
+	private void disposeChart() {
+		currentChart.dispose();
+	}
+	public void showChart(String groupName) throws SQLException {
+		if(currentChart != null) {
+			disposeChart();
+			setChart(groupName);
+		}
+		else
+			setChart(groupName);
 	}
 }

@@ -49,7 +49,7 @@ public class HomePage extends JFrame {
 	private JPanel contentPane;
 	private final int minHeigth = 350;
 	private final int minWidth = 640;
-	HomePageController controller;
+	private HomePageController controller;
 	private JMenuItem mntmCreateGroupMenuItem;
 	private JMenuBar menuBar;
 	private JMenu mnSearchMenu;
@@ -73,7 +73,6 @@ public class HomePage extends JFrame {
 	private JMenuItem mntmDeletePartecipantItem;
 	private JMenuItem mntmDeleteMessageItem;
 	private ImageIcon searchIcon;
-	private ImageIcon requestFriendshipIcon;
 	private JLabel lblStateLabel;
 	private JLabel lblStatusLabel;
 	private JTextArea showMessageTextArea;
@@ -570,39 +569,9 @@ public class HomePage extends JFrame {
 		else
 			showSearchDialog();	
 	}
-	private void showFriendShipDialog() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		requestFriendshipIcon = new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-contacts-1126684.png");
-		String userInput = (String) JOptionPane.showInputDialog(this,"nome dell'utente","cerca",JOptionPane.DEFAULT_OPTION,requestFriendshipIcon,null,null);
-		if(userInput != null) {
-			checkUser(userInput);
-			
-		}
 	
-			
-	}
-	private void checkUser(String userInput) throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		boolean result;
-		result = controller.checkUser(userInput);
-		if(result) {
-			requestFriendshipDialog();
-		}
-		else
-			ShowMessage("Errore", "lo username inserito non esiste");
-	}
-	private void requestFriendshipDialog() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
-		int result;
-		result = JOptionPane.showConfirmDialog(this,"vuoi inviare una richiesta di amicizia a questo utente?");
-		if(result == 0) {
-			//new friendship request
-		}
-		else if(result == 1)
-			showFriendShipDialog();
-	}
-	private DefaultListModel<String> setGroupPostsListModel() throws SQLException {
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
-		listModel.addAll(controller.getGroupPosts());
-		return listModel;
-	}
+	
+	
 	private void setGroupPosts() throws SQLException {
 		ArrayList<String>post = controller.getGroupPosts();
 		Iterator<String> postIterator = post.iterator();
