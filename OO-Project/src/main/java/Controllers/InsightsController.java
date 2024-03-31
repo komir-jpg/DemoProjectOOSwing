@@ -21,6 +21,7 @@ public class InsightsController {
 	private Group groupSelected;
 	private User loggedUser;
 	private ChartFrame currentChart;
+	private final int ORIZONTAL_OFFSET = 100;
 	
 	public InsightsController(JFrame previousFrame,Group groupSelected,User loggedUser) {
 		this.groupSelected = groupSelected;
@@ -30,18 +31,19 @@ public class InsightsController {
 	
 	public void setInsightsFrame(JFrame previousFrame) {
 		insightsFrame = new InsightsFrame(this);
-		SetFramePositionOffset(insightsFrame, GetFramePosition(previousFrame));
+		SetFramePositionOffset(insightsFrame, GetFrameYPosition(previousFrame));
 		SetFrameSize(insightsFrame, new Dimension(1240,800));
 		insightsFrame.setVisible(true);
 	}
 	
-	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
-		return point;
+	private int GetFrameYPosition(JFrame frame) {
+		int yPoint;
+		yPoint = frame.getY();
+		return yPoint;
 	}
-	private void SetFramePositionOffset(JFrame frame,Point point) {
-		point.move(point.x+100, point.y+100);
+	private void SetFramePositionOffset(JFrame frame,int yPoint) {
+		Point point = new Point();
+		point.move(point.x+ORIZONTAL_OFFSET, yPoint);
 		frame.setLocation(point);
 	}
 	

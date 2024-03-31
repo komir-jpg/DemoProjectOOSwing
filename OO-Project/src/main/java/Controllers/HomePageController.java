@@ -28,7 +28,7 @@ public class HomePageController {
 	public void setHomePageFrame(JFrame previousFrame) {
 		homePageFrame = new HomePage(this);
 		SetFramePosition(homePageFrame, GetFramePosition(previousFrame));
-		SetFrameSize(homePageFrame,GetFrameSize(previousFrame));
+		SetFrameSize(homePageFrame);
 		previousFrame.setVisible(false);
 		previousFrame.dispose();
 		homePageFrame.setVisible(true);
@@ -53,17 +53,14 @@ public class HomePageController {
 	private void SetFramePosition(JFrame frame,Point point) {
 		frame.setLocation(point);
 	}
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
 	
 	private Dimension GetFrameSize(JFrame frame) {
 		Dimension dimension;
 		dimension = frame.getSize();
 		return dimension;
 	}
-	private void SetFrameSize(JFrame frame,Dimension dimension) {
-		frame.setSize(dimension);
+	private void SetFrameSize(JFrame frame) {
+		frame.setSize(1080, 700);
 	}
 	public void setSearchTagDialog() {
 		new SearchTagController(homePageFrame,loginUser);
@@ -291,6 +288,10 @@ public class HomePageController {
 	public void deleteLastMessage() throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		postDAO.deleteLastMessage(loginUser, groupSelected);
+	}
+	public void setLoginScreen() {
+		new LoginController();
+		homePageFrame.dispose();
 	}
 	
 }

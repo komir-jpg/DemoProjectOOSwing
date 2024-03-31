@@ -42,6 +42,8 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class HomePage extends JFrame {
 
@@ -80,6 +82,7 @@ public class HomePage extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JMenuItem mntmInsightsMenuItem;
 	private JTextArea sendMessageTextArea;
+	private JMenuItem mntmNewMenuItem;
 	/**
 	 * Launch the application.
 	 */
@@ -92,8 +95,6 @@ public class HomePage extends JFrame {
 	 * Create the frame.
 	 */
 	public HomePage(HomePageController myController) {
-		
-		
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -183,6 +184,15 @@ public class HomePage extends JFrame {
 		});
 		mntmNotAviableItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-invisible-1126706.png"));
 		mnStatusMenu.add(mntmNotAviableItem);
+		
+		mntmNewMenuItem = new JMenuItem("esci");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setLoginScreen();
+			}
+		});
+		mntmNewMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+		mnStatusMenu.add(mntmNewMenuItem);
 		
 		mnDeleteMenu = new JMenu("elimina");
 		mnDeleteMenu.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
