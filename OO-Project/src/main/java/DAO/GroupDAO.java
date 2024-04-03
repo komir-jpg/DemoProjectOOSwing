@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import Entities.Group;
+import Entities.User;
+import utils.ConnectionToDB;
+
 public class GroupDAO {
 
 	private Connection connection;

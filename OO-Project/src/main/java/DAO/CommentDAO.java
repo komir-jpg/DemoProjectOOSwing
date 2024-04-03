@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import Entities.Comment;
+import Entities.Post;
+import Entities.User;
+import utils.ConnectionToDB;
+
 public class CommentDAO {
 	
 	

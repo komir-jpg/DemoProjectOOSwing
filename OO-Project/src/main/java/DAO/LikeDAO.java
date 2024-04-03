@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import Entities.Like;
+import Entities.Post;
+import Entities.User;
+import utils.ConnectionToDB;
+
 public class LikeDAO{
 	Connection connection;
 	Statement statement;

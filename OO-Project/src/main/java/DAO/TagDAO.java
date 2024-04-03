@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import Entities.Group;
+import Entities.Tag;
+import utils.ConnectionToDB;
+
 public class TagDAO{
 	Connection connection;
 	Statement statement;

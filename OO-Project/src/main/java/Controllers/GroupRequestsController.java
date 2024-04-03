@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 import Boundaries.RequestGroupDialog;
 import DAO.*;
+import Entities.Group;
+import Entities.Request;
 
 public class GroupRequestsController {
 	private RequestGroupDialog groupRequestsDialog;

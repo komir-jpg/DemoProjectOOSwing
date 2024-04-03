@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 import Boundaries.SearchTagDialog;
 import DAO.*;
+import Entities.Request;
+import Entities.User;
 
 public class SearchTagController {
 	SearchTagDialog searchTagDialog;

@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Entities.Post;
+import Entities.User;
+import utils.ConnectionToDB;
+
 public class NotifyDAO {
 
 	Connection connection;
