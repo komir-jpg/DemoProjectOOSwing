@@ -44,6 +44,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.MatteBorder;
 
 public class HomePage extends JFrame {
 
@@ -95,6 +99,7 @@ public class HomePage extends JFrame {
 	 * Create the frame.
 	 */
 	public HomePage(HomePageController myController) {
+		setTitle("Unina Social Group");
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -343,7 +348,8 @@ public class HomePage extends JFrame {
 		setContentPane(contentPane);
 		setMinimumSize(setMinDimension());
 		
-		JLabel GroupLabel = new JLabel("Gruppi");
+		JLabel GroupLabel = new JLabel("GRUPPI");
+		GroupLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Documents\\group-profile-users_icon-icons.com_73540.png"));
 		GroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
 		
 		btnSend = new JButton("invia");
@@ -365,6 +371,7 @@ public class HomePage extends JFrame {
 		btnSend.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
@@ -392,8 +399,10 @@ public class HomePage extends JFrame {
 		lblStatusLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144), 2, true));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBorder(new LineBorder(new Color(130, 135, 144), 2, true));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -401,36 +410,38 @@ public class HomePage extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(GroupLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+						.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+						.addComponent(GroupLabel, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+					.addGap(46)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-							.addGap(46)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane)
-								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-									.addComponent(lblStateLabel)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblStatusLabel))
-								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-									.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)))))
+							.addComponent(lblStateLabel)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblStatusLabel))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(22)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(GroupLabel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblStateLabel)
-							.addComponent(lblStatusLabel)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(29)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblStateLabel)
+								.addComponent(lblStatusLabel)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(GroupLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addComponent(btnSend)
@@ -439,16 +450,20 @@ public class HomePage extends JFrame {
 		);
 		
 		sendMessageTextArea = new JTextArea();
+		sendMessageTextArea.setBorder(new LineBorder(new Color(0, 0, 0), 0, true));
 		sendMessageTextArea.setColumns(10);
 		scrollPane_1.setViewportView(sendMessageTextArea);
 		
 		showMessageTextArea = new JTextArea();
+		showMessageTextArea.setBorder(new LineBorder(new Color(0, 0, 0), 0, true));
 		showMessageTextArea.setEditable(false);
 		showMessageTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		showMessageTextArea.setLineWrap(true);
 		scrollPane.setViewportView(showMessageTextArea);
 		
 		GroupTabList = new JList<String>();
+		GroupTabList.setSelectionBackground(Color.LIGHT_GRAY);
+		GroupTabList.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		GroupTabList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()) {
@@ -472,6 +487,7 @@ public class HomePage extends JFrame {
 		tabbedPane.setEnabledAt(0, true);
 		
 		adminGroupList = new JList<String>();
+		adminGroupList.setSelectionBackground(Color.LIGHT_GRAY);
 
 		
 		adminGroupList.addListSelectionListener(new ListSelectionListener() {
@@ -496,7 +512,7 @@ public class HomePage extends JFrame {
 		adminGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
-		tabbedPane.addTab("Gruppi admin", null, adminGroupList, null);
+		tabbedPane.addTab("Gruppi admin", new ImageIcon("C:\\Users\\mirko\\Pictures\\kisspng-icon-design-admin-settings-male-icon-free-download-png-and-5d4039ea986130.5491207615644902186242.jpg"), adminGroupList, null);
 		contentPane.setLayout(gl_contentPane);
 		
 		addWindowListener(new WindowAdapter() {

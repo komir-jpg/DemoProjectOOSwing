@@ -52,6 +52,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login(LoginController myController) {
+		setTitle("Unina Social Group Login");
 		controller = myController;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,18 +75,20 @@ public class Login extends JFrame {
 		panel_2.setBorder(null);
 		
 		UsernameLabel = new JLabel("username");
-		UsernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		UsernameLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		
 		UsernameField = new JTextField();
+		UsernameField.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		UsernameField.setColumns(10);
 		
 		passwordLabel = new JLabel("password");
-		passwordLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		passwordLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(10);
 		
 		LoginBtn = new JButton("Login");
+		LoginBtn.setFont(new Font("Cascadia Code", Font.BOLD, 10));
 		LoginBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -30,6 +30,8 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class SearchTagDialog extends JDialog {
 
@@ -70,16 +72,18 @@ public class SearchTagDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
-		JLabel lbTagLabel = new JLabel("Tag");
-		lbTagLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		JLabel lbTagLabel = new JLabel("TAG");
+		lbTagLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		lbTagLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		JLabel lblResultLabel = new JLabel("gruppi");
+		JLabel lblResultLabel = new JLabel("GRUPPI");
 		lblResultLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblResultLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblResultLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		
 		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setViewportBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
@@ -112,11 +116,14 @@ public class SearchTagDialog extends JDialog {
 		);
 		
 		resultGroupList = new JList<String>();
+		resultGroupList.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		resultGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(resultGroupList);
 		
 		tagList = new JList<String>();
+		tagList.setSelectionBackground(Color.LIGHT_GRAY);
+		tagList.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		tagList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tagList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {

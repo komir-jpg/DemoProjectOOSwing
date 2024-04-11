@@ -25,6 +25,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class DeletePartecipantDialog extends JDialog {
 
@@ -41,6 +42,7 @@ public class DeletePartecipantDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public DeletePartecipantDialog(deletePartecipantController myController) {
+		setTitle("Rimuovi partecipanti");
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -63,21 +65,21 @@ public class DeletePartecipantDialog extends JDialog {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JLabel lblNewLabel = new JLabel("partecipanti:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		JLabel lblNewLabel = new JLabel("PARTECIPANTI");
+		lblNewLabel.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap(16, Short.MAX_VALUE)
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -86,6 +88,7 @@ public class DeletePartecipantDialog extends JDialog {
 		);
 		
 		groupPartecipantsList = new JList<String>();
+		groupPartecipantsList.setSelectionBackground(Color.LIGHT_GRAY);
 		scrollPane.setViewportView(groupPartecipantsList);
 		contentPanel.setLayout(gl_contentPanel);
 		{

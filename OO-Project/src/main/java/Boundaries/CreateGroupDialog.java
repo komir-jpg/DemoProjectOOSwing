@@ -38,6 +38,7 @@ import ExceptionPackage.DBconnectionError;
 import java.awt.SystemColor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Color;
 
 public class CreateGroupDialog extends JDialog {
 
@@ -57,6 +58,7 @@ public class CreateGroupDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public CreateGroupDialog(CreateGroupController myController) {
+		setTitle("Crea Gruppo");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -80,9 +82,11 @@ public class CreateGroupDialog extends JDialog {
 		
 		JLabel CreateGroupLabel = new JLabel("Crea Gruppo");
 		CreateGroupLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		CreateGroupLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		CreateGroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 15));
 		
 		groupNameTextField = new JTextField();
+		groupNameTextField.setSelectionColor(Color.LIGHT_GRAY);
+		groupNameTextField.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		groupNameTextField.setColumns(10);
 		DefaultComboBoxModel<String> comboModel= new DefaultComboBoxModel<String>();
 		try {
@@ -95,17 +99,17 @@ public class CreateGroupDialog extends JDialog {
 		
 		JLabel GroupNameLabel = new JLabel("nome");
 		GroupNameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		GroupNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		GroupNameLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel TagLabel = new JLabel("seleziona tag esistente");
 		TagLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		TagLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		TagLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JLabel lblNewLabel = new JLabel("descrizione");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel lblNewLabel_1 = new JLabel("oppure");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -142,16 +146,16 @@ public class CreateGroupDialog extends JDialog {
 								.addComponent(GroupNameLabel, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-								.addComponent(groupNameTextField, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+								.addComponent(scrollPane)
+								.addComponent(groupNameTextField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 								.addGroup(gl_contentPanel.createSequentialGroup()
 									.addComponent(lblNewLabel_1)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblNewTagLabel)))
-							.addGap(160))
+									.addComponent(lblNewTagLabel))
+								.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE))
+							.addGap(147))
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(CreateGroupLabel, GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+							.addComponent(CreateGroupLabel, GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
 							.addContainerGap())))
 		);
 		gl_contentPanel.setVerticalGroup(
@@ -173,12 +177,14 @@ public class CreateGroupDialog extends JDialog {
 						.addComponent(lblNewTagLabel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
 						.addComponent(lblNewLabel))
 					.addContainerGap())
 		);
 		
 		tagList = new JList<String>();
+		tagList.setSelectionBackground(Color.LIGHT_GRAY);
+		tagList.setFont(new Font("Cascadia Code", Font.BOLD, 11));
 		tagList.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -189,6 +195,8 @@ public class CreateGroupDialog extends JDialog {
 		scrollPane_1.setViewportView(tagList);
 		
 		descriptionTextArea = new JTextArea();
+		descriptionTextArea.setSelectionColor(Color.LIGHT_GRAY);
+		descriptionTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		descriptionTextArea.setLineWrap(true);
 		scrollPane.setViewportView(descriptionTextArea);
 		contentPanel.setLayout(gl_contentPanel);
