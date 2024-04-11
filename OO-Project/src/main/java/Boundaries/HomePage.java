@@ -119,7 +119,7 @@ public class HomePage extends JFrame {
 				controller.setSearchTagDialog();
 			}
 		});
-		mntmSearchGroupByTagItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-label-1126708.png"));
+		mntmSearchGroupByTagItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-label-1126708.png")));
 		mnSearchMenu.add(mntmSearchGroupByTagItem);
 		
 		mntmSearchGrpupByNameMenuItem = new JMenuItem("Cerca gruppo");
@@ -135,7 +135,7 @@ public class HomePage extends JFrame {
 				}
 			}
 		});
-		mntmSearchGrpupByNameMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-search-1126639.png"));
+		mntmSearchGrpupByNameMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-search-1126639.png")));
 		mnSearchMenu.add(mntmSearchGrpupByNameMenuItem);
 		
 		mnStatusMenu = new JMenu("stato");
@@ -147,11 +147,11 @@ public class HomePage extends JFrame {
 		mntmOnlineMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Online");
-				lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-online-status-3864663.png"));
+				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-online-status-3864663.png")));
 				lblStatusLabel.setForeground(new Color(0, 128, 64));
 			}
 		});
-		mntmOnlineMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-avatar-1126670.png"));
+		mntmOnlineMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-avatar-1126670.png")));
 		mnStatusMenu.add(mntmOnlineMenuItem);
 		
 		mntmOffilneItem = new JMenuItem("Offline");
@@ -159,11 +159,11 @@ public class HomePage extends JFrame {
 		mntmOffilneItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Offilne");
-				lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-offline-status-3864665.png"));
+				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 				lblStatusLabel.setForeground(new Color(206, 0, 0));
 			}
 		});
-		mntmOffilneItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-remove-avatar-1126634.png"));
+		mntmOffilneItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 		mnStatusMenu.add(mntmOffilneItem);
 		
 		mntmNotOnPCItem = new JMenuItem("Non al pc");
@@ -171,11 +171,11 @@ public class HomePage extends JFrame {
 		mntmNotOnPCItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Non al pc");
-				lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-remove-contact-1126739.png"));
+				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-contact-1126739.png")));
 				lblStatusLabel.setForeground(new Color(255, 200, 0));
 			}
 		});
-		mntmNotOnPCItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-remove-contact-1126739.png"));
+		mntmNotOnPCItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-contact-1126739.png")));
 		mnStatusMenu.add(mntmNotOnPCItem);
 		
 		mntmNotAviableItem = new JMenuItem("Non disponibile");
@@ -183,11 +183,11 @@ public class HomePage extends JFrame {
 		mntmNotAviableItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Non disponibile");
-				lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-invisible-1126706.png"));
+				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-invisible-1126706.png")));
 				lblStatusLabel.setForeground(new Color(128, 128, 128));
 			}
 		});
-		mntmNotAviableItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-invisible-1126706.png"));
+		mntmNotAviableItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-invisible-1126706.png")));
 		mnStatusMenu.add(mntmNotAviableItem);
 		
 		mntmNewMenuItem = new JMenuItem("esci");
@@ -215,7 +215,7 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmDeleteMsgMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmDeleteMsgMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-delete-message-1167872.png"));
+		mntmDeleteMsgMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mnDeleteMenu.add(mntmDeleteMsgMenuItem);
 		
 		mntmDeleteLastItem = new JMenuItem("Elimina ultimo messaggio");
@@ -234,10 +234,11 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmDeleteLastItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmDeleteLastItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-delete-message-1167872.png"));
+		mntmDeleteLastItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mnDeleteMenu.add(mntmDeleteLastItem);
 		
 		mnGroupMenu = new JMenu("gruppo");
+		mnGroupMenu.setIcon(null);
 		mnGroupMenu.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		menuBar.add(mnGroupMenu);
 		
@@ -250,7 +251,7 @@ public class HomePage extends JFrame {
 		});
 		mntmCreateGroupMenuItem.setSelected(true);
 		
-		mntmCreateGroupMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\createGroup.png"));
+		mntmCreateGroupMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/createGroup.png")));
 		mnGroupMenu.add(mntmCreateGroupMenuItem);
 		
 		mntmLeaveGroupMenuItem = new JMenuItem("Abbandona gruppo");
@@ -269,7 +270,7 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmLeaveGroupMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmLeaveGroupMenuItem.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\leaveGroup.png"));
+		mntmLeaveGroupMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
 		mnGroupMenu.add(mntmLeaveGroupMenuItem);
 		
 		mnGroupManagmentMenu = new JMenu("gestione gruppo");
@@ -395,7 +396,7 @@ public class HomePage extends JFrame {
 		
 		lblStatusLabel = new JLabel("online");
 		lblStatusLabel.setForeground(new Color(0, 128, 64));
-		lblStatusLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-online-status-3864663.png"));
+		lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-online-status-3864663.png")));
 		lblStatusLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		JScrollPane scrollPane = new JScrollPane();

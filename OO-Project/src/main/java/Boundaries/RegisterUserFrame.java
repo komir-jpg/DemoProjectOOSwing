@@ -124,7 +124,7 @@ public class RegisterUserFrame extends JFrame {
 		SexComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"M", "F", "Altro"}));
 		
 		JLabel ImageLabel = new JLabel("");
-		ImageLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\MSN_Messenger_23101.png"));
+		ImageLabel.setIcon(new ImageIcon(RegisterUserFrame.class.getResource("/resources/MSN_Messenger_23101.png")));
 		
 		JButton createAccoutnBtn = new JButton("Crea");
 		createAccoutnBtn.setBorder(new LineBorder(new Color(0, 0, 0)));

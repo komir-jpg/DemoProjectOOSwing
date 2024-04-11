@@ -69,7 +69,7 @@ public class Login extends JFrame {
 		
 		JLabel pictureLabel = new JLabel("");
 		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pictureLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Pictures\\_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg"));
+		pictureLabel.setIcon(new ImageIcon(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg")));
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(null);
