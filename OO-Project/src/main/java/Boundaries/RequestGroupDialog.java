@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controllers.*;
-import DAO.Request;
+import Entities.Request;
 import ExceptionPackage.DBconnectionError;
 
 import javax.swing.DefaultListCellRenderer;

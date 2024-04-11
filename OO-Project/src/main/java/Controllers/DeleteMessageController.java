@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 
 import Boundaries.DeleteMessageDialog;
 import DAO.*;
+import Entities.Group;
+import Entities.Post;
+import Entities.User;
 
 public class DeleteMessageController {
 	private Group selectedGroup;

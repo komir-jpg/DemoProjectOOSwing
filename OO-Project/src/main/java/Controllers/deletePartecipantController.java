@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import Boundaries.DeletePartecipantDialog;
 import DAO.*;
+import Entities.Group;
 
 public class deletePartecipantController {
 	private Group selectedGroup;

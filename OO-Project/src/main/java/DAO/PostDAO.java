@@ -10,6 +10,11 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import Entities.Group;
+import Entities.Post;
+import Entities.User;
+import utils.ConnectionToDB;
+
 
 public class PostDAO{
 
@@ -184,7 +189,7 @@ public class PostDAO{
 			return postResult;
 		}
 		public ArrayList<Post> getPostsByGroup(Group group) throws SQLException{
-			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ?");
+			preparedstatement = connection.prepareStatement("SELECT * FROM progettobd_unina_social_network.post where gruppo = ? order by datapost");
 			preparedstatement.setString(1, group.getGroupName());
 			ResultSet queryRS = preparedstatement.executeQuery();
 			ArrayList<Post> postResult = new ArrayList<Post>();

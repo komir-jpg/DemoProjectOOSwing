@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 
 import Boundaries.RegisterUserFrame;
-import DAO.User;
 import DAO.UserDAO;
+import Entities.User;
 
 public class RegisterUserController {
 

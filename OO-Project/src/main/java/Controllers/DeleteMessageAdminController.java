@@ -10,6 +10,9 @@ import javax.swing.JFrame;
 
 import Boundaries.*;
 import DAO.*;
+import Entities.Group;
+import Entities.Post;
+import Entities.User;
 
 public class DeleteMessageAdminController {
 	DeleteMessageAdminDialog deleteMessageAdminDialog;

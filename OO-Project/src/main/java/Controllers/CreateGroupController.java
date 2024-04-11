@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 
 import Boundaries.*;
 import DAO.*;
+import Entities.Group;
+import Entities.Tag;
+import Entities.User;
 
 public class CreateGroupController {
 	User loggedInUser;

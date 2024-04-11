@@ -9,6 +9,12 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import Entities.Group;
+import Entities.Post;
+import Entities.Share;
+import Entities.User;
+import utils.ConnectionToDB;
+
 public class ShareDAO {
 
 	Connection connection;

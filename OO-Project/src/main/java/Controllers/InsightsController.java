@@ -13,6 +13,9 @@ import org.jfree.chart.ChartFrame;
 
 import Boundaries.InsightsFrame;
 import DAO.*;
+import Entities.Group;
+import Entities.Post;
+import Entities.User;
 import utils.GroupChart;
 
 public class InsightsController {

@@ -3,6 +3,10 @@ package DAO;
 import java.sql.*;
 import java.util.ArrayList;
 
+import Entities.Group;
+import Entities.Request;
+import utils.ConnectionToDB;
+
 public class RequestDAO {
 
 	private Connection connection;
