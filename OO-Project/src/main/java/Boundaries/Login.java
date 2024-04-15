@@ -29,6 +29,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import Controllers.LoginController;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 
@@ -52,6 +53,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login(LoginController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group Login");
 		controller = myController;
 		

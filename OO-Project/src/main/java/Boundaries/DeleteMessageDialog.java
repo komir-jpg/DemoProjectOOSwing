@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class DeleteMessageDialog extends JDialog {
 
@@ -43,6 +44,8 @@ public class DeleteMessageDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public DeleteMessageDialog(DeleteMessageController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DeleteMessageDialog.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		setTitle("elimina messaggi");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {

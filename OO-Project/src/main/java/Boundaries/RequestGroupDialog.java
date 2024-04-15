@@ -28,6 +28,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
 
 public class RequestGroupDialog extends JDialog {
 
@@ -44,6 +45,8 @@ public class RequestGroupDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public RequestGroupDialog(GroupRequestsController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RequestGroupDialog.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		setTitle("richieste");
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setModal(true);
 		addWindowListener(new WindowAdapter() {

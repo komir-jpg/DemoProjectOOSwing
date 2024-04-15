@@ -12,6 +12,7 @@ import Boundaries.SearchTagDialog;
 import DAO.*;
 import Entities.Request;
 import Entities.User;
+import java.awt.Toolkit;
 
 public class SearchTagController {
 	SearchTagDialog searchTagDialog;
@@ -25,6 +26,8 @@ public class SearchTagController {
 
 	private void setSearchTagDialog(JFrame previousFrame) {
 		searchTagDialog = new SearchTagDialog(this);
+		searchTagDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(SearchTagController.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		searchTagDialog.setTitle("cerca tag");
 		SetFramePosition(searchTagDialog, GetFramePosition(previousFrame));
 		searchTagDialog.setVisible(true);
 	}

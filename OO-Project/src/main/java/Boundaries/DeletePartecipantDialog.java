@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class DeletePartecipantDialog extends JDialog {
 
@@ -42,6 +43,7 @@ public class DeletePartecipantDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public DeletePartecipantDialog(deletePartecipantController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DeletePartecipantDialog.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Rimuovi partecipanti");
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		addWindowListener(new WindowAdapter() {

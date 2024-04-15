@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class SearchTagDialog extends JDialog {
 
@@ -73,9 +74,11 @@ public class SearchTagDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		JLabel lbTagLabel = new JLabel("TAG");
+		lbTagLabel.setIcon(new ImageIcon(SearchTagDialog.class.getResource("/resources/noun-label-1126708.png")));
 		lbTagLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		lbTagLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		JLabel lblResultLabel = new JLabel("GRUPPI");
+		lblResultLabel.setIcon(new ImageIcon(SearchTagDialog.class.getResource("/resources/createGroup.png")));
 		lblResultLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblResultLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		

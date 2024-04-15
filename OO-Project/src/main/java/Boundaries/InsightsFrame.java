@@ -41,6 +41,7 @@ import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
+import java.awt.Toolkit;
 
 public class InsightsFrame extends JFrame {
 
@@ -67,6 +68,8 @@ public class InsightsFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public InsightsFrame(InsightsController myController) {
+		setTitle("insights");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InsightsFrame.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -165,8 +168,7 @@ public class InsightsFrame extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(chartButton)
-							.addContainerGap())
+							.addComponent(chartButton))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
@@ -176,24 +178,18 @@ public class InsightsFrame extends JFrame {
 								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE)
 								.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
 								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
 							.addGap(174)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE)
-											.addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(2031, Short.MAX_VALUE))
-									.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(scrollPane_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()))
+								.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPane_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblNewLabel_6)
 									.addGap(18)
-									.addComponent(groupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap())))))
+									.addComponent(groupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -226,15 +222,15 @@ public class InsightsFrame extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_3)
 						.addComponent(chartButton))
-					.addContainerGap(1123, Short.MAX_VALUE))
+					.addContainerGap(151, Short.MAX_VALUE))
 		);
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel_4, lblNewLabel_3});
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, groupComboBox});
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel, lblNewLabel_6});
 		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
-		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {comboBox, groupComboBox});
-		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblNewLabel, lblNewLabel_6});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel, lblNewLabel_6});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, groupComboBox});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel_4, lblNewLabel_3});
 		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
+		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblNewLabel, lblNewLabel_6});
+		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {comboBox, groupComboBox});
 		
 		mostCommentedPostTextArea = new JTextArea();
 		scrollPane_4.setViewportView(mostCommentedPostTextArea);

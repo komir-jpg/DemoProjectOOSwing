@@ -31,8 +31,7 @@ public class RegisterUserController {
 		previousFrame.dispose();
 	}
 	
-	
-	
+
 	public void setLoginFrame(JFrame previousFrame) {
 		loginController.setLoginFrame(previousFrame);
 	}

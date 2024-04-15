@@ -24,6 +24,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Font;
 
 public class DeleteMessageAdminDialog extends JDialog{
 
@@ -40,6 +44,8 @@ public class DeleteMessageAdminDialog extends JDialog{
 	 * Create the dialog.
 	 */
 	public DeleteMessageAdminDialog(DeleteMessageAdminController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DeleteMessageAdminDialog.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		setTitle("elimina messaggi");
 		setMinimumSize(new Dimension(455, 306));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		controller = myController;
@@ -62,19 +68,25 @@ public class DeleteMessageAdminDialog extends JDialog{
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JLabel deleteMessageLabel = new JLabel("messaggi");
+		deleteMessageLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(deleteMessageLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(deleteMessageLabel)
+					.addGap(3)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		

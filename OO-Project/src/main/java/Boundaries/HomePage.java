@@ -48,6 +48,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
+import java.awt.Toolkit;
 
 public class HomePage extends JFrame {
 
@@ -99,6 +100,7 @@ public class HomePage extends JFrame {
 	 * Create the frame.
 	 */
 	public HomePage(HomePageController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(HomePage.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group");
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -191,6 +193,7 @@ public class HomePage extends JFrame {
 		mnStatusMenu.add(mntmNotAviableItem);
 		
 		mntmNewMenuItem = new JMenuItem("esci");
+		mntmNewMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/pngegg.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.setLoginScreen();
@@ -279,6 +282,7 @@ public class HomePage extends JFrame {
 		menuBar.add(mnGroupManagmentMenu);
 		
 		mntmRequestStatusItem = new JMenuItem("gestione richieste");
+		mntmRequestStatusItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/user-add.png")));
 		mntmRequestStatusItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty())
@@ -292,6 +296,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmRequestStatusItem);
 		
 		mntmDeleteGroupItem = new JMenuItem("elimina gruppo");
+		mntmDeleteGroupItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
 		mntmDeleteGroupItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mntmDeleteGroupItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -314,6 +319,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeleteGroupItem);
 		
 		mntmDeletePartecipantItem = new JMenuItem("elimina partecipante");
+		mntmDeletePartecipantItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 		mntmDeletePartecipantItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.deletePartecipantDialog();
@@ -323,6 +329,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeletePartecipantItem);
 		
 		mntmDeleteMessageItem = new JMenuItem("elimina messaggio");
+		mntmDeleteMessageItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mntmDeleteMessageItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.deleteMessageAdminDialog();
@@ -333,6 +340,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeleteMessageItem);
 		
 		mntmInsightsMenuItem = new JMenuItem("insigths");
+		mntmInsightsMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/chart-histogram.png")));
 		mntmInsightsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.setInsightsFrame();
@@ -565,7 +573,7 @@ public class HomePage extends JFrame {
 	}
 	private int ConfirmDialog() {
 		int result;
-		result = JOptionPane.showConfirmDialog(this, "Sicuro? la cancellazione del gruppo comporta l'eliminazione di tutti i messaggi");
+		result = JOptionPane.showConfirmDialog(this, "Sicuro? la cancellazione del gruppo comporta l'eliminazione di tutti i messaggi","elimina gruppo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
 		return result;
 	}
 	private void showSearchDialog() throws InvalidInsertion, SQLException {

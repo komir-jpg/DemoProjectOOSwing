@@ -20,6 +20,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -39,6 +40,7 @@ import java.awt.SystemColor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class CreateGroupDialog extends JDialog {
 
@@ -58,6 +60,7 @@ public class CreateGroupDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public CreateGroupDialog(CreateGroupController myController) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CreateGroupDialog.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Crea Gruppo");
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -263,7 +266,7 @@ public class CreateGroupDialog extends JDialog {
 	}
 	private void showInputDialog() throws SQLException,InputMismatchException {
 		String userInput;
-		userInput = JOptionPane.showInputDialog(this, "inserisci un nuovo tag");
+		userInput = (String) JOptionPane.showInputDialog(this,"inserisci un nuovo tag","inserisci tag",JOptionPane.DEFAULT_OPTION,new ImageIcon(CreateGroupDialog.class.getResource("/resources/noun-label-1126708.png")),null,null);
 		setNewTag(userInput);
 		
 	}
