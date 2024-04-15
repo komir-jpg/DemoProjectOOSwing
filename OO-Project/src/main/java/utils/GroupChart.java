@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -62,6 +63,8 @@ public class GroupChart extends JPanel {
 		JFreeChart lineChart = ChartFactory.createLineChart("post per mese", "mesi", "numero di post", dataset, PlotOrientation.VERTICAL, true, true, false);
 		
 		frame = new ChartFrame("Result",lineChart);
+		ImageIcon imgIcon = new ImageIcon(GroupChart.class.getResource("/resources/chart-histogram.png"));
+		frame.setIconImage(imgIcon.getImage());
 		return frame;
 	}
 	

@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class RequestGroupDialog extends JDialog {
 
@@ -70,15 +71,16 @@ public class RequestGroupDialog extends JDialog {
 		
 		
 		
-		JLabel FriendLabel = new JLabel("richieste di partecipazione");
-		FriendLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
+		JLabel FriendLabel = new JLabel("RICHIESTE DI PARTECIPAZIONE");
+		FriendLabel.setIcon(new ImageIcon(RequestGroupDialog.class.getResource("/resources/user-add.png")));
+		FriendLabel.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(FriendLabel, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+						.addComponent(FriendLabel, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
 						.addComponent(requestedGroupList, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -133,6 +135,11 @@ public class RequestGroupDialog extends JDialog {
 			buttonPane.add(refuseButton);
 			{
 				JButton cancelButton = new JButton("Annulla");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.setHomePageFrameFromDialog();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -156,7 +163,7 @@ public class RequestGroupDialog extends JDialog {
 	}
 	/**
 	 * this method splits, the request string, in the {@link JList}
-	 * and return a string containing only the username.
+	 * and returns a string containing only the username.
 	 * <p>First the request string is split by the ":", see {@link Request#toString()},
 	 * so the result would be: [<b>[username]   data di iscrizione</b>.]
 	 * Then the result string is split again removing the space and data di iscrizione
@@ -184,7 +191,5 @@ public class RequestGroupDialog extends JDialog {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	private void ShowInfoMassage(String titolo,String testo) {
-		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
-	}
+	
 }

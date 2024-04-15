@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class DeletePartecipantDialog extends JDialog {
 
@@ -68,6 +69,7 @@ public class DeletePartecipantDialog extends JDialog {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JLabel lblNewLabel = new JLabel("PARTECIPANTI");
+		lblNewLabel.setIcon(new ImageIcon(DeletePartecipantDialog.class.getResource("/resources/delete-user.png")));
 		lblNewLabel.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
@@ -106,7 +108,7 @@ public class DeletePartecipantDialog extends JDialog {
 						} else
 							try {
 								deletePartecipant(groupPartecipantsList.getSelectedValue());
-								ShowInfoMassage("Info", "la rimozione è avvenuta con successo");
+								ShowInfoMessage("Info", "la rimozione è avvenuta con successo");
 								groupPartecipantsList.repaint();
 							} catch (SQLException e1) {
 								e1.printStackTrace();
@@ -138,7 +140,7 @@ public class DeletePartecipantDialog extends JDialog {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	private void ShowInfoMassage(String titolo,String testo) {
+	private void ShowInfoMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
 	private void deletePartecipant(String username) throws SQLException {

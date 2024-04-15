@@ -27,6 +27,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class DeleteMessageDialog extends JDialog {
 
@@ -67,6 +68,7 @@ public class DeleteMessageDialog extends JDialog {
 		messageList = new JList<String>();
 		messageList.setSelectionBackground(Color.LIGHT_GRAY);
 		JLabel lblNewLabel = new JLabel("MESSAGGI");
+		lblNewLabel.setIcon(new ImageIcon(DeleteMessageDialog.class.getResource("/resources/noun-delete-message-1167872.png")));
 		lblNewLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
@@ -98,7 +100,7 @@ public class DeleteMessageDialog extends JDialog {
 						String[] splltedString = splitMessageString(messageList.getSelectedValue());
 						try {
 							deleteMessage(splltedString);
-							ShowInfoMassage("Messaggio eliminato", "messaggio eliminato con successo");
+							ShowInfoMessage("Messaggio eliminato", "messaggio eliminato con successo");
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 							ShowMessage("Error", "OPS! Qualcosa è andato storto");
@@ -129,7 +131,7 @@ public class DeleteMessageDialog extends JDialog {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	private void ShowInfoMassage(String titolo,String testo) {
+	private void ShowInfoMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
 	private String[] splitMessageString(String selectedMessage){

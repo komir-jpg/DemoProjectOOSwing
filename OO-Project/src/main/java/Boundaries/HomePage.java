@@ -39,6 +39,8 @@ import javax.swing.event.ListSelectionListener;
 import Controllers.HomePageController;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -100,6 +102,7 @@ public class HomePage extends JFrame {
 	 * Create the frame.
 	 */
 	public HomePage(HomePageController myController) {
+		lookAndFeel();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(HomePage.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group");
 		controller = myController;
@@ -306,6 +309,7 @@ public class HomePage extends JFrame {
 					try {
 						controller.deleteGroup();
 						showMessageTextArea.setText("");
+						ShowInfoMessage("elimina gruppo","l'eliminazione del gruppo è andata a buon fine");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 						ShowMessage("Errore", "OPS! Qualcosa è andato storto nella cancellazione del gruppo");
@@ -322,7 +326,11 @@ public class HomePage extends JFrame {
 		mntmDeletePartecipantItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 		mntmDeletePartecipantItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.deletePartecipantDialog();
+				if(adminGroupList.isSelectionEmpty()) {
+					ShowMessage("Errore","devi prima selezionare un gruppo");
+				}
+				else
+					controller.deletePartecipantDialog();
 			}
 		});
 		mntmDeletePartecipantItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -332,8 +340,13 @@ public class HomePage extends JFrame {
 		mntmDeleteMessageItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mntmDeleteMessageItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.deleteMessageAdminDialog();
-				showMessageTextArea.repaint();
+				if(adminGroupList.isSelectionEmpty()) {
+					ShowMessage("Errore","devi prima selezionare un gruppo");
+				}
+				else {
+					controller.deleteMessageAdminDialog();
+					showMessageTextArea.repaint();
+				}
 			}
 		});
 		mntmDeleteMessageItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -343,7 +356,11 @@ public class HomePage extends JFrame {
 		mntmInsightsMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/chart-histogram.png")));
 		mntmInsightsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setInsightsFrame();
+				if(adminGroupList.isSelectionEmpty()) {
+					ShowMessage("Errore","devi prima selezionare un gruppo");
+				}
+				else
+					controller.setInsightsFrame();
 			}
 		});
 		mntmInsightsMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
@@ -351,6 +368,7 @@ public class HomePage extends JFrame {
 		
 		
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(192, 192, 192));
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -358,6 +376,7 @@ public class HomePage extends JFrame {
 		setMinimumSize(setMinDimension());
 		
 		JLabel GroupLabel = new JLabel("GRUPPI");
+		GroupLabel.setForeground(new Color(0, 0, 0));
 		GroupLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Documents\\group-profile-users_icon-icons.com_73540.png"));
 		GroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
 		
@@ -373,14 +392,14 @@ public class HomePage extends JFrame {
 						e1.printStackTrace();
 						ShowMessage("Errore", "OPS! Qualcosa è andato storto nell'invio del messagio "+e1.getMessage());
 					}
-				else
-					System.out.println("NO");
 			}
 		});
 		btnSend.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedPane.setBackground(new Color(192, 192, 192));
+		tabbedPane.setBorder(null);
 		
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
@@ -394,16 +413,15 @@ public class HomePage extends JFrame {
 					btnSend.setEnabled(false);
 			}
 		});
-
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		lblStateLabel = new JLabel("stato:");
+		lblStateLabel.setForeground(new Color(0, 0, 0));
 		lblStateLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblStateLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		lblStatusLabel = new JLabel("online");
-		lblStatusLabel.setForeground(new Color(0, 128, 64));
+		lblStatusLabel.setForeground(new Color(0, 128, 0));
 		lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-online-status-3864663.png")));
 		lblStatusLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
@@ -459,6 +477,7 @@ public class HomePage extends JFrame {
 		);
 		
 		sendMessageTextArea = new JTextArea();
+		sendMessageTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		sendMessageTextArea.setBorder(new LineBorder(new Color(0, 0, 0), 0, true));
 		sendMessageTextArea.setColumns(10);
 		scrollPane_1.setViewportView(sendMessageTextArea);
@@ -471,6 +490,7 @@ public class HomePage extends JFrame {
 		scrollPane.setViewportView(showMessageTextArea);
 		
 		GroupTabList = new JList<String>();
+		GroupTabList.setBorder(null);
 		GroupTabList.setSelectionBackground(Color.LIGHT_GRAY);
 		GroupTabList.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		GroupTabList.addListSelectionListener(new ListSelectionListener() {
@@ -547,7 +567,7 @@ public class HomePage extends JFrame {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	private void ShowInfoMassage(String titolo,String testo) {
+	private void ShowInfoMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
 	private DefaultListModel<String> showListModelAdmin() throws DBconnectionError {
@@ -597,7 +617,7 @@ public class HomePage extends JFrame {
 		result = JOptionPane.showConfirmDialog(this, "vuoi inviare una richiesta di partecipazione a questo gruppo?");
 		if (result == 0) {
 			controller.newRequest(groupName);
-			ShowInfoMassage("Richiesta", "richiesta di partecipazione al gruppo andata a buon fine");
+			ShowInfoMessage("Richiesta", "richiesta di partecipazione al gruppo andata a buon fine");
 		}
 		else if (result == 1)
 			showSearchDialog();
@@ -636,7 +656,7 @@ public class HomePage extends JFrame {
 		userInput = JOptionPane.showConfirmDialog(this, "sicuro di voler lasciare il gruppo?", "abbandona", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(userInput == 0) {
 			controller.leaveGroup();
-			ShowInfoMassage("info", "hai abbandonato il gruppo");
+			ShowInfoMessage("info", "hai abbandonato il gruppo");
 		}
 	}
 	private void deleteLastMessage() throws SQLException {
@@ -644,6 +664,14 @@ public class HomePage extends JFrame {
 		userInput = JOptionPane.showConfirmDialog(this, "vuoi eliminare il tuo ultimo messaggio?","elimina messaggio",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
 		if(userInput == 0) {
 			controller.deleteLastMessage();
+		}
+	}
+	private void lookAndFeel() {
+		String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

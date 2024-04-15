@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,6 +32,8 @@ import javax.swing.border.LineBorder;
 
 import Controllers.LoginController;
 import java.awt.Toolkit;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 public class Login extends JFrame {
 
@@ -53,6 +57,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login(LoginController myController) {
+		lookAndFeel();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group Login");
 		controller = myController;
@@ -67,30 +72,37 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(64, 0, 128));
+		panel.setBackground(new Color(0, 0, 64));
 		
 		JLabel pictureLabel = new JLabel("");
 		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pictureLabel.setIcon(new ImageIcon(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg")));
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(192, 192, 192));
 		panel_2.setBorder(null);
 		
 		UsernameLabel = new JLabel("username");
-		UsernameLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
+		UsernameLabel.setForeground(new Color(0, 0, 64));
+		UsernameLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		UsernameField = new JTextField();
+		UsernameField.setBorder(null);
 		UsernameField.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		UsernameField.setColumns(10);
 		
 		passwordLabel = new JLabel("password");
-		passwordLabel.setFont(new Font("Cascadia Code", Font.BOLD, 13));
+		passwordLabel.setForeground(new Color(0, 0, 64));
+		passwordLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		passwordField = new JPasswordField();
+		passwordField.setBorder(null);
 		passwordField.setColumns(10);
 		
 		LoginBtn = new JButton("Login");
-		LoginBtn.setFont(new Font("Cascadia Code", Font.BOLD, 10));
+		LoginBtn.setBackground(new Color(212, 212, 212));
+		LoginBtn.setForeground(new Color(0, 0, 64));
+		LoginBtn.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		LoginBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,11 +136,12 @@ public class Login extends JFrame {
 				
 			}
 		});
-		CreateAccount.setForeground(SystemColor.textHighlight);
-		CreateAccount.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		CreateAccount.setForeground(new Color(0, 0, 255));
+		CreateAccount.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel textLabel = new JLabel("o");
-		textLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textLabel.setForeground(new Color(0, 0, 64));
+		textLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -144,17 +157,30 @@ public class Login extends JFrame {
 				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
 		);
+		
+		JLabel lblNewLabel = new JLabel("Benvenuto su Unina Social Group");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 16));
+		lblNewLabel.setForeground(Color.WHITE);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(28)
-					.addComponent(pictureLabel, GroupLayout.PREFERRED_SIZE, 276, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(28)
+							.addComponent(pictureLabel, GroupLayout.PREFERRED_SIZE, 276, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(128)
+					.addContainerGap()
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addGap(31)
 					.addComponent(pictureLabel, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
 		);
 		panel.setLayout(gl_panel);
@@ -164,33 +190,40 @@ public class Login extends JFrame {
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(131)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-							.addGap(44))
-						.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-							.addGap(44))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addGap(118))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
-					.addGap(39))
+							.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel_2.createSequentialGroup()
+								.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap())
+							.addGroup(gl_panel_2.createSequentialGroup()
+								.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_panel_2.createSequentialGroup()
+										.addComponent(UsernameField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+										.addGap(44))
+									.addGroup(gl_panel_2.createSequentialGroup()
+										.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+										.addGap(44))
+									.addGroup(gl_panel_2.createSequentialGroup()
+										.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+										.addGap(118))
+									.addGroup(gl_panel_2.createSequentialGroup()
+										.addComponent(textLabel, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(CreateAccount, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
+								.addGap(39)))))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(74)
+					.addGap(79)
 					.addComponent(UsernameLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(UsernameField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
+					.addGap(18)
 					.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
+					.addGap(4)
 					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
 					.addComponent(LoginBtn, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
@@ -249,5 +282,12 @@ public class Login extends JFrame {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	
+	private void lookAndFeel() {
+		String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

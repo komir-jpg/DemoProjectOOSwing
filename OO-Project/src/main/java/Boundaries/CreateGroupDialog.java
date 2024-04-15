@@ -214,7 +214,7 @@ public class CreateGroupDialog extends JDialog {
 						try {
 							createNewGroup();
 							selectedTag(tagList.getSelectedValuesList());
-							ShowInfoMassage("Creazione Gruppo", "gruppo creato correttamente");
+							ShowInfoMessage("Creazione Gruppo", "gruppo creato correttamente");
 							BackFrame();
 						} catch (DBconnectionError DBerror) {
 							ShowMessage("Errore", "qualcosa è andato storto");
@@ -256,7 +256,7 @@ public class CreateGroupDialog extends JDialog {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	private void ShowInfoMassage(String titolo,String testo) {
+	private void ShowInfoMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo,titolo,JOptionPane.INFORMATION_MESSAGE);
 	}
 	private DefaultListModel<String>setListModel() throws SQLException{

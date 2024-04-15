@@ -42,6 +42,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class InsightsFrame extends JFrame {
 
@@ -96,6 +98,7 @@ public class InsightsFrame extends JFrame {
 		setContentPane(contentPane);
 		
 		comboBox = new JComboBox<String>();
+		comboBox.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -109,15 +112,20 @@ public class InsightsFrame extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre ", "Novembre", "Dicembre"}));
 		
 		JLabel lblNewLabel = new JLabel("mese di riferimento");
+		lblNewLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		
 		JLabel lblNewLabel_1 = new JLabel("post con numero maggiore di like");
+		lblNewLabel_1.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel lblNewLabel_2 = new JLabel("post con numero maggiore di commenti");
+		lblNewLabel_2.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel lblNewLabel_4 = new JLabel("post con minor numero di like");
+		lblNewLabel_4.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JLabel lblNewLabel_5 = new JLabel("post con il minor numero di commenti");
+		lblNewLabel_5.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -128,10 +136,12 @@ public class InsightsFrame extends JFrame {
 		JScrollPane scrollPane_4 = new JScrollPane();
 		
 		JLabel lblNewLabel_6 = new JLabel("gruppo selezionato");
+		lblNewLabel_6.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
 		
 		try {
 			groupComboBox = new JComboBox<String>(setGroupModel());
+			groupComboBox.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 			groupComboBox.setSelectedIndex(0);
 			groupComboBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -148,6 +158,7 @@ public class InsightsFrame extends JFrame {
 		}
 		
 		JButton chartButton = new JButton("mostra grafico ");
+		chartButton.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		chartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -159,6 +170,8 @@ public class InsightsFrame extends JFrame {
 		});
 		
 		JLabel lblNewLabel_3 = new JLabel("numero di post per mese");
+		lblNewLabel_3.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+		lblNewLabel_3.setIcon(new ImageIcon(InsightsFrame.class.getResource("/resources/chart-histogram.png")));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -166,19 +179,19 @@ public class InsightsFrame extends JFrame {
 					.addGap(63)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(chartButton))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
+									.addComponent(lblNewLabel)
+									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 258, GroupLayout.PREFERRED_SIZE))
 								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE)
 								.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblNewLabel_4)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE))
 							.addGap(174)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblNewLabel_5, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
@@ -198,8 +211,8 @@ public class InsightsFrame extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_6)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(groupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(groupComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)
@@ -222,28 +235,31 @@ public class InsightsFrame extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_3)
 						.addComponent(chartButton))
-					.addContainerGap(151, Short.MAX_VALUE))
+					.addContainerGap(167, Short.MAX_VALUE))
 		);
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel, lblNewLabel_6});
-		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, groupComboBox});
 		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel_4, lblNewLabel_3});
-		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
-		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblNewLabel, lblNewLabel_6});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {comboBox, groupComboBox});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {lblNewLabel, lblNewLabel_6});
+		gl_contentPane.linkSize(SwingConstants.VERTICAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
 		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {comboBox, groupComboBox});
+		gl_contentPane.linkSize(SwingConstants.HORIZONTAL, new Component[] {scrollPane, scrollPane_2, scrollPane_3, scrollPane_4});
 		
 		mostCommentedPostTextArea = new JTextArea();
+		mostCommentedPostTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		scrollPane_4.setViewportView(mostCommentedPostTextArea);
 		mostCommentedPostTextArea.setEditable(false);
 		
 		mostLikedPostTextArea = new JTextArea();
+		mostLikedPostTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		scrollPane.setViewportView(mostLikedPostTextArea);
 		mostLikedPostTextArea.setEditable(false);
 		
 		leastCommentedPostTextArea = new JTextArea();
+		leastCommentedPostTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		scrollPane_3.setViewportView(leastCommentedPostTextArea);
 		
 		leastLikedPostTextArea = new JTextArea();
+		leastLikedPostTextArea.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		scrollPane_2.setViewportView(leastLikedPostTextArea);
 		contentPane.setLayout(gl_contentPane);
 		
