@@ -32,8 +32,10 @@ public class DeleteMessageController {
 	}
 	
 	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
+		Point point = new Point(0,0);
+		//point = frame.getLocationOnScreen();
+		point.x += (frame.getWidth()/2);
+		point.y += (frame.getHeight()/2);
 		return point;
 	}
 	private void SetFramePosition(JDialog dialog,Point point) {

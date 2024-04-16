@@ -38,8 +38,10 @@ public class CreateGroupController {
 		createGroupDialog.dispose();
 	}
 	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
+		Point point = new Point();
+		//point = frame.getLocationOnScreen();
+		point.x += (frame.getWidth()/2);
+		point.y += (frame.getHeight()/2);
 		return point;
 	}
 	

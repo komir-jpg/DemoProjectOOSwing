@@ -103,7 +103,7 @@ public class Login extends JFrame {
 		LoginBtn.setBackground(new Color(212, 212, 212));
 		LoginBtn.setForeground(new Color(0, 0, 64));
 		LoginBtn.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		LoginBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		LoginBtn.setBorder(new LineBorder(new Color(0, 0, 0)));
 		LoginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

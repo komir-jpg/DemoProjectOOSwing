@@ -136,7 +136,7 @@ public class HomePage extends JFrame {
 				} catch (InvalidInsertion e1) {
 					ShowMessage("Errore", "il nome che hai inserito non corrisponde ad alcun gruppo");
 				} catch (SQLException e1) {
-					ShowMessage("Errore", "la richiesta non è andata a buon fine\n"+e1.getMessage());
+					ShowMessage("Errore", "la richiesta non è andata a buon fine si fa già parte del gruppo\n");
 				}
 			}
 		});
@@ -377,7 +377,7 @@ public class HomePage extends JFrame {
 		
 		JLabel GroupLabel = new JLabel("GRUPPI");
 		GroupLabel.setForeground(new Color(0, 0, 0));
-		GroupLabel.setIcon(new ImageIcon("C:\\Users\\mirko\\Documents\\group-profile-users_icon-icons.com_73540.png"));
+		GroupLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/group-profile-users_icon-icons.com_73540.png")));
 		GroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
 		
 		btnSend = new JButton("invia");
@@ -516,6 +516,7 @@ public class HomePage extends JFrame {
 		tabbedPane.setEnabledAt(0, true);
 		
 		adminGroupList = new JList<String>();
+		adminGroupList.setFont(new Font("Cascadia Code", Font.BOLD, 12));
 		adminGroupList.setSelectionBackground(Color.LIGHT_GRAY);
 
 		
@@ -541,7 +542,7 @@ public class HomePage extends JFrame {
 		adminGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
-		tabbedPane.addTab("Gruppi admin", new ImageIcon("C:\\Users\\mirko\\Pictures\\kisspng-icon-design-admin-settings-male-icon-free-download-png-and-5d4039ea986130.5491207615644902186242.jpg"), adminGroupList, null);
+		tabbedPane.addTab("Gruppi admin", new ImageIcon(HomePage.class.getResource("/resources/kisspng-icon-design-admin-settings-male-icon-free-download-png-and-5d4039ea986130.5491207615644902186242.jpg")), adminGroupList, null);
 		contentPane.setLayout(gl_contentPane);
 		
 		addWindowListener(new WindowAdapter() {

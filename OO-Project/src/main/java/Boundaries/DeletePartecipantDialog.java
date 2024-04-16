@@ -92,6 +92,7 @@ public class DeletePartecipantDialog extends JDialog {
 		);
 		
 		groupPartecipantsList = new JList<String>();
+		groupPartecipantsList.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		groupPartecipantsList.setSelectionBackground(Color.LIGHT_GRAY);
 		scrollPane.setViewportView(groupPartecipantsList);
 		contentPanel.setLayout(gl_contentPanel);

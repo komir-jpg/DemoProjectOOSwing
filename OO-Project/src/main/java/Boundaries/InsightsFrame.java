@@ -44,6 +44,9 @@ import javax.swing.JButton;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.MatteBorder;
 
 public class InsightsFrame extends JFrame {
 
@@ -98,6 +101,7 @@ public class InsightsFrame extends JFrame {
 		setContentPane(contentPane);
 		
 		comboBox = new JComboBox<String>();
+		comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
 		comboBox.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -141,6 +145,7 @@ public class InsightsFrame extends JFrame {
 		
 		try {
 			groupComboBox = new JComboBox<String>(setGroupModel());
+			groupComboBox.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 			groupComboBox.setFont(new Font("Cascadia Code", Font.PLAIN, 11));
 			groupComboBox.setSelectedIndex(0);
 			groupComboBox.addActionListener(new ActionListener() {

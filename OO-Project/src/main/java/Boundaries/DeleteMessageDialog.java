@@ -66,6 +66,7 @@ public class DeleteMessageDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		messageList = new JList<String>();
+		messageList.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		messageList.setSelectionBackground(Color.LIGHT_GRAY);
 		JLabel lblNewLabel = new JLabel("MESSAGGI");
 		lblNewLabel.setIcon(new ImageIcon(DeleteMessageDialog.class.getResource("/resources/noun-delete-message-1167872.png")));
