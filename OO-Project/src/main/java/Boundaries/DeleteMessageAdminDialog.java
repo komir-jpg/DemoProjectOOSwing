@@ -28,6 +28,7 @@ import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import javax.swing.ListSelectionModel;
 
 public class DeleteMessageAdminDialog extends JDialog{
 
@@ -91,6 +92,7 @@ public class DeleteMessageAdminDialog extends JDialog{
 		);
 		
 		deleteMessageList = new JList<String>();
+		deleteMessageList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(deleteMessageList);
 		contentPanel.setLayout(gl_contentPanel);
 		{

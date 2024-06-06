@@ -42,7 +42,7 @@ public class HomePageController {
 	}
 	
 	public void setCreateGroupDialog() {
-		new CreateGroupController(loginUser,this,homePageFrame);
+		new CreateGroupController(loginUser,homePageFrame);
 	}
 	
 	public void setGroupRequestDialog() {

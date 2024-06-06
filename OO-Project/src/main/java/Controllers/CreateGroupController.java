@@ -21,12 +21,10 @@ import Entities.User;
 
 public class CreateGroupController {
 	User loggedInUser;
-	HomePageController homePageController;
 	CreateGroupDialog createGroupDialog;
 	
-	public CreateGroupController(User loggedInUser,HomePageController homePageController,JFrame previousFrame){
+	public CreateGroupController(User loggedInUser,JFrame previousFrame){
 		this.loggedInUser = loggedInUser;
-		this.homePageController = homePageController;
 		setCreateGroupDialog(previousFrame);
 	}
 	public void setCreateGroupDialog(JFrame previousFrame) {

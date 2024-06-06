@@ -15,7 +15,6 @@ import Entities.Request;
 
 public class GroupRequestsController {
 	private RequestGroupDialog groupRequestsDialog;
-	private HomePageController homePageController;
 	private Group selectedGroup;
 	
 	public GroupRequestsController(JFrame previousFrame,Group selectedGroup) {

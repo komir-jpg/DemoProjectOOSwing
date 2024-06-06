@@ -27,6 +27,7 @@ public class LoginController {
 	
 	public LoginController() {
 		loginFrame = new Login(this);
+		userDao = new UserDAO();
 		loginFrame.setVisible(true);
 		
 	}
@@ -74,13 +75,11 @@ public class LoginController {
 	
 	
 	public void userLogIn(String username) throws  SQLException{
-		UserDAO userDao = new UserDAO();
 		this.LogInUser = userDao.getUserbyUsername(username);
 	}
 	
 	
 	private ArrayList<User> GetUser() throws SQLException{
-		userDao = new UserDAO();
 		ArrayList<User> userResult= new ArrayList<User>();
 		userResult = userDao.getUserList();
 		return userResult;
