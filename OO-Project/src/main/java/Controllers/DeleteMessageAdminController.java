@@ -31,19 +31,10 @@ public class DeleteMessageAdminController {
 	}
 	private void setDeleteMessageAdminDialog(JFrame previousFrame) {
 		deleteMessageAdminDialog = new DeleteMessageAdminDialog(this);
-		SetFramePosition(deleteMessageAdminDialog, GetFramePosition(previousFrame));
+		deleteMessageAdminDialog.setLocationRelativeTo(previousFrame);
 		deleteMessageAdminDialog.setVisible(true);
 	}
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point(0,0);
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		
-		return point;
-	}
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
+	
 	private ArrayList<String> listToStringUserMessages(ArrayList<Post> list){
 		Iterator<Post> listIterator = list.iterator();
 		ArrayList<String> ToString = new ArrayList<String>();

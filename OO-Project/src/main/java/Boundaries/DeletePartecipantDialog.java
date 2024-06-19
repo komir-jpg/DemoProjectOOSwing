@@ -36,10 +36,7 @@ public class DeletePartecipantDialog extends JDialog {
 	private deletePartecipantController controller;
 	private JList<String> groupPartecipantsList; 
 
-	/**
-	 * Launch the application.
-	 */
-	
+
 	/**
 	 * Create the dialog.
 	 */

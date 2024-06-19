@@ -23,20 +23,12 @@ public class deletePartecipantController {
 	
 	private void setDeletePartecipantDialog(JFrame previousFrame) {
 		deletePartecipantDialog = new DeletePartecipantDialog(this);
-		SetFramePosition(deletePartecipantDialog, GetFramePosition(previousFrame));
+		deletePartecipantDialog.setLocationRelativeTo(previousFrame);
 		deletePartecipantDialog.setVisible(true);
 	}
 	
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point(0,0);
-		//point = frame.getLocationOnScreen();
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		return point;
-	}
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
+	
+	
 	private <T> ArrayList<String> listToString(ArrayList<T> list){
 		Iterator<T> listIterator = list.iterator();
 		ArrayList<String> ToString = new ArrayList<String>();

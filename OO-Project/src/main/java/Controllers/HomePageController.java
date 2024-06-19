@@ -34,7 +34,7 @@ public class HomePageController {
 	}
 	public void setHomePageFrame(JFrame previousFrame) {
 		homePageFrame = new HomePage(this);
-		SetFramePosition(homePageFrame, GetFramePosition(previousFrame));
+		homePageFrame.setLocationRelativeTo(previousFrame);
 		SetFrameSize(homePageFrame);
 		previousFrame.setVisible(false);
 		previousFrame.dispose();
@@ -52,15 +52,6 @@ public class HomePageController {
 		new InsightsController(homePageFrame, groupSelected,loginUser);
 	}
 
-	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
-		return point;
-	}
-	private void SetFramePosition(JFrame frame,Point point) {
-		frame.setLocation(point);
-	}
-	
 	
 	private void SetFrameSize(JFrame frame) {
 		frame.setSize(1080, 700);

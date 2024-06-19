@@ -29,24 +29,12 @@ public class CreateGroupController {
 	}
 	public void setCreateGroupDialog(JFrame previousFrame) {
 		createGroupDialog = new CreateGroupDialog(this);
-		SetFramePosition(createGroupDialog, GetFramePosition(previousFrame));
+		createGroupDialog.setLocationRelativeTo(previousFrame);
 		createGroupDialog.setVisible(true);
 	}
 	public void setHomePageFrameFromDialog() {
 		createGroupDialog.dispose();
 	}
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point();
-		//point = frame.getLocationOnScreen();
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		return point;
-	}
-	
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
-	
 	
 	
 	public ArrayList<String> setTag() throws SQLException {

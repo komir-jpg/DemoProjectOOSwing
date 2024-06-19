@@ -90,14 +90,7 @@ public class HomePage extends JFrame {
 	private JMenuItem mntmInsightsMenuItem;
 	private JTextArea sendMessageTextArea;
 	private JMenuItem mntmNewMenuItem;
-	/**
-	 * Launch the application.
-	 */
-	/*
-	 * TODO inviare messaggio 
-	 * TODO mi piace commento e share 
-	 * 
-	 * */
+	
 	/**
 	 * Create the frame.
 	 */

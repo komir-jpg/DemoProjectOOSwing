@@ -26,21 +26,11 @@ public class DeleteMessageController {
 	
 	private void setDeleteMessageDialog(JFrame previousFrame) {
 		deleteMessageDialog = new DeleteMessageDialog(this);
-		SetFramePosition(deleteMessageDialog, GetFramePosition(previousFrame));
+		deleteMessageDialog.setLocationRelativeTo(previousFrame);
 		deleteMessageDialog.setVisible(true);
 		
 	}
 	
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point(0,0);
-		//point = frame.getLocationOnScreen();
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		return point;
-	}
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
 	
 	public ArrayList<String>showUserMessages() throws SQLException {
 		PostDAO postDAO = new PostDAO();

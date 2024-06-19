@@ -38,9 +38,7 @@ public class RequestGroupDialog extends JDialog {
 	private GroupRequestsController controller;
 	private JList<String> requestedGroupList;
 
-	/**
-	 * Launch the application.
-	 */
+
 	
 	/**
 	 * Create the dialog.

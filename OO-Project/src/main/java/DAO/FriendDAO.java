@@ -18,7 +18,7 @@ public class FriendDAO {
 	Statement statement;
 	PreparedStatement preparedStatement;
 	
-	public FriendDAO() throws ClassNotFoundException, SQLException, IOException, RuntimeException {
+	public FriendDAO(){
 		ConnectionToDB connectionToDB = new ConnectionToDB();
 		connection = connectionToDB.getConnection();
 		

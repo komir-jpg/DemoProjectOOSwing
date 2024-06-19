@@ -21,6 +21,11 @@ public class GroupRequestsController {
 		this.selectedGroup = selectedGroup;
 		setRequestGroup(previousFrame);
 	}
+	private void setRequestGroup(JFrame previousFrame) {
+		groupRequestsDialog = new RequestGroupDialog(this);
+		groupRequestsDialog.setLocationRelativeTo(previousFrame);
+		groupRequestsDialog.setVisible(true);
+	}
 	public void setHomePageFrameFromDialog() {
 		groupRequestsDialog.dispose();
 	}
@@ -37,21 +42,7 @@ public class GroupRequestsController {
 		requestDAO.requestAccepted(userRequestAccepted,selectedGroup);
 	}
 	
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
-	}
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point(0,0);
-		//point = frame.getLocationOnScreen();
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		return point;
-	}
-	private void setRequestGroup(JFrame previousFrame) {
-		groupRequestsDialog = new RequestGroupDialog(this);
-		SetFramePosition(groupRequestsDialog, GetFramePosition(previousFrame));
-		groupRequestsDialog.setVisible(true);
-	}
+	
 	private <T> ArrayList<String> listToString(ArrayList<T> list){
 		Iterator<T> postIterator = list.iterator();
 		ArrayList<String>postToString = new ArrayList<String>();

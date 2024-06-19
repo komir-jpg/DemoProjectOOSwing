@@ -37,9 +37,7 @@ public class DeleteMessageAdminDialog extends JDialog{
 	DeleteMessageAdminController controller;
 	JList<String> deleteMessageList;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	
 	/**
 	 * Create the dialog.
@@ -103,13 +101,17 @@ public class DeleteMessageAdminDialog extends JDialog{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String[] splittedString = splitMessageString(deleteMessageList.getSelectedValue());
+						
 						try {
+							String[] splittedString = splitMessageString(deleteMessageList.getSelectedValue());
 							deleteMessage(splittedString);
 							ShowInfoMassage("Messsaggio eliminato", "messaggio eliminato con successo");
-						} catch (SQLException e1) {
+						}catch(SQLException e1) {
 							ShowMessage("Errore", "OPS! qualcosa è andato storto");
 							e1.printStackTrace();
+						}catch (Exception e2) {
+							ShowMessage("Errore", "OPS! messaggio selezionato non valido");
+							e2.printStackTrace();
 						}
 					}
 				});
@@ -134,12 +136,12 @@ public class DeleteMessageAdminDialog extends JDialog{
 		listModel.addAll(controller.showMessages());
 		return listModel;
 	}
-	private String[] splitMessageString(String selectedMessage) {
+	private String[] splitMessageString(String selectedMessage) throws Exception {
 		String messageString = selectedMessage;
 		String[] splittedString = messageString.split("    ");
 		return splittedString;
 	}
-	private void deleteMessage(String[] splittedString) throws SQLException {
+	private void deleteMessage(String[] splittedString) throws SQLException,Exception {
 		String user = splittedString[0];
 		String message = splittedString[1];
 		String date = splittedString[2];

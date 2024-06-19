@@ -49,9 +49,7 @@ public class Login extends JFrame {
 	private final int minWidth = 700;
 	private LoginController controller;
 
-	/**
-	 * Launch the application.
-	 */
+	
 
 	/**
 	 * Create the frame.

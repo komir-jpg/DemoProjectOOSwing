@@ -61,9 +61,6 @@ public class PostDAO{
 									 "DEFAULT"+","
 									 +"\""+idUser+"\""+","
 									 +"\'"+"1/1/12"+"\'"+","
-//									 +"\'"+newPost.getNumberOfLikes()+"\'"+","
-//									 +"\'"+newPost.getNumberOfComments()+"\'"+","
-//									 +"\'"+newPost.getNumberOfShare()+"\'"+","
 									 +newPost.getContent()+"," //valore null
 									 +"\'"+newPost.getFotoFormat()+"\'"+","
 									 +"\'"+newPost.getTypeOfPost()+"\'"+","
@@ -77,8 +74,6 @@ public class PostDAO{
 		 //questo fa scattare il trigger
 		 
 			preparedStatement = connection.prepareStatement("UPDATE pubblica set posteliminato = true where idPost = ? and idGruppo = ?");
-		//	preparedStatement.setInt(1, getPostID(post));
-		//	preparedStatement.setInt(2, getGroupID(group));
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		

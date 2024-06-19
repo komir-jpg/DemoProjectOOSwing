@@ -28,21 +28,11 @@ public class SearchTagController {
 		searchTagDialog = new SearchTagDialog(this);
 		searchTagDialog.setIconImage(Toolkit.getDefaultToolkit().getImage(SearchTagController.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		searchTagDialog.setTitle("cerca tag");
-		SetFramePosition(searchTagDialog, GetFramePosition(previousFrame));
+		searchTagDialog.setLocationRelativeTo(previousFrame);
 		searchTagDialog.setVisible(true);
 	}
 	public void setHomePageFrameFromDialog() {
 		searchTagDialog.dispose();
-	}
-	private Point GetFramePosition(JFrame frame) {
-		Point point = new Point(0,0);
-		//point = frame.getLocationOnScreen();
-		point.x += (frame.getWidth()/2);
-		point.y += (frame.getHeight()/2);
-		return point;
-	}
-	private void SetFramePosition(JDialog dialog,Point point) {
-		dialog.setLocation(point);
 	}
 	
 	private <T> ArrayList<String> listToString(ArrayList<T> list){

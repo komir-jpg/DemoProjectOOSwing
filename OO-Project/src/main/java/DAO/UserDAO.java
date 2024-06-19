@@ -182,7 +182,6 @@ public class UserDAO {
 		
 	}
 	public User getUserByPost(int postID) throws SQLException {
-		//slelect * from utente as u join post as p on u.idUtente = p.idUtente where p.idPost = ?
 		preparedStatement = connection.prepareStatement("slelect * from utente as u join post as p on u.idUtente = p.idUtente where p.idPost = ?");
 		preparedStatement.setInt(1, postID);
 		ResultSet queryRS = preparedStatement.executeQuery();

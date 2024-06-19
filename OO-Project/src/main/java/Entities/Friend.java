@@ -25,6 +25,5 @@ public class Friend {
 	public void setFriends(ArrayList<User> friends) {
 		this.friends = friends;
 	}
-	
 
 }

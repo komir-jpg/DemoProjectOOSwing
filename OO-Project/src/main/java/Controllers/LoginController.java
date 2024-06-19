@@ -28,6 +28,7 @@ public class LoginController {
 	public LoginController() {
 		loginFrame = new Login(this);
 		userDao = new UserDAO();
+		loginFrame.setLocationRelativeTo(null);
 		loginFrame.setVisible(true);
 		
 	}
@@ -47,22 +48,13 @@ public class LoginController {
 	
 	public void setLoginFrame(JFrame frame) {
 		loginFrame = new Login(this);
-		SetFramePosition(loginFrame, GetFramePosition(frame));
 		SetFrameSize(loginFrame,GetFrameSize(frame));
 		frame.setVisible(false);
+		loginFrame.setLocationRelativeTo(null);
 		loginFrame.setVisible(true);
 		frame.dispose();
 	}
 
-	
-	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
-		return point;
-	}
-	private void SetFramePosition(JFrame frame,Point point) {
-		frame.setLocation(point);
-	}
 	
 	private Dimension GetFrameSize(JFrame frame) {
 		Dimension dimension;

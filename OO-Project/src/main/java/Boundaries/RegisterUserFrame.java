@@ -45,20 +45,12 @@ public class RegisterUserFrame extends JFrame {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JComboBox<String> SexComboBox;
-	//private String phoneNumber;
 	private final int minHeigth = 350;
 	private final int minWidth = 640;
 	RegisterUserController controller;
-	private int idIncrement = 0; //sol temporanea creare un trigger di autoincremento per tutte le pk
+	
 
-	/*TODO 
-	 * controllare numero di telefono se inserito 
-	 * matricola se ci sono errori lanciare un eccezione
-	 * creare un package con le classi di tutte le eccezioni userdefined
-	 * al text field posso castare ad intero e se lancia un'eccezione la posso gestire
-	 * lo si può fare per tutti i text field
-	 * inserire campo data di nascita e rimuovere il campo matricola
-	*/
+	
 	/**
 	 * Create the frame.
 	 */

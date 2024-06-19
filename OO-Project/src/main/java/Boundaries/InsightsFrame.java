@@ -61,12 +61,6 @@ public class InsightsFrame extends JFrame {
 	private JComboBox<String> groupComboBox;
 	private JComboBox<String> comboBox;
 
-	/**
-	 * Launch the application.
-	 */
-	
-	//Post con più like 
-	//post con più commenti
 	
 
 	/**
@@ -91,11 +85,6 @@ public class InsightsFrame extends JFrame {
 		contentPane.setSize(new Dimension(1200, 800));
 		contentPane.setMaximumSize(new Dimension(1200, 900));
 		contentPane.setMinimumSize(new Dimension(400, 300));
-//		scrPane = new JScrollPane(contentPane);
-//		scrPane.setSize(new Dimension(1200, 800));
-//		
-//		scrPane.setMinimumSize(new Dimension(400, 300));
-//		scrPane.setMaximumSize(new Dimension(1200, 800));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);

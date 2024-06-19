@@ -24,7 +24,7 @@ public class RegisterUserController {
 	
 	public void setRegisterFrame(JFrame previousFrame) {
 		registerFrame = new RegisterUserFrame(this);
-		SetFramePosition(registerFrame,GetFramePosition(previousFrame));
+		registerFrame.setLocationRelativeTo(previousFrame);
 		SetFrameSize(registerFrame, GetFrameSize(previousFrame));
 		registerFrame.setVisible(true);
 		previousFrame.setVisible(false);
@@ -37,15 +37,6 @@ public class RegisterUserController {
 	}
 	
 	
-	private Point GetFramePosition(JFrame frame) {
-		Point point;
-		point = frame.getLocationOnScreen();
-		return point;
-	}
-	private void SetFramePosition(JFrame frame,Point point) {
-		frame.setLocation(point);
-	}
-	
 	private Dimension GetFrameSize(JFrame frame) {
 		Dimension dimension;
 		dimension = frame.getSize();
@@ -57,11 +48,6 @@ public class RegisterUserController {
 	
 
 	
-	/*
-	 * 
-	 * LOGIN FUNCTIONS
-	 * 
-	 */
 	public void InsertNewUser(String name, String surname, String sex, String userName,String email, String password) throws SQLException 
 	{
 		User user = new User(name,surname,sex,userName,email,password);

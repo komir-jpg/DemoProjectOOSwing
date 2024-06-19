@@ -51,10 +51,6 @@ public class CreateGroupDialog extends JDialog {
 	private JTextArea descriptionTextArea;
 	JList<String> tagList;
 
-	/**
-	 * Launch the application.
-	 */
-	
 
 	/**
 	 * Create the dialog.

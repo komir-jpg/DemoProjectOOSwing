@@ -36,9 +36,7 @@ public class DeleteMessageDialog extends JDialog {
 	private DeleteMessageController controller;
 	private JList<String> messageList;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	
 
 	/**
