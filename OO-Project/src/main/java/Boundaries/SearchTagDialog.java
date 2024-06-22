@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -132,7 +131,7 @@ public class SearchTagDialog extends JDialog {
 			public void valueChanged(ListSelectionEvent e) {
 				if(e.getValueIsAdjusting()){
 					try {
-						resultGroupList.setModel(showGroupModel((ArrayList<String>) tagList.getSelectedValuesList()));
+						resultGroupList.setModel(showGroupModel(tagList.getSelectedValue()));
 						resultGroupList.setCellRenderer(new DefaultListCellRenderer());
 					} catch (SQLException e1) {
 						ShowMessage("Errore","OPS!,Qualcosa è andato storto");
@@ -192,7 +191,7 @@ public class SearchTagDialog extends JDialog {
 		listModel.addAll(controller.getTags());
 		return listModel;
 	}
-	private DefaultListModel<String> showGroupModel(ArrayList<String> selectedTags) throws SQLException {
+	private DefaultListModel<String> showGroupModel(String selectedTags) throws SQLException {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
 			listModel.addAll(controller.showGroup(selectedTags));

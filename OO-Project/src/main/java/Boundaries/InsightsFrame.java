@@ -1,16 +1,12 @@
 package Boundaries;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
 
 import Controllers.InsightsController;
-import utils.GroupChart;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,20 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
-import java.awt.Scrollbar;
-import java.awt.TextArea;
 
-import javax.swing.JScrollBar;
-import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import java.awt.Dimension;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 
-import java.time.Month;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -52,7 +40,6 @@ public class InsightsFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JScrollPane scrPane;
 	private InsightsController controller;
 	private JTextArea mostLikedPostTextArea;
 	private JTextArea leastCommentedPostTextArea;

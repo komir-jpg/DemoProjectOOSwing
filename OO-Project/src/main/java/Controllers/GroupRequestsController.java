@@ -1,11 +1,9 @@
 package Controllers;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.RequestGroupDialog;
@@ -30,18 +28,34 @@ public class GroupRequestsController {
 		groupRequestsDialog.dispose();
 	}
 	
-	
+	/**
+	 * Retrieves all the users request to join a group
+	 * 
+	 * 
+	 * */
 	public ArrayList<String> getRequestList() throws SQLException{
 		RequestDAO requestDAO = new RequestDAO();
 		ArrayList<Request> request = requestDAO.getGroupRequests(selectedGroup);
 		return listToString(request);
 	}
-	
+	/**
+	 * accept a request from a user
+	 * 
+	 * 
+	 * */
 	public void requestAccepted(String userRequestAccepted) throws SQLException {
 		RequestDAO requestDAO = new RequestDAO();
 		requestDAO.requestAccepted(userRequestAccepted,selectedGroup);
 	}
-	
+	/**
+	 * denies a request from a user
+	 * 
+	 * 
+	 * */
+	public void requestDenied(String username) throws SQLException {
+		RequestDAO requestDAO = new RequestDAO();
+		requestDAO.requestDenied(username, selectedGroup);
+	}
 	
 	private <T> ArrayList<String> listToString(ArrayList<T> list){
 		Iterator<T> postIterator = list.iterator();
@@ -51,8 +65,5 @@ public class GroupRequestsController {
 		}
 		return postToString;
 	}
-	public void requestDenied(String username) throws SQLException {
-		RequestDAO requestDAO = new RequestDAO();
-		requestDAO.requestDenied(username, selectedGroup);
-	}
+	
 }

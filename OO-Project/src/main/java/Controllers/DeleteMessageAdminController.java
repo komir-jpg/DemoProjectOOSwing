@@ -1,11 +1,9 @@
 package Controllers;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.*;
@@ -20,12 +18,6 @@ public class DeleteMessageAdminController {
 	Group selectedGroup;
 	
 	
-	public DeleteMessageAdminController(JFrame previousFrame,Group selectedGroup,User loggedUser) {
-		this.selectedGroup = selectedGroup;
-		this.loggedUser = loggedUser;
-		setDeleteMessageAdminDialog(previousFrame);
-		
-	}
 	public void setHomePageFrame() {
 		deleteMessageAdminDialog.dispose();
 	}
@@ -35,6 +27,17 @@ public class DeleteMessageAdminController {
 		deleteMessageAdminDialog.setVisible(true);
 	}
 	
+	/**
+	 * deletes the messages from all the participants of the group
+	 * @param
+	 * @param
+	 * */
+	public DeleteMessageAdminController(JFrame previousFrame,Group selectedGroup,User loggedUser) {
+		this.selectedGroup = selectedGroup;
+		this.loggedUser = loggedUser;
+		setDeleteMessageAdminDialog(previousFrame);
+		
+	}
 	private ArrayList<String> listToStringUserMessages(ArrayList<Post> list){
 		Iterator<Post> listIterator = list.iterator();
 		ArrayList<String> ToString = new ArrayList<String>();
@@ -43,11 +46,20 @@ public class DeleteMessageAdminController {
 		}
 		return ToString;
 	}
-
+	/**
+	 * show all the messages of the group
+	 * @param
+	 * @param
+	 * */
 	public ArrayList<String> showMessages() throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		return listToStringUserMessages(postDAO.getPostsByGroup(selectedGroup));
 	}
+	/**
+	 * delete a specific message of the group
+	 * @param
+	 * @param
+	 * */
 	public void deleteMessage(String user,String message,String date) throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		postDAO.deletePost(message, date, user, selectedGroup);

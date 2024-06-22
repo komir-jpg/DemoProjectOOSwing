@@ -1,12 +1,9 @@
 package Controllers;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.*;
@@ -17,7 +14,6 @@ import Entities.Like;
 import Entities.Post;
 import Entities.Request;
 import Entities.Share;
-import Entities.Tag;
 import Entities.User;
 
 public class HomePageController {
@@ -60,17 +56,12 @@ public class HomePageController {
 		new SearchTagController(homePageFrame,loginUser);
 	}
 	
-	private ArrayList<User> GetUser() throws SQLException{
-		UserDAO userDao = new UserDAO();
-		ArrayList<User> userResult= new ArrayList<User>();
-		userResult = userDao.getUserList();
-		return userResult;
-	}
+	
 
 	/**
 	 * creates a new Post in a group from the logged in User
-	 * @param 
-	 * @param 
+	 *  
+	 *  
 	 * @throws SQLException 
 	 * */
 	public String newPost(String content) throws SQLException {
@@ -81,8 +72,8 @@ public class HomePageController {
 	}
 	/**
 	 * user inserted a new comment
-	 * @param
-	 * @param
+	 * 
+	 * 
 	 * @throws SQLException 
 	 * */
 	public void newComment(Post post,String text) throws SQLException {
@@ -92,8 +83,8 @@ public class HomePageController {
 		post.addPostComment(comment);
 	}
 	/**
-	 * method that inserts a new like of a post in the DB 
-	 * @param
+	 * method that inserts a new like of a post
+	 * 
 	 * @throws SQLException 
 	 * */
 	public void newLike(Post post) throws SQLException {
@@ -104,8 +95,8 @@ public class HomePageController {
 	}
 	/**		
 	 * insert a new shared post on the DB
-	 * @param
-	 * @param
+	 * 
+	 * 
 	 * @throws SQLException 
 	 * */
 	public void newShare(Post post,Group group) throws SQLException {
@@ -121,16 +112,10 @@ public class HomePageController {
 		requestDAO.insertNewRequest(request);
 	}
 	/**
-	 * this method returns the posts in a group
-	 * @return arrayList Post
+	 * this method returns all the current user owned groups
+	 * 
 	 * @throws SQLException 
 	 * */
-	public ArrayList<Post>GroupPosts(String groupName) throws SQLException{
-		PostDAO postDAO = new PostDAO();
-		ArrayList<Post> postList = new ArrayList<Post>();
-		postList = postDAO.getPostsByGroupNoUser(groupName,loginUser.getUserName());
-		return postList;
-	}
 	
 	public ArrayList<String> getUserAdminGroups() throws SQLException{
 		GroupDAO groupDAO = new GroupDAO();
@@ -140,13 +125,22 @@ public class HomePageController {
 		groupsToString = listToString(groups);
 		return groupsToString;
 	}
+	/**
+	 * this method returns all the current user groups which he is part of
+	 * 
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String>getUserGroups() throws SQLException{
 		GroupDAO groupDAO = new GroupDAO();
 		ArrayList<Group> groups = groupDAO.getUserGroup(loginUser);
 		ArrayList<String>groupsToString = listToString(groups);
 		return groupsToString;
 	}
-	
+	/**
+	 * this method returns all the selectedGroup post
+	 * 
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String> getGroupPosts() throws SQLException{
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> post = new ArrayList<Post>(); 
@@ -155,30 +149,40 @@ public class HomePageController {
 		return postToString;
 		
 	}
-	
+	/**
+	 * get the current selected group
+	 * 
+	 * @throws SQLException 
+	 * */
 	public void selectedGroup(String groupName) throws SQLException {
 		this.groupSelected = getGroup(groupName);
 	}
+	/**
+	 * get the current user of this session
+	 * 
+	 * @throws SQLException 
+	 * */
 	public String getCurrentUser() {
 		return loginUser.getUserName();
 	}
 	
-	private <T> ArrayList<String> listToString(ArrayList<T> list){
-		Iterator<T> listIterator = list.iterator();
-		ArrayList<String> ToString = new ArrayList<String>();
-		while(listIterator.hasNext()) {
-			ToString.add(listIterator.next().toString());
-		}
-		return ToString;
-	}
 	
+	/**
+	 * this method deletes the selected group
+	 * 
+	 * @throws SQLException 
+	 * */
 	public void deleteGroup() throws SQLException{
 		GroupDAO groupDAO = new GroupDAO();
 		groupDAO.deleteGroup(groupSelected);
 		groupSelected = null;
 		
 	}
-	
+	/**
+	 * this method checks if the inserted group name corresponds to an existing group
+	 * 
+	 * @throws SQLException 
+	 * */
 	public boolean checkGroupName(String groupName) throws SQLException {
 		Group group = getGroup(groupName);
 		if(group.getGroupName() != null)
@@ -186,40 +190,8 @@ public class HomePageController {
 		return false;
 	}
 	
-	private Group getGroup(String groupName) throws SQLException{
-		GroupDAO groupDAO = new GroupDAO();
-		Group group = new Group();
-		group = groupDAO.GetGroupByName(groupName);
-		return group;
-	}
 	
-	private ArrayList<Group> getGroupFromTag(String selectedTag) throws SQLException { 
-		TagDAO tagDAO = new TagDAO();
-		Tag tag = new Tag();
-		return tagDAO.getGroupByTag(tag);
-		
-	}
-	public ArrayList<String> showGroup(String selectedTag) throws SQLException {
-		ArrayList<String> tagList = new ArrayList<String>();
-		ArrayList<Group> group = new ArrayList<Group>();
-		group = getGroupFromTag(selectedTag);
-		Iterator<Group> groupIterator = group.iterator();
-		while(groupIterator.hasNext()) {
-			tagList.add(groupIterator.next().getGroupName());
-		}
-		return tagList;
-	}
-	public boolean checkUser(String username) throws SQLException {
-		ArrayList<User> userList = new ArrayList<User>();
-		userList = GetUser();
-		Iterator <User>UserIterator = userList.iterator();
-		while(UserIterator.hasNext()) {
-			if(UserIterator.next().getUserName().compareTo(username) == 0)
-				return true;
-		}
-		return false;
-	
-	}
+
 	public void deletePartecipantDialog() {
 		new deletePartecipantController(homePageFrame, groupSelected);
 	}
@@ -242,4 +214,20 @@ public class HomePageController {
 		homePageFrame.dispose();
 	}
 	
+	private Group getGroup(String groupName) throws SQLException{
+		GroupDAO groupDAO = new GroupDAO();
+		Group group = new Group();
+		group = groupDAO.GetGroupByName(groupName);
+		return group;
+	}
+	
+	
+	private <T> ArrayList<String> listToString(ArrayList<T> list){
+		Iterator<T> listIterator = list.iterator();
+		ArrayList<String> ToString = new ArrayList<String>();
+		while(listIterator.hasNext()) {
+			ToString.add(listIterator.next().toString());
+		}
+		return ToString;
+	}
 }

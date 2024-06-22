@@ -1,6 +1,5 @@
 package Controllers;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -8,7 +7,6 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 
@@ -66,10 +64,21 @@ public class CreateGroupController {
 		GroupDAO createGroupDao = new GroupDAO();
 		createGroupDao.createNewGroup(newGroup, loggedInUser);
 	}
+	/**
+	 * sets the tags of the group
+	 * @param
+	 * @param
+	 * */
 	public void setGroupTags(String groupName, String selectedTag) throws SQLException {
 		TagDAO tagDAO = new TagDAO();
 		tagDAO.setGroupTag(groupName,selectedTag);
 	}
+	/**
+	 * checks if the inserted tag is valid. 
+	 * Confronts the tag with the pattern ^\\w+$
+	 * @param
+	 * @param
+	 * */
 	public void checkTag(String tag)throws InputMismatchException {
 		Pattern pattern = Pattern.compile("^\\w+$");
 		Matcher matcher = pattern.matcher(tag);

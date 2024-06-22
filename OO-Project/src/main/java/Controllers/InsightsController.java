@@ -1,12 +1,10 @@
 package Controllers;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFrame;
@@ -65,23 +63,42 @@ public class InsightsController {
 		}
 		return postToString;
 	}
-
+	/**
+	 * this method returns the post with the most number of like
+	 * in a selected month
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String> mostNumberOfLikes(int month) throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = postDAO.getPostsMostNuberOfLikes(month, groupSelected);
 		return listToStringLikes(postList);
 		
 	}
+	/**
+	 * this method returns the post with the most number of comments
+	 * in a selected month
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String> mostNumberOfComments(int month) throws SQLException{
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = postDAO.getPostsMostNuberOfComments(month, groupSelected);
 		return listToStringComments(postList);
 	}
+	/**
+	 * this method returns the post with the least number of like
+	 * in a selected month
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String> leastNumberOfLikes(int month) throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = postDAO.getPostsLeastNuberOfLikes(month, groupSelected);
 		return listToStringLikes(postList);
 	}
+	/**
+	 * this method returns the post with the least number of comments
+	 * in a selected month
+	 * @throws SQLException 
+	 * */
 	public ArrayList<String> leastNumberOfComments(int month) throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		ArrayList<Post> postList = postDAO.getPostsLeastNuberOfComments(month, groupSelected);

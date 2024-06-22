@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
 import javax.swing.ListSelectionModel;
 

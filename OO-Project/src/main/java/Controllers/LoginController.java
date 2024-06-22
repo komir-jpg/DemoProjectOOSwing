@@ -1,12 +1,10 @@
 package Controllers;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.LoginFrame;
@@ -76,13 +74,18 @@ public class LoginController {
 		userResult = userDao.getUserList();
 		return userResult;
 	}
+	
 	private boolean checkCredentials(String Username,String Password,User userIterator) {
 		if(Username.compareTo(userIterator.getUserName()) == 0 && Password.compareTo(userIterator.getPassword()) == 0)
 			return true;
 		else
 			return false;
 	}
-	
+	/**
+	 * this method checks if the inserted user name and password in the login screen match any user name and password in the DB
+	 * 
+	 * @throws SQLException 
+	 * */
 	public boolean CheckUserLogIn(String Username,String Password) throws SQLException  {
 		ArrayList<User> Result = GetUser();
 		Iterator<User> UserIterator = Result.iterator();

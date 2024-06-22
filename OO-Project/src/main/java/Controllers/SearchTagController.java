@@ -1,11 +1,11 @@
 package Controllers;
 
-import java.awt.Point;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
+
 import javax.swing.JFrame;
 
 import Boundaries.SearchTagDialog;
@@ -43,6 +43,11 @@ public class SearchTagController {
 		}
 		return postToString;
 	}
+	/**
+	 * this method creates a new group request for the selected group
+	 * 
+	 * @throws SQLException 
+	 * */
 	public void newGroupRequest(String groupname) throws SQLException {
 		RequestDAO requestDAO = new RequestDAO();
 		GroupDAO groupDAO = new GroupDAO();
@@ -53,17 +58,9 @@ public class SearchTagController {
 		TagDAO tagDAO = new TagDAO();
 		return listToString(tagDAO.getTag());
 	}
-	public ArrayList<String> showGroup(ArrayList<String> selectedTags) throws SQLException {
-		String stringTags = stringTags(selectedTags);
+	public ArrayList<String> showGroup(String selectedTag) throws SQLException {
 		TagDAO tagDAO = new TagDAO();
-		return tagDAO.setGroupByTag(stringTags);
+		return tagDAO.setGroupByTag(selectedTag);
 	}
-	private String stringTags(ArrayList<String> selectedTags) {
-		String tagString = "";
-		Iterator<String> selectedTagIterator = selectedTags.iterator();
-		while(selectedTagIterator.hasNext()) {
-			tagString = tagString.concat(selectedTagIterator.next()+",");
-		}
-		return tagString.substring(0, tagString.length()-1);
-	}
+	
 }

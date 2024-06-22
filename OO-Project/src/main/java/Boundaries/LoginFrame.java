@@ -15,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -32,8 +31,6 @@ import javax.swing.border.LineBorder;
 
 import Controllers.LoginController;
 import java.awt.Toolkit;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 
 public class LoginFrame extends JFrame {
 

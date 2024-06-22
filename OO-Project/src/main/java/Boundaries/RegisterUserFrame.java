@@ -29,10 +29,6 @@ import Controllers.RegisterUserController;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowStateListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.Toolkit;
 
 public class RegisterUserFrame extends JFrame {
@@ -45,8 +41,6 @@ public class RegisterUserFrame extends JFrame {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private JComboBox<String> SexComboBox;
-	private final int minHeigth = 350;
-	private final int minWidth = 640;
 	RegisterUserController controller;
 	
 

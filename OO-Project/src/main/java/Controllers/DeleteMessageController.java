@@ -1,10 +1,8 @@
 package Controllers;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.DeleteMessageDialog;
@@ -31,7 +29,11 @@ public class DeleteMessageController {
 		
 	}
 	
-	
+	/**
+	 * show all the user messages of the group
+	 * 
+	 * 
+	 * */
 	public ArrayList<String>showUserMessages() throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		return listToStringUserMessages(postDAO.getUserPostsByGroup(selectedGroup, loggedUser));
@@ -45,7 +47,11 @@ public class DeleteMessageController {
 		}
 		return ToString;
 	}
-
+	/**
+	 * delete a specific user message 
+	 * 
+	 * 
+	 * */
 	public void deleteMessage(String message, String date) throws SQLException {
 		PostDAO postDAO = new PostDAO();
 		postDAO.deletePost(message, date, loggedUser, selectedGroup);

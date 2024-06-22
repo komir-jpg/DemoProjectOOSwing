@@ -1,11 +1,9 @@
 package Controllers;
 
-import java.awt.Point;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import Boundaries.DeletePartecipantDialog;
@@ -37,11 +35,21 @@ public class deletePartecipantController {
 		}
 		return ToString;
 	}
+	/**
+	 * Retrieves all the participants of a specific group
+	 * 
+	 * 
+	 * */
 	public ArrayList<String> groupPartecipants() throws SQLException{
 		UserDAO userDAO = new UserDAO();
 		return listToString(userDAO.getUsersByGroup(selectedGroup));
 		
 	}
+	/**
+	 * Removes a specific participant from a group
+	 * 
+	 * 
+	 * */
 	public void deletePartecipant(String username) throws SQLException {
 		GroupDAO groupDAO = new GroupDAO();
 		groupDAO.deletePartecipant(selectedGroup, username);
