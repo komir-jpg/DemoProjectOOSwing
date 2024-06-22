@@ -143,7 +143,7 @@ public class RegisterUserFrame extends JFrame {
 				}catch(InvalidInsertion InvalidInsertionExc) {
 					ShowMessage("Errore: inserire un valore nei campi","Errore");
 				}catch (DBconnectionError DBconnectionError) {
-					ShowMessage("Errore: connessione al db non riuscita","Errore");
+					ShowMessage("OPS! Qualocosa è andato storto "+DBconnectionError.getLocalizedMessage(),"Errore");
 				}catch(InvalidEmailException InvalidEmail) {
 					ShowMessage("Inserire una mail valida", "Errore");	
 				}

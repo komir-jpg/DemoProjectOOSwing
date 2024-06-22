@@ -28,6 +28,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.ModuleLayer.Controller;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
@@ -105,6 +106,7 @@ public class RequestGroupDialog extends JDialog {
 							if(selectedValues.isEmpty())
 								ShowMessage("Errore", "devi selezionare prima una richiesta");
 							requestAccepted(selectedValues);
+							ShowInfoMessage("La richiesta è stata accettata","Info");
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 							ShowMessage("Errore", "Ops!,Qualcosa è andato storto");
@@ -173,7 +175,6 @@ public class RequestGroupDialog extends JDialog {
 		String splittedString = stringArray[1];
 		stringArray = splittedString.split("   ");
 		String resultString = stringArray[0].strip();
-		System.out.println(resultString);
 		return resultString;
 	}
 	private DefaultListModel<String> setListModel() throws DBconnectionError {
@@ -189,5 +190,7 @@ public class RequestGroupDialog extends JDialog {
 	private void ShowMessage(String titolo,String testo) {
 		JOptionPane.showMessageDialog(this, testo, titolo, JOptionPane.WARNING_MESSAGE);
 	}
-	
+	private void ShowInfoMessage(String testo,String titolo) {
+		JOptionPane.showMessageDialog(this,testo,titolo,JOptionPane.INFORMATION_MESSAGE);
+	}
 }

@@ -216,6 +216,7 @@ public class HomePageFrame extends JFrame {
 				if(GroupTabList.getSelectedIndex() != -1 || adminGroupList.getSelectedIndex() != -1)
 					try {
 						deleteLastMessage();
+						ShowInfoMessage("Info", "il messagio è stato eliminato con successo");
 						showMessageTextArea.repaint();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
