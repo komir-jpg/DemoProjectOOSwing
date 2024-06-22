@@ -35,7 +35,7 @@ import java.awt.Toolkit;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
-public class Login extends JFrame {
+public class LoginFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -54,9 +54,9 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login(LoginController myController) {
+	public LoginFrame(LoginController myController) {
 		lookAndFeel();
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group Login");
 		controller = myController;
 		
@@ -74,7 +74,7 @@ public class Login extends JFrame {
 		
 		JLabel pictureLabel = new JLabel("");
 		pictureLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		pictureLabel.setIcon(new ImageIcon(Login.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg")));
+		pictureLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res.jpg")));
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(192, 192, 192));
@@ -126,7 +126,7 @@ public class Login extends JFrame {
 		CreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.setRegisterFrame(Login.this);
+				controller.setRegisterFrame(LoginFrame.this);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -232,8 +232,7 @@ public class Login extends JFrame {
 		);
 		panel_2.setLayout(gl_panel_2);
 		contentPane.setLayout(gl_contentPane);
-	}
-	//redere generica passando il componente per parametro 
+	} 
 	private void checkUsername() throws InvalidUsername{
 		
 			String Username = UsernameField.getText();

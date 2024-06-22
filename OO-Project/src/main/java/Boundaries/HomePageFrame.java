@@ -52,7 +52,7 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.Toolkit;
 
-public class HomePage extends JFrame {
+public class HomePageFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -94,9 +94,9 @@ public class HomePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HomePage(HomePageController myController) {
+	public HomePageFrame(HomePageController myController) {
 		lookAndFeel();
-		setIconImage(Toolkit.getDefaultToolkit().getImage(HomePage.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(HomePageFrame.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("Unina Social Group");
 		controller = myController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,7 +117,7 @@ public class HomePage extends JFrame {
 				controller.setSearchTagDialog();
 			}
 		});
-		mntmSearchGroupByTagItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-label-1126708.png")));
+		mntmSearchGroupByTagItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-label-1126708.png")));
 		mnSearchMenu.add(mntmSearchGroupByTagItem);
 		
 		mntmSearchGrpupByNameMenuItem = new JMenuItem("Cerca gruppo");
@@ -133,7 +133,7 @@ public class HomePage extends JFrame {
 				}
 			}
 		});
-		mntmSearchGrpupByNameMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-search-1126639.png")));
+		mntmSearchGrpupByNameMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-search-1126639.png")));
 		mnSearchMenu.add(mntmSearchGrpupByNameMenuItem);
 		
 		mnStatusMenu = new JMenu("stato");
@@ -145,11 +145,11 @@ public class HomePage extends JFrame {
 		mntmOnlineMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Online");
-				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-online-status-3864663.png")));
+				lblStatusLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-online-status-3864663.png")));
 				lblStatusLabel.setForeground(new Color(0, 128, 64));
 			}
 		});
-		mntmOnlineMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-avatar-1126670.png")));
+		mntmOnlineMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-avatar-1126670.png")));
 		mnStatusMenu.add(mntmOnlineMenuItem);
 		
 		mntmOffilneItem = new JMenuItem("Offline");
@@ -157,11 +157,11 @@ public class HomePage extends JFrame {
 		mntmOffilneItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Offilne");
-				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
+				lblStatusLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 				lblStatusLabel.setForeground(new Color(206, 0, 0));
 			}
 		});
-		mntmOffilneItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
+		mntmOffilneItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 		mnStatusMenu.add(mntmOffilneItem);
 		
 		mntmNotOnPCItem = new JMenuItem("Non al pc");
@@ -169,11 +169,11 @@ public class HomePage extends JFrame {
 		mntmNotOnPCItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Non al pc");
-				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-contact-1126739.png")));
+				lblStatusLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-remove-contact-1126739.png")));
 				lblStatusLabel.setForeground(new Color(255, 200, 0));
 			}
 		});
-		mntmNotOnPCItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-contact-1126739.png")));
+		mntmNotOnPCItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-remove-contact-1126739.png")));
 		mnStatusMenu.add(mntmNotOnPCItem);
 		
 		mntmNotAviableItem = new JMenuItem("Non disponibile");
@@ -181,15 +181,15 @@ public class HomePage extends JFrame {
 		mntmNotAviableItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblStatusLabel.setText("Non disponibile");
-				lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-invisible-1126706.png")));
+				lblStatusLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-invisible-1126706.png")));
 				lblStatusLabel.setForeground(new Color(128, 128, 128));
 			}
 		});
-		mntmNotAviableItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-invisible-1126706.png")));
+		mntmNotAviableItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-invisible-1126706.png")));
 		mnStatusMenu.add(mntmNotAviableItem);
 		
 		mntmNewMenuItem = new JMenuItem("esci");
-		mntmNewMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/pngegg.png")));
+		mntmNewMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/pngegg.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.setLoginScreen();
@@ -214,7 +214,7 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmDeleteMsgMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmDeleteMsgMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
+		mntmDeleteMsgMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mnDeleteMenu.add(mntmDeleteMsgMenuItem);
 		
 		mntmDeleteLastItem = new JMenuItem("Elimina ultimo messaggio");
@@ -233,7 +233,7 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmDeleteLastItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmDeleteLastItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
+		mntmDeleteLastItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mnDeleteMenu.add(mntmDeleteLastItem);
 		
 		mnGroupMenu = new JMenu("gruppo");
@@ -250,7 +250,7 @@ public class HomePage extends JFrame {
 		});
 		mntmCreateGroupMenuItem.setSelected(true);
 		
-		mntmCreateGroupMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/createGroup.png")));
+		mntmCreateGroupMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/createGroup.png")));
 		mnGroupMenu.add(mntmCreateGroupMenuItem);
 		
 		mntmLeaveGroupMenuItem = new JMenuItem("Abbandona gruppo");
@@ -269,7 +269,7 @@ public class HomePage extends JFrame {
 			}
 		});
 		mntmLeaveGroupMenuItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-		mntmLeaveGroupMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
+		mntmLeaveGroupMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/leaveGroup.png")));
 		mnGroupMenu.add(mntmLeaveGroupMenuItem);
 		
 		mnGroupManagmentMenu = new JMenu("gestione gruppo");
@@ -278,7 +278,7 @@ public class HomePage extends JFrame {
 		menuBar.add(mnGroupManagmentMenu);
 		
 		mntmRequestStatusItem = new JMenuItem("gestione richieste");
-		mntmRequestStatusItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/user-add.png")));
+		mntmRequestStatusItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/user-add.png")));
 		mntmRequestStatusItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty())
@@ -292,7 +292,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmRequestStatusItem);
 		
 		mntmDeleteGroupItem = new JMenuItem("elimina gruppo");
-		mntmDeleteGroupItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
+		mntmDeleteGroupItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/leaveGroup.png")));
 		mntmDeleteGroupItem.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
 		mntmDeleteGroupItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -316,7 +316,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeleteGroupItem);
 		
 		mntmDeletePartecipantItem = new JMenuItem("elimina partecipante");
-		mntmDeletePartecipantItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-remove-avatar-1126634.png")));
+		mntmDeletePartecipantItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-remove-avatar-1126634.png")));
 		mntmDeletePartecipantItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty()) {
@@ -330,7 +330,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeletePartecipantItem);
 		
 		mntmDeleteMessageItem = new JMenuItem("elimina messaggio");
-		mntmDeleteMessageItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-delete-message-1167872.png")));
+		mntmDeleteMessageItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-delete-message-1167872.png")));
 		mntmDeleteMessageItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty()) {
@@ -346,7 +346,7 @@ public class HomePage extends JFrame {
 		mnGroupManagmentMenu.add(mntmDeleteMessageItem);
 		
 		mntmInsightsMenuItem = new JMenuItem("insigths");
-		mntmInsightsMenuItem.setIcon(new ImageIcon(HomePage.class.getResource("/resources/chart-histogram.png")));
+		mntmInsightsMenuItem.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/chart-histogram.png")));
 		mntmInsightsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(adminGroupList.isSelectionEmpty()) {
@@ -370,7 +370,7 @@ public class HomePage extends JFrame {
 		
 		JLabel GroupLabel = new JLabel("GRUPPI");
 		GroupLabel.setForeground(new Color(0, 0, 0));
-		GroupLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/group-profile-users_icon-icons.com_73540.png")));
+		GroupLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/group-profile-users_icon-icons.com_73540.png")));
 		GroupLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
 		
 		btnSend = new JButton("invia");
@@ -415,7 +415,7 @@ public class HomePage extends JFrame {
 		
 		lblStatusLabel = new JLabel("online");
 		lblStatusLabel.setForeground(new Color(0, 128, 0));
-		lblStatusLabel.setIcon(new ImageIcon(HomePage.class.getResource("/resources/noun-online-status-3864663.png")));
+		lblStatusLabel.setIcon(new ImageIcon(HomePageFrame.class.getResource("/resources/noun-online-status-3864663.png")));
 		lblStatusLabel.setFont(new Font("Cascadia Code", Font.PLAIN, 13));
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -535,7 +535,7 @@ public class HomePage extends JFrame {
 		adminGroupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
-		tabbedPane.addTab("Gruppi admin", new ImageIcon(HomePage.class.getResource("/resources/kisspng-icon-design-admin-settings-male-icon-free-download-png-and-5d4039ea986130.5491207615644902186242.jpg")), adminGroupList, null);
+		tabbedPane.addTab("Gruppi admin", new ImageIcon(HomePageFrame.class.getResource("/resources/kisspng-icon-design-admin-settings-male-icon-free-download-png-and-5d4039ea986130.5491207615644902186242.jpg")), adminGroupList, null);
 		contentPane.setLayout(gl_contentPane);
 		
 		addWindowListener(new WindowAdapter() {
@@ -587,7 +587,7 @@ public class HomePage extends JFrame {
 	}
 	private int ConfirmDialog() {
 		int result;
-		result = JOptionPane.showConfirmDialog(this, "Sicuro? la cancellazione del gruppo comporta l'eliminazione di tutti i messaggi","elimina gruppo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(HomePage.class.getResource("/resources/leaveGroup.png")));
+		result = JOptionPane.showConfirmDialog(this, "Sicuro? la cancellazione del gruppo comporta l'eliminazione di tutti i messaggi","elimina gruppo",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,new ImageIcon(HomePageFrame.class.getResource("/resources/leaveGroup.png")));
 		return result;
 	}
 	private void showSearchDialog() throws InvalidInsertion, SQLException {

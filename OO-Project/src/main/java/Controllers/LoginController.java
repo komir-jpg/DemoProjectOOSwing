@@ -9,12 +9,12 @@ import java.util.Iterator;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import Boundaries.Login;
+import Boundaries.LoginFrame;
 import DAO.*;
 import Entities.User;
 
 public class LoginController {
-	private Login loginFrame;
+	private LoginFrame loginFrame;
 	private User LogInUser;
 	private UserDAO userDao;
 	
@@ -26,7 +26,7 @@ public class LoginController {
 	}
 	
 	public LoginController() {
-		loginFrame = new Login(this);
+		loginFrame = new LoginFrame(this);
 		userDao = new UserDAO();
 		loginFrame.setLocationRelativeTo(null);
 		loginFrame.setVisible(true);
@@ -47,7 +47,7 @@ public class LoginController {
 	}
 	
 	public void setLoginFrame(JFrame frame) {
-		loginFrame = new Login(this);
+		loginFrame = new LoginFrame(this);
 		SetFrameSize(loginFrame,GetFrameSize(frame));
 		frame.setVisible(false);
 		loginFrame.setLocationRelativeTo(null);

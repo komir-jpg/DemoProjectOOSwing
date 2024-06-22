@@ -28,7 +28,6 @@ public class GroupChart extends JPanel {
 		super();
 		ConnectionToDB connectionToDB = new ConnectionToDB();
 		connection = connectionToDB.getConnection();
-		//getChart(groupName);
 	}
 	
 	private ArrayList<DataBaseResult> numPostByMonth(String groupName) throws SQLException{
@@ -65,6 +64,7 @@ public class GroupChart extends JPanel {
 		frame = new ChartFrame("Result",lineChart);
 		ImageIcon imgIcon = new ImageIcon(GroupChart.class.getResource("/resources/chart-histogram.png"));
 		frame.setIconImage(imgIcon.getImage());
+		frame.setLocationRelativeTo(null);
 		return frame;
 	}
 	

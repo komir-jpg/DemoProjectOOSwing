@@ -21,19 +21,19 @@ import Entities.Tag;
 import Entities.User;
 
 public class HomePageController {
-	HomePage homePageFrame;
+	HomePageFrame homePageFrame;
 	private User loginUser;
 	private Group groupSelected;
 	SearchTagDialog searchTagDialog;
 	
 	
 	public HomePageController(JFrame previousFrame,User loginUser) {
-		homePageFrame = new HomePage(this);
+		homePageFrame = new HomePageFrame(this);
 		this.loginUser = loginUser; 
 		setHomePageFrame(previousFrame);
 	}
 	public void setHomePageFrame(JFrame previousFrame) {
-		homePageFrame = new HomePage(this);
+		homePageFrame = new HomePageFrame(this);
 		homePageFrame.setLocationRelativeTo(previousFrame);
 		SetFrameSize(homePageFrame);
 		previousFrame.setVisible(false);
