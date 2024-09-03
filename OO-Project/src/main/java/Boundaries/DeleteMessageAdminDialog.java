@@ -100,7 +100,6 @@ public class DeleteMessageAdminDialog extends JDialog{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
 						try {
 							String[] splittedString = splitMessageString(deleteMessageList.getSelectedValue());
 							deleteMessage(splittedString);

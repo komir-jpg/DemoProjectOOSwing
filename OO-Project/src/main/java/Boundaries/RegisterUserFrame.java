@@ -49,8 +49,8 @@ public class RegisterUserFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterUserFrame(RegisterUserController myController) {
-		lookAndFeel();
 		setResizable(false);
+		lookAndFeel();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegisterUserFrame.class.getResource("/resources/_3707e1ea-9c9b-4142-82e2-be32952fd594_res_icon.png")));
 		setTitle("registrazione");
 		setName("registrati");
@@ -63,7 +63,7 @@ public class RegisterUserFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		setMinimumSize(new Dimension(500, 500));
+		setMinimumSize(new Dimension(700, 550));
 		
 		JLabel lbName = new JLabel("nome");
 		lbName.setHorizontalAlignment(SwingConstants.TRAILING);

@@ -1,6 +1,5 @@
 package Controllers;
 
-import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 
@@ -24,7 +23,6 @@ public class RegisterUserController {
 	public void setRegisterFrame(JFrame previousFrame) {
 		registerFrame = new RegisterUserFrame(this);
 		registerFrame.setLocationRelativeTo(previousFrame);
-		SetFrameSize(registerFrame, GetFrameSize(previousFrame));
 		registerFrame.setVisible(true);
 		previousFrame.setVisible(false);
 		previousFrame.dispose();
@@ -35,18 +33,7 @@ public class RegisterUserController {
 		loginController.setLoginFrame(previousFrame);
 	}
 	
-	
-	private Dimension GetFrameSize(JFrame frame) {
-		Dimension dimension;
-		dimension = frame.getSize();
-		return dimension;
-	}
-	private void SetFrameSize(JFrame frame,Dimension dimension) {
-		frame.setSize(dimension);
-	}
-	
-
-	
+		
 	public void InsertNewUser(String name, String surname, String sex, String userName,String email, String password) throws SQLException 
 	{
 		User user = new User(name,surname,sex,userName,email,password);
