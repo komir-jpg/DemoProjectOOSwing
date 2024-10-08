@@ -588,7 +588,6 @@ public class HomePageFrame extends JFrame {
 		searchIcon = new ImageIcon("C:\\Users\\mirko\\Pictures\\noun-magnifying-glass-1497539.png");
 		boolean result;
 		String userInput = (String) JOptionPane.showInputDialog(this,"nome del gruppo","cerca",JOptionPane.DEFAULT_OPTION,searchIcon,null,null);
-		System.out.println(userInput);
 		if(userInput != null) {
 			result = controller.checkGroupName(userInput);
 			if(result == false)

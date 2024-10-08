@@ -125,7 +125,7 @@ public class RegisterUserFrame extends JFrame {
 		JLabel ImageLabel = new JLabel("");
 		ImageLabel.setIcon(new ImageIcon(RegisterUserFrame.class.getResource("/resources/MSN_Messenger_23101.png")));
 		
-		JButton createAccoutnBtn = new JButton("Crea");
+		JButton createAccoutnBtn = 	new JButton("Crea");
 		createAccoutnBtn.setBorder(new LineBorder(new Color(0, 0, 0)));
 		createAccoutnBtn.setBackground(Color.WHITE);
 		createAccoutnBtn.addActionListener(new ActionListener() {
